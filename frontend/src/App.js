@@ -12,6 +12,7 @@ import { fetchUser } from './redux/features/userSlice';
 import { fetchAllProducts } from './redux/features/productsSlice';
 import { fetchAllBrands } from './redux/features/brandsSlice';
 import { fetchAllEvents } from './redux/features/eventsSlice';
+import { fetchCartItems } from './redux/features/shoppingcartSlice';
 import Products from './pages/Products';
 import BestSelling from './pages/BestSelling';
 import FAQ from './pages/FAQ';
@@ -31,6 +32,7 @@ import AllBrands from './pages/Admin/AllBrands';
 import AllOrders from './pages/Admin/AllOrders';
 import AllEvents from './pages/Admin/AllEvents';
 import AllUsers from './pages/Admin/AllUsers';
+import { fetchWishlist } from './redux/features/wishlistSlice';
 
 
 
@@ -40,10 +42,13 @@ const App = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(fetchUser());
 		dispatch(fetchAllProducts());
 		dispatch(fetchAllBrands());
 		dispatch(fetchAllEvents());
+		dispatch(fetchUser());
+		dispatch(fetchCartItems());
+		dispatch(fetchWishlist());
+
 		console.log('app reload');
 	},[])
 

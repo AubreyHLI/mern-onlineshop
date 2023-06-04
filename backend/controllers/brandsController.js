@@ -30,10 +30,13 @@ const createNewBrand = asyncHandler( async (req, res, next) => {
             brandData.avatar = fileUrl;
         } 
         const newBrand = await Brand.create(brandData);
+        const brands = await Brand.find().sort({
+            createdAt: -1,
+        });
         
         res.status(201).json({
             success: true,
-            brand: newBrand,
+            brands,
         });
     } catch (error) {
         return next(new CustomErrorClass(400, error.message));

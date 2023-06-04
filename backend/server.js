@@ -1,5 +1,8 @@
 const app = require("./app");
 
+// connect to db
+require('./db/dbConnection');
+
 // config
 require("dotenv").config();
 
@@ -14,9 +17,6 @@ const server = http.createServer(app);
 server.listen(process.env.PORT, () => {
     console.log('listening to port', process.env.PORT);
 });
-
-// connect to db
-require('./db/dbConnection');
 
 // close server when has unhandled promise rejection
 process.on('unhandledRejection', err => {

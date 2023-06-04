@@ -1,5 +1,6 @@
 const Product = require("../models/productModel");
 const Brand = require("../models/brandModel");
+const User = require("../models/userModel");
 // const Order = require("../model/order");
 const asyncHandler = require('../middlewares/asyncHandler');
 const CustomErrorClass = require('../utils/CustomErrorClass');
@@ -20,10 +21,11 @@ const createNewProduct = asyncHandler( async(request, response, next) => {
             productData.brand = brand;
 
             const product = await Product.create(productData);
+            const products = await Product.find().sort({ createdAt: -1 });
 
             response.status(201).json({
                 success: true,
-                product,
+                products,
             });
         }
     } catch (error) {
@@ -85,9 +87,141 @@ const createReview = asyncHandler( async(request, response, next) => {
 })
 
 
+
+// shopping cart
+const addProductToCart = asyncHandler(async (req, res, next) => {
+    const { product, qty, repeat } = req.body;
+    const user = await User.findById(req.user.id);
+    const existsProduct = user.shoppingCart.find(item => item.productId === req.params.id);
+    if (existsProduct) {
+        if(repeat) {
+            existsProduct.qty += qty;
+        } else {
+            return next(new CustomErrorClass(400, "Product is already in shopping cart!"));
+        }
+    } else { // add the new product to the shopping cart array
+        user.shoppingCart.push({
+            product: {...product},
+            productId: product._id,
+            qty,
+        });
+    }
+    await user.save();
+
+    // const cartItems = await user.shoppingCart.sort({createdAt: -1});
+    res.status(201).json({
+        success: true,
+        cartItems: user.shoppingCart,
+        message:'Item added to cart successfully!'
+    });
+})
+
+
+const getAllCartItems = asyncHandler(async (req, res, next) => {
+    const user = await User.findById(req.user.id);
+    // const cartItems = await user.shoppingCart.sort((a,b) => b.createdAt - a.createdAt);
+
+    res.status(200).json({
+        success: true,
+        cartItems: user.shoppingCart,
+    });
+})
+
+
+const deleteProductInCart = asyncHandler(async (req, res, next) => {
+    const userId = req.user.id;
+    const itemId = req.params.id;
+    const user = await User.findOneAndUpdate({_id: userId}, {$pull: {shoppingCart: { _id: itemId }}}, {new:true});
+
+    res.status(201).json({
+        success: true,
+        cartItems: user.shoppingCart,
+    });
+})
+
+
+const updateProductInCart = asyncHandler(async (req, res, next) => {
+    const {itemId, qty} = req.body;
+    const userId = req.user.id;
+    const user = await User.findOneAndUpdate({"_id": userId, "shoppingCart._id": itemId}, {$set: {"shoppingCart.$.qty": qty}}, {new:true});
+
+    res.status(201).json({
+        success: true,
+        cartItems: user.shoppingCart,
+    });
+})
+
+
+// wishilist
+const addProductToWishlist = asyncHandler(async (req, res, next) => {
+    const {productId, product} = req.body;
+
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+    const existsProd = user.wishlist.find(item => item.product._id.toString() === productId);
+    if (existsProd) {
+        const user1 = await User.findOneAndUpdate({_id: userId}, {$pull: {wishlist: { productId: productId }}}, {new:true});
+        res.status(201).json({
+            success: true,
+            wishItems: user1.wishlist, 
+        });
+    } else { // add the new product to the wishlist array
+        const user2 = await User.findOneAndUpdate(
+            {_id: userId}, 
+            {$push: 
+                { wishlist: { 
+                    product, 
+                    productId,
+                }}
+            }, {new:true});
+        res.status(201).json({
+            success: true,
+            wishItems: user2.wishlist, 
+        });
+    }
+})
+
+
+const getAllWishItems = asyncHandler(async (req, res, next) => {
+    const user = await User.findById(req.user.id);
+    res.status(200).json({
+        success: true,
+        wishItems: user.wishlist,
+    });
+})
+
+
+const deleteProductInWishlist = asyncHandler(async (req, res, next) => {
+    try{
+        const wishItemId = req.params.id;
+        const userId = req.user.id;
+        const user = await User.findOneAndUpdate({_id: userId}, {$pull: {wishlist: { _id: wishItemId }}}, {new:true});
+    
+        res.status(201).json({
+            success: true,
+            wishItems: user.wishlist, 
+        });
+    } catch(err) {
+        return next(new CustomErrorClass(500, err.message));
+    }
+})
+
+
+
+
+
 // export
 module.exports = {
     createNewProduct,
     getAllProducts,
     createReview,
+
+    addProductToCart,
+    updateProductInCart,
+    getAllCartItems,
+    deleteProductInCart,
+
+    addProductToWishlist,
+    getAllWishItems,
+    deleteProductInWishlist,
 }

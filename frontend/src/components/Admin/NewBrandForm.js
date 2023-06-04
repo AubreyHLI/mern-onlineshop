@@ -18,7 +18,6 @@ const NewBrandForm = ({setOpenAddForm}) => {
 			toast.success("Brand created successfully!");
 			setOpenAddForm(false);
 			dispatch(clearSuccess());
-			dispatch(fetchAllBrands());
 		}
 		if (isError) {
 			toast.error(error.response.data.message);

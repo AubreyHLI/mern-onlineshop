@@ -33,7 +33,6 @@ const NewEventForm = ({setOpenAddForm}) => {
 			toast.success("Event created successfully!");
 			setOpenAddForm(false);
 			dispatch(clearSuccess());
-			dispatch(fetchAllEvents());
 		}
 		if (isError) {
 			toast.error(error);
@@ -99,7 +98,7 @@ const NewEventForm = ({setOpenAddForm}) => {
 			{/* create event form */}
 			<form onSubmit={handleSubmit}>
 				<br/>
-				<div>
+				<div className="w-full relative">
 					<label className="pb-2">
 						Event Product <span className="text-red-500">*</span>
 					</label>

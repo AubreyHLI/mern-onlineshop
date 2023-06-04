@@ -22,6 +22,21 @@ const UserSchema = new Schema({
     address: {
         type: String,
     },
+    shoppingCart: [
+        {
+            product: { type: Object, },
+            productId: { type: String },
+            qty: { type: Number, },
+            createdAt:{ type: Date,  default: Date.now(), }
+        },
+    ],
+    wishlist: [
+        {
+            product: { type: Object, },
+            productId: { type: String, },
+            createdAt:{ type: Date,  default: Date.now(), }
+        },
+    ],
     createdAt: {
         type: Date,
         default: Date.now(),

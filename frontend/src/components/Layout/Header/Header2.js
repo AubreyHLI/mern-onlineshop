@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { categoriesData, productData } from "../../../static/data";
+import { categoriesData } from "../../../static/data";
 import { AiOutlineHeart, AiOutlineSearch, AiOutlineShoppingCart } from "react-icons/ai";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { BiMenuAltLeft } from "react-icons/bi";
@@ -14,6 +14,8 @@ import Navbar from "./Navbar";
 import ShoppingCart from "../../ShoppingCart/ShoppingCart";
 import Wishlist from "../../Wishlist.js/Wishlist";
 import { selectAllProducts } from "../../../redux/features/productsSlice";
+import { selectAllCartItems } from "../../../redux/features/shoppingcartSlice";
+import { selectAllWishItems } from "../../../redux/features/wishlistSlice";
 
 
 const Header = ({ activeHeading }) => {
@@ -26,8 +28,9 @@ const Header = ({ activeHeading }) => {
 
     const user = useSelector((state) => state.user.user);
     const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
-    // const allProducts = useSelector(state => state.products.allProducts);
     const allProducts = useSelector(selectAllProducts);
+    const cartItems = useSelector(selectAllCartItems);
+    const wishlist = useSelector(selectAllWishItems);
 
     const dispatch = useDispatch();    
 
@@ -85,7 +88,7 @@ const Header = ({ activeHeading }) => {
                     <div className="relative mr-[20px]" onClick={() => setOpenCart(true)}>
                         <AiOutlineShoppingCart size={30} />
                         <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px]  leading-tight text-center">
-                            0
+                            {cartItems?.length}
                         </span>
                     </div>
                 </div>
@@ -125,7 +128,7 @@ const Header = ({ activeHeading }) => {
                         <div className="relative cursor-pointer mr-[15px]" onClick={() => setOpenWishlist(true)}>
                             <AiOutlineHeart size={30} color="rgb(255 255 255 / 83%)" />
                             <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
-                                0
+                                {wishlist?.length}
                             </span>
                         </div>
                     </div>
@@ -134,7 +137,7 @@ const Header = ({ activeHeading }) => {
                         <div className="relative cursor-pointer mr-[15px]" onClick={() => setOpenCart(true)}>
                             <AiOutlineShoppingCart size={30} color="rgb(255 255 255 / 83%)"/>
                             <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
-                                0
+                                {cartItems?.length}
                             </span>
                         </div>
                     </div>

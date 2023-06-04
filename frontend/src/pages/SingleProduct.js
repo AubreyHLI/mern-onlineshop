@@ -15,7 +15,7 @@ const SingleProduct = () => {
     const allProducts = useSelector(selectAllProducts);
 
     useEffect(() => {
-        const p = allProducts.find(item => item._id === id);
+        const p = allProducts?.find(item => item._id === id);
         setProduct(p);
         window.scrollTo(0,0);
     }, [id])

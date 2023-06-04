@@ -29,7 +29,6 @@ const NewProductForm = ({setOpenAddForm}) => {
 			toast.success("Product created successfully!");
 			setOpenAddForm(false);
 			dispatch(clearSuccess());
-			dispatch(fetchAllProducts());
 		}
 		if (isError) {
 			toast.error(error);

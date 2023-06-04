@@ -57,7 +57,6 @@ export const loginAdmin = createAsyncThunk('user/loginAdmin', async (inputData, 
 export const fetchAllUsers = createAsyncThunk('user/fetchAllUsers', async (_, {rejectWithValue}) => {
     try{
         const response = await axios.get(`${SERVER_URL}/users/getAllUsers`, { withCredentials: true });
-        console.log(response);
         return response.data;
     } catch(err) {
         if (!err.response) {
@@ -156,7 +155,6 @@ export const userSlice = createSlice({
             state.loading = 'finish';
             state.error = action.payload.message;
         })
-        
     }
 });
 

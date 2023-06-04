@@ -1,18 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { AiFillHeart, AiOutlineHeart, AiOutlineMessage, AiOutlineShoppingCart } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { BACKEND_URL } from "../../static/server";
+import { useDispatch, useSelector } from "react-redux";
+import { addProductToCart } from "../../redux/features/shoppingcartSlice";
+import { addProductToWishlist, selectAllWishItems } from "../../redux/features/wishlistSlice";
 
 
 const ProductDetailsPreview = ({ setOpen, data }) => {
 	const [count, setCount] = useState(1);
 	const [click, setClick] = useState(false);
-	const [select, setSelect] = useState(false);
+
+	const isAuthenticated = useSelector(state => state.user.isAuthenticated);
+   	const wishlist = useSelector(selectAllWishItems);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (wishlist && wishlist.find((i) => i.productId === data?._id)) {
+            setClick(true);
+        } else {
+            setClick(false);
+        }
+    }, [wishlist]);
 
 	const incrementCount = () => {
-		setCount(count + 1);
+		if(count < data.stock) {
+			setCount(count + 1);
+		}
 	};
 
 	const decrementCount = () => {
@@ -21,30 +38,50 @@ const ProductDetailsPreview = ({ setOpen, data }) => {
 		}
 	};
 
-	// const addToCartHandler = (id) => {
-	// 	const isItemExists = cart && cart.find((i) => i._id === id);
-	// 	if (isItemExists) {
-	// 	toast.error("Item already in cart!");
-	// 	} else {
-	// 	if (data.stock < count) {
-	// 		toast.error("Product stock limited!");
-	// 	} else {
-	// 		const cartData = { ...data, qty: count };
-	// 		dispatch(addTocart(cartData));
-	// 		toast.success("Item added to cart successfully!");
-	// 	}
-	// 	}
-	// };
-
-	const removeFromWishlistHandler = (data) => {
-		setClick(!click);
-		// dispatch(removeFromWishlist(data));
-	};
+	const addToCartHandler = () => {
+        if(isAuthenticated) {
+            if (data.stock < 1) {
+                toast.error("Product stock limited!");
+            } else {
+                dispatch(addProductToCart({
+                    product: {
+                        _id: data._id,
+                        name: data.name,
+                        image: data.images[0],
+                        stock: data.stock,
+                        originalPrice: data.originalPrice,
+                        discountPrice: data.discountPrice,
+                    },
+                    qty: count,
+                    repeat: true,
+                }))
+                .then(resp => toast.success(resp.payload.message, {autoClose: 1500}));
+            }
+        } else {
+            navigate('/login');
+        }
+    };
 
 	const addToWishlistHandler = (data) => {
-		setClick(!click);
-		// dispatch(addToWishlist(data));
-	};
+        if(isAuthenticated) {
+            setClick(!click);
+            dispatch(addProductToWishlist({
+                productId: data._id,
+                product: {
+                    _id: data._id,
+                    name: data.name,
+                    image: data.images[0],
+                    stock: data.stock,
+                    originalPrice: data.originalPrice,
+                    discountPrice: data.discountPrice,
+                }
+            }));
+        } else {
+            navigate('/login');
+        }
+    };
+
+	
 
 	return (
 		<div className="bg-[#fff]">
@@ -98,14 +135,15 @@ const ProductDetailsPreview = ({ setOpen, data }) => {
 									? <AiFillHeart
 										size={30}
 										className="cursor-pointer"
-										onClick={() => removeFromWishlistHandler(data)}
-										color={click ? "red" : "#333"}
+										onClick={() => addToWishlistHandler(data)}
+										color="#78be20"
 										title="Remove from wishlist"
 									/>
 									: <AiOutlineHeart
 										size={30}
 										className="cursor-pointer"
 										onClick={() => addToWishlistHandler(data)}
+										color="#333"
 										title="Add to wishlist"
 									/>
 									}
@@ -113,7 +151,7 @@ const ProductDetailsPreview = ({ setOpen, data }) => {
 							</div>
 
 							<div className="normalFlex justify-between mt-5 800px:mr-3">
-								<div className='button rounded-[4px] h-11 flex items-center !w-[120px] 400px:!w-[200px]'>
+								<div className='button rounded-[4px] h-11 flex items-center !w-[120px] 400px:!w-[200px]' onClick={() => addToCartHandler()}>
 									<span className="flex items-center">
 										Add to cart <AiOutlineShoppingCart size={20} className="ml-1" />
 									</span>

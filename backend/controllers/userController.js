@@ -44,7 +44,6 @@ const createJwtToken = (userPayload) => {
 
 // Validate jwt token
 const validateToken = asyncHandler( async (request, response, next) => {
-    console.log('requestBody:',request.body);
     const { activation_token } = request.body;
     const userPayload = jwt.verify(activation_token, process.env.JWT_URL_SECRET_KEY);
     if(!userPayload) {
@@ -83,7 +82,6 @@ const loginUser = asyncHandler( async (request, response, next) => {
 const getUserInCookie = asyncHandler( async(request, response, next) => {
     try{
         const cookieUser = await User.findById(request.user.id);
-        console.log(cookieUser);
         if(!cookieUser) {
             return next(new CustomErrorClass(400, "User doesn't exist!"));
         }
@@ -116,7 +114,7 @@ const logoutUser = asyncHandler( async(request, response, next) => {
 const loginAdmin = asyncHandler( async (request, response, next) => {
     const { email, password } = request.body;
     if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PW) {
-        response.status(200).json({
+        response.status(201).json({
             success: true,
             isAdmin: true
         })
@@ -134,7 +132,7 @@ const getAllUsers =  asyncHandler( async (req, res, next) => {
         const users = await User.find().sort({
             createdAt: -1,
         });
-        res.status(201).json({
+        res.status(200).json({
             success: true,
             users,
         });
@@ -150,7 +148,6 @@ const deleteUserById = asyncHandler(async (req, res, next) => {
         if (!user) {
             return next(new CustomErrorClass(400, "User is not available with this id"));
         }
-
         await User.findByIdAndDelete(req.params.id);
 
         res.status(201).json({
@@ -174,4 +171,5 @@ module.exports = {
     loginAdmin,
     getAllUsers,
     deleteUserById,
+
 }

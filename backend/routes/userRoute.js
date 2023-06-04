@@ -10,7 +10,7 @@ const {
     logoutUser,
     loginAdmin,
     getAllUsers,
-    deleteUserById,
+    deleteUserById,    
 } = require('../controllers/userController');
 
 // middlewares
@@ -25,5 +25,6 @@ router.get('/logout', logoutUser);
 router.post('/loginAdmin', loginAdmin);
 router.get('/getAllUsers', getAllUsers);
 router.delete('/deleteUser/:id', deleteUserById);
+
 
 module.exports = router;

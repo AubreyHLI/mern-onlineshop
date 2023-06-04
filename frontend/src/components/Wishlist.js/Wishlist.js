@@ -2,30 +2,32 @@ import React from 'react';
 import { RxCross1 } from "react-icons/rx";
 import { IoBagHandleOutline } from "react-icons/io5";
 import WishlistItem from './WishlistItem';
-
-const wishlistData = [
-    {
-        name: "Iphone 14 pro max 256gb ssd and 8gb ram sliver color",
-        description: "test",
-        price: 888
-    },
-    {
-        name: "Iphone 14 pro max 256gb ssd and 8gb ram sliver color",
-        description: "test",
-        price: 888
-    },
-];
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteInWishlist, selectAllWishItems } from '../../redux/features/wishlistSlice';
+import { toast } from 'react-toastify';
+import { addProductToCart } from '../../redux/features/shoppingcartSlice';
 
 
 const Wishlist = ({setOpenWishlist}) => {
+    const wishlistData = useSelector(selectAllWishItems);
+    const dispatch = useDispatch();
 
-    const handleRemoveItem = () => {
-
+    const handleRemoveItem = (itemId) => {
+        dispatch(deleteInWishlist(itemId));
     }
 
-    const handleAddToCart = () => {
-
-    }
+    const handleAddToCart = (data) => {
+        if (data.stock < 1) {
+            toast.error("Product stock limited!");
+        } else {
+            dispatch(addProductToCart({
+                product: {...data},
+                qty: 1,
+                repeat: false,
+            }))
+            .then(resp => toast.success(resp.payload.message, {autoClose: 1500}));
+        }
+    };
 
     return (
     <div className="fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10">

@@ -16,9 +16,12 @@ const createNewEvent = asyncHandler( async (req, res, next) => {
 			const eventData = req.body;
 			eventData.product = product;
 			const event = await Event.create(eventData);
+			const events = await Event.find().sort({
+				createdAt: -1,
+			});
 			res.status(201).json({
 				success: true,
-				event,
+				events,
 			});
 		}
 	} catch (error) {

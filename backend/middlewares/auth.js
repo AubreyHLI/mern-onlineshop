@@ -12,7 +12,7 @@ const isAuthenticated = asyncHandler( async(request, response, next) => {
     }
     // else
     const decoded = jwt.verify(userToken, process.env.JWT_COOKIE_SECRET_KEY);
-    request.user = await User.findById(decoded.id);
+    request.user = await User.findById(decoded.id).select('-shoppingCart');
 
     next();
 });
