@@ -78,7 +78,7 @@
 }
 
 .input{
-    @apply w-full border p-1 rounded-[5px];
+    @apply w-full border p-1 rounded-[5px] border-[#cccccc];
 }
     
 .activeStatus{

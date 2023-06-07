@@ -18,7 +18,7 @@ const Home = () => {
 
   return (
     <>
-      {loading !== 'idle' && !isLoadingProducts &&
+      {!loading && !isLoadingProducts &&
         <div className='bg-gray-100'>
           <Header activeHeading={1} />
           <Banner />

@@ -19,9 +19,22 @@ const UserSchema = new Schema({
         minLength: [6, "Password should be greater than 6 characters"],
         select: false,// not return password field info when query(select) this user
     },
-    address: {
-        type: String,
+    phoneNumber: {
+        type: Number,
     },
+    addresses: [
+        {
+            recipient: { type: String,},
+            phoneNumber: { type: Number, },
+            country: { type: String, },
+            state: { type: String, },
+            city: { type: String, },
+            address1: { type: String, },
+            address2: { type: String, },
+            zipCode:{ type: String, },
+            addressType: { type: String, },
+          }
+    ],
     shoppingCart: [
         {
             product: { type: Object, },

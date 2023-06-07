@@ -8,6 +8,10 @@ const {
     loginUser,
     getUserInCookie,
     logoutUser,
+    updateUserInfo,
+    updateUserAddresses,
+    deleteAddress,
+    
     loginAdmin,
     getAllUsers,
     deleteUserById,    
@@ -21,7 +25,12 @@ router.post('/signup', createUser);
 router.post('/activation', validateToken);
 router.post('/login', loginUser);
 router.get('/getuser', isAuthenticated, getUserInCookie);
-router.get('/logout', logoutUser);
+
+router.get('/logout', isAuthenticated, logoutUser);
+router.patch('/updateInfo', isAuthenticated, updateUserInfo);
+router.patch('/updateAddresses', isAuthenticated, updateUserAddresses);
+router.delete('/deleteAddress/:id', isAuthenticated, deleteAddress);
+
 router.post('/loginAdmin', loginAdmin);
 router.get('/getAllUsers', getAllUsers);
 router.delete('/deleteUser/:id', deleteUserById);

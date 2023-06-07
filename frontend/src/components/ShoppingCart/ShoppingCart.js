@@ -8,7 +8,6 @@ import { fetchCartItems, updateProductInCart, deleteProductInCart, selectAllCart
 
 
 const ShoppingCart = ({setOpenCart}) => {
-    const isLoadingItems = useSelector(getLoadingItems);
     const cartItems = useSelector(selectAllCartItems);
     const dispatch = useDispatch();
 

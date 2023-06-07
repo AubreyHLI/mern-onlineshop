@@ -1,67 +1,75 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { CgProfile } from "react-icons/cg";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { FaUserCircle } from "react-icons/fa";
+import { CiEdit } from "react-icons/ci";
+import { clearSuccess, clearError, updateUserInfo } from "../../redux/features/userSlice";
+import { toast } from "react-toastify";
 
 const ProfileContent = ({ active }) => {
 	const user = useSelector(state => state.user.user);
 	const [name, setName] = useState(user?.name);
 	const [email, setEmail] = useState(user?.email);
 	const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber);
-	const [zipCode, setZipCode] = useState(user?.zipCode);
-	const [address1, setAddress1] = useState(user?.address1);
-	const [address2, setAddress2] = useState(user?.address2);
-	
+	const [isEditName, setIsEditName] = useState(false);
+	const [isEditEmail, setIsEditEmail] = useState(false);
+	const [isEditPhone, setIsEditPhone] = useState(false);
 
+	const {isSuccess, isError, error} = useSelector(state => state.user);
+	const dispatch = useDispatch();
+	
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
+		dispatch(updateUserInfo({
+			name,
+			email,
+			phoneNumber,
+		}));
+		if(isSuccess) {
+			toast.success("Account infomation updated successfully!", {autoClose: 1000});
+			dispatch(clearSuccess());
+		} 
+		if(isError) {
+			toast.error(error, {autoClose: 2000});
+			dispatch(clearError());
+		}
 	}
 
 	return (
 	<>
 		<div className="flex justify-center w-full pb-10 pr-5">
-			<CgProfile size={80} color='rgb(120 113 108)'/>
+			<FaUserCircle size={80} color='rgb(120 113 108)'/>
 		</div>
 		
 		<div className="w-full">
 			<form onSubmit={handleSubmit} aria-required={true}>			
-				<div className="w-full 800px:flex block pb-3">
-					<div className="w-[100%] 800px:w-[50%]">
+				<div className="w-full max-w-[600px] flex flex-col gap-6 mx-auto">
+					<div className="w-full pr-3">
 						<label className="block pb-2">Full Name</label>
-						<input type="text" className='input !w-[95%] mb-4 800px:mb-0' required value={name} onChange={(e) => setName(e.target.value)} />
+						<div className="normalFlex gap-2">
+							<input type="text" className='input' required value={name} onChange={(e) => setName(e.target.value)} disabled={!isEditName} />
+							<CiEdit size={26} className="cursor-pointer" onClick={() => setIsEditName(prev => !prev)}/>
+						</div>
 					</div>
-					<div className="w-[100%] 800px:w-[50%]">
+					<div className="w-full pr-3">
 						<label className="block pb-2">Email Address</label>
-						<input type="text" className='input !w-[95%] mb-4 800px:mb-0' required value={email} onChange={(e) => setEmail(e.target.value)} />
+						<div className="normalFlex gap-2">
+							<input type="email" className='input' required value={email} onChange={(e) => setEmail(e.target.value)} disabled={!isEditEmail} />
+							<CiEdit size={26} className="cursor-pointer" onClick={() => setIsEditEmail(prev => !prev)}/>
+						</div>
 					</div>
-				</div>
-
-				<div className="w-full 800px:flex block pb-3">
-					<div className="w-[100%] 800px:w-[50%]">
+					<div className="w-full pr-3">
 						<label className="block pb-2">Phone Number</label>
-						<input type="tel" className='input !w-[95%] mb-4 800px:mb-0' required value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}/>
+						<div className="normalFlex gap-2">
+							<input type="tel" className='input' required value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} disabled={!isEditPhone} />
+							<CiEdit size={26} className="cursor-pointer" onClick={() => setIsEditPhone(prev => !prev)}/>
+						</div>
 					</div> 
-
-					<div className="w-[100%] 800px:w-[50%]">
-						<label className="block pb-2">Zip Code</label>
-						<input type="text" className='input !w-[95%] mb-4 800px:mb-0' required value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
+					<div className="w-full mt-8 text-right">
+						<button type="submit"  disabled={!isEditName && !isEditEmail && !isEditPhone}
+							className="bg-[green] text-[white] w-[200px] h-[40px] border text-center rounded-[3px] disabled:bg-[#cccccc]">
+							Update
+						</button>
 					</div>
-				</div>
-
-				<div className="w-full 800px:flex block pb-3">
-					<div className="w-[100%] 800px:w-[50%]">
-						<label className="block pb-2">Address 1</label>
-						<input type="text" className='input !w-[95%] mb-4 800px:mb-0' required value={address1} onChange={(e) => setAddress1(e.target.value)}/>
-					</div> 
-
-					<div className="w-[100%] 800px:w-[50%]">
-						<label className="block pb-2">Address 2</label>
-						<input type="text" className='input !w-[95%] mb-4 800px:mb-0' required value={address2} onChange={(e) => setAddress2(e.target.value)}/>
-					</div> 
-				</div>
-
-				<div className="width-full mt-8 text-right">
-					<input type="submit" value="Update" required className={`w-[250px] h-[40px] border border-[#3a24db] text-center text-[#3a24db] rounded-[3px] cursor-pointer`} />
 				</div>
 			</form>
 		</div>

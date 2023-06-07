@@ -91,12 +91,12 @@ const getUserInCookie = asyncHandler( async(request, response, next) => {
             user: cookieUser
         })
     } catch (err) {
-        return next(new ErrorHandler(err.message, 500));
+        return next(new CustomErrorClass(500, err.message));
     }
 });
 
 
-// Logout
+// Profile actions
 const logoutUser = asyncHandler( async(request, response, next) => {
     try {
         response.clearCookie("userToken");
@@ -105,12 +105,101 @@ const logoutUser = asyncHandler( async(request, response, next) => {
             message: "Log out successful!",
         });
     } catch (err) {
-        return next(new ErrorHandler(err.message, 500));
+        return next(new CustomErrorClass(500, err.message));
     }
 })
 
 
-// loginAdmin
+const updateUserInfo = asyncHandler( async(req, res, next) => {
+    const { name, phoneNumber, email } = req.body;
+    const user = await User.findOne({_id: req.user.id});
+    if (!user) {
+        return next(new CustomErrorClass(400, "User not found"));
+    }
+    const emailUsed = await User.findOne({email});
+    if(emailUsed && emailUsed._id.toString() !== user._id.toString()) {
+        return next(new CustomErrorClass(400, "Email was used, please change one."));
+    }
+
+    user.name = name;
+    user.email = email;
+    user.phoneNumber = phoneNumber;
+    await user.save();
+
+    res.status(201).json({
+        success: true,
+        user,
+    });
+})
+  
+  
+// update user addresses
+const updateUserAddresses = asyncHandler(async (req, res, next) => {
+    const user = await User.findById(req.user.id);
+    const existsAddress = user.addresses.find((address) => address._id === req.body._id);
+
+    if (existsAddress) {
+        Object.assign(existsAddress, req.body);
+    } else {
+        // add the new address to the array
+        user.addresses.push(req.body);
+    }
+    await user.save();
+
+    res.status(201).json({
+        success: true,
+        user,
+    });
+})
+  
+// delete user address
+const deleteAddress = asyncHandler(async (req, res, next) => {
+    const userId = req.user._id;
+    const addressId = req.params.id;
+
+    console.log(addressId);
+
+    const user = await User.findOneAndUpdate({ _id: userId, }, { $pull: { addresses: { _id: addressId }}}, {new:true});
+
+    res.status(200).json({ success: true, user });
+})
+  
+// update user password
+//   router.put( "/update-user-password", isAuthenticated, catchAsyncErrors(async (req, res, next) => {
+//       try {
+//         const user = await User.findById(req.user.id).select("+password");
+  
+//         const isPasswordMatched = await user.comparePassword(
+//           req.body.oldPassword
+//         );
+  
+//         if (!isPasswordMatched) {
+//           return next(new ErrorHandler("Old password is incorrect!", 400));
+//         }
+  
+//         if (req.body.newPassword !== req.body.confirmPassword) {
+//           return next(
+//             new ErrorHandler("Password doesn't matched with each other!", 400)
+//           );
+//         }
+//         user.password = req.body.newPassword;
+  
+//         await user.save();
+  
+//         res.status(200).json({
+//           success: true,
+//           message: "Password updated successfully!",
+//         });
+//       } catch (error) {
+//         return next(new ErrorHandler(error.message, 500));
+//       }
+//     })
+//   );
+
+
+
+
+// Admin
 const loginAdmin = asyncHandler( async (request, response, next) => {
     const { email, password } = request.body;
     if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PW) {
@@ -126,7 +215,6 @@ const loginAdmin = asyncHandler( async (request, response, next) => {
 });
 
 
-// all users --- for admin
 const getAllUsers =  asyncHandler( async (req, res, next) => {
     try {
         const users = await User.find().sort({
@@ -141,7 +229,7 @@ const getAllUsers =  asyncHandler( async (req, res, next) => {
     }
 })
   
-// delete users --- admin
+
 const deleteUserById = asyncHandler(async (req, res, next) => {
     try {
         const user = await User.findById(req.params.id);
@@ -167,7 +255,12 @@ module.exports = {
     validateToken,
     loginUser,
     getUserInCookie,
+
     logoutUser,
+    updateUserInfo,
+    updateUserAddresses,
+    deleteAddress,
+
     loginAdmin,
     getAllUsers,
     deleteUserById,
