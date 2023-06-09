@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from "react-redux";
-import { clearError, loginUser } from "../redux/features/userSlice";
+import { clearError, clearSuccess, fetchUser, loginUser } from "../redux/features/userSlice";
+import PwInput from "../components/atmos/PwInput";
+import CustomInput from "../components/atmos/CustomInput";
+import { fetchCartItems } from "../redux/features/shoppingcartSlice";
+import { fetchWishlist } from "../redux/features/wishlistSlice";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -17,6 +20,11 @@ const Login = () => {
     useEffect(() => {
         if(isSuccess) {
             toast.success(`Login success! Welcome back ${user?.name}!`);
+            dispatch(clearSuccess());
+            dispatch(fetchUser());
+            dispatch(fetchCartItems());
+		    dispatch(fetchWishlist());
+           
             navigate('/');
         }
         if(isError) {
@@ -27,49 +35,44 @@ const Login = () => {
   
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(loginUser({email: email, password: password}))
+        dispatch(loginUser({email: email, password: password}));
     };
   
     return (
-    <div className="min-h-100 bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                Login to your account
-            </h2>
-        </div>
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-            <form className="space-y-6 bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10" onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                        Email
-                    </label>
-                    <input type="email" name="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} 
-                        className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"/>
-                </div>
-                <div className="relative">
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                        Password
-                    </label>
-                    <input type={visible ? "text" : "password"} name="password" autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)}
-                        className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"/>
-                    { visible 
-                    ? <AiOutlineEye className="absolute right-2 top-8 cursor-pointer" size={25} onClick={() => setVisible(false)}/>
-                    : <AiOutlineEyeInvisible className="absolute right-2 top-8 cursor-pointer" size={25} onClick={() => setVisible(true)}/>
-                    }
-                </div>
-                <div className="normalFlex justify-between">
-                    <span className="text-sm">
-                        <a href=".forgot-password" className="font-medium text-blue-600 hover:text-blue-500">Forgot password?</a>
-                    </span>
-                </div>
-                <button type="submit" className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"> 
-                    Login
-                </button>
-                <div className="normalFlex w-full">
-                    <h4>Not have any account?</h4>
-                    <Link to="/signup" className="text-blue-600 pl-2">Sign up</Link>
-                </div>
-            </form>
+    <div className='w-full h-screen bg-gray-50'>
+        <div className="min-h-[300px] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+            <div className="sm:mx-auto sm:w-full sm:max-w-md">
+                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                    Login to your account
+                </h2>
+            </div>
+            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+                <form className="space-y-6 bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10" onSubmit={handleSubmit}>
+                    <CustomInput 
+                        label='Email' type='email' id='email' name='email'
+                        value={email} setValue={setEmail}
+                    />
+                    <PwInput 
+                        label='Password' id='password' name='password'
+                        password={password} 
+                        setPassword={setPassword}  
+                        visible={visible} 
+                        setVisible={setVisible} 
+                    />
+                    <div className="normalFlex justify-between">
+                        <span className="text-sm">
+                            <a href=".forgot-password" className="font-medium text-blue-600 hover:text-blue-500">Forgot password?</a>
+                        </span>
+                    </div>
+                    <button type="submit" className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"> 
+                        Login
+                    </button>
+                    <div className="normalFlex w-full">
+                        <h4>Not have any account?</h4>
+                        <Link to="/signup" className="text-blue-600 pl-2">Sign up</Link>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
     );

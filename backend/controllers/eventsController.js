@@ -3,13 +3,13 @@ const Brand = require("../models/brandModel");
 const Product = require("../models/productModel");
 const asyncHandler = require('../middlewares/asyncHandler');
 const CustomErrorClass = require('../utils/CustomErrorClass');
-const fs = require("fs");
 
 // create event
 const createNewEvent = asyncHandler( async (req, res, next) => {
 	try {
 		const productId = req.body.productId;
 		const product = await Product.findById(productId);
+		console.log('productId:',productId);
 		if (!product) {
 			return next(new CustomErrorClass(400, "Product Id is invalid!"));
 		} else {

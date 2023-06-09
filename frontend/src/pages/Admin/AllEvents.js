@@ -28,7 +28,7 @@ const AllEvents = () => {
     }
     
     const gridColumns = [
-        { field: "id", headerName: "Event Id", minWidth: 100, flex: 0.1 },
+        { field: "id", headerName: "Event ID", minWidth: 100, flex: 0.1 },
         { field: "product_name",  headerName: "Product Name",  minWidth: 120,  flex: 0.2,},
         { field: "original_price",  headerName: "Original Price",  minWidth: 80,  flex: 0.1,},
         { field: "discount_price",  headerName: "Discount Price",  minWidth: 80,  flex: 0.1,},

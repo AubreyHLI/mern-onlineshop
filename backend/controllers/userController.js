@@ -137,7 +137,6 @@ const updateUserInfo = asyncHandler( async(req, res, next) => {
 const updateUserAddresses = asyncHandler(async (req, res, next) => {
     const user = await User.findById(req.user.id);
     const existsAddress = user.addresses.find((address) => address._id === req.body._id);
-
     if (existsAddress) {
         Object.assign(existsAddress, req.body);
     } else {
@@ -156,47 +155,33 @@ const updateUserAddresses = asyncHandler(async (req, res, next) => {
 const deleteAddress = asyncHandler(async (req, res, next) => {
     const userId = req.user._id;
     const addressId = req.params.id;
-
-    console.log(addressId);
-
     const user = await User.findOneAndUpdate({ _id: userId, }, { $pull: { addresses: { _id: addressId }}}, {new:true});
 
-    res.status(200).json({ success: true, user });
+    res.status(200).json({ 
+        success: true, 
+        message: 'Address was deleted',
+        user });
 })
   
 // update user password
-//   router.put( "/update-user-password", isAuthenticated, catchAsyncErrors(async (req, res, next) => {
-//       try {
-//         const user = await User.findById(req.user.id).select("+password");
-  
-//         const isPasswordMatched = await user.comparePassword(
-//           req.body.oldPassword
-//         );
-  
-//         if (!isPasswordMatched) {
-//           return next(new ErrorHandler("Old password is incorrect!", 400));
-//         }
-  
-//         if (req.body.newPassword !== req.body.confirmPassword) {
-//           return next(
-//             new ErrorHandler("Password doesn't matched with each other!", 400)
-//           );
-//         }
-//         user.password = req.body.newPassword;
-  
-//         await user.save();
-  
-//         res.status(200).json({
-//           success: true,
-//           message: "Password updated successfully!",
-//         });
-//       } catch (error) {
-//         return next(new ErrorHandler(error.message, 500));
-//       }
-//     })
-//   );
+const updateUserPw = asyncHandler(async (req, res, next) => {
+    const user = await User.findById(req.user.id).select("+password");
+    const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
+    if (!isPasswordMatched) {
+        return next(new CustomErrorClass(400, "Old password is incorrect!"));
+    }
+    if (req.body.newPassword !== req.body.confirmPassword) {
+        return next(new CustomErrorClass(400, "Confirmed Password doesn't matched!"));
+    }
 
+    user.password = req.body.newPassword;
+    await user.save();
 
+    res.status(200).json({
+        success: true,
+        message: "Password updated successfully!",
+    });
+})
 
 
 // Admin
@@ -260,9 +245,9 @@ module.exports = {
     updateUserInfo,
     updateUserAddresses,
     deleteAddress,
+    updateUserPw,
 
     loginAdmin,
     getAllUsers,
     deleteUserById,
-
 }

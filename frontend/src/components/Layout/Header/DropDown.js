@@ -5,10 +5,6 @@ import { useNavigate } from 'react-router-dom'
 const DropDown = ({categoriesData, setDropDown}) => {
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		
-	}, [])
-
 	const handleClickDropDownItem = (item) => {
 		navigate(`/products?category=${item.title}`);
 		setDropDown(false);

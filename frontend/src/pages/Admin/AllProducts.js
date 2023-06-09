@@ -36,7 +36,7 @@ const AllProducts = () => {
     };
 
     const gridColumns = [
-        { field: "id", headerName: "Product Id", minWidth: 120, flex: 0.2 },
+        { field: "id", headerName: "Product ID", minWidth: 120, flex: 0.2 },
         { field: "name", headerName: "Name", minWidth: 120, flex: 0.2, },
         { field: "image", headerName: "Image", minWidth: 80, flex: 0.1, sortable: false, renderCell: (params) => 
             <img src={`${BACKEND_URL}${params.value}`}  alt="" className="w-[40px] h-[40px]" />

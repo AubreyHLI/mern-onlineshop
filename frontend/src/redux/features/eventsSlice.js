@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, createSelector } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { SERVER_URL } from "../../static/server";
 
@@ -21,8 +21,8 @@ export const createEvent = createAsyncThunk('events/createEvent', async (newForm
         const response = await axios.post(`${SERVER_URL}/events/createEvent`, 
             newForm, 
             { 
-                headers: { "Content-Type": "multipart/form-data" },
-                withCredentials: true 
+                headers: { "Access-Control-Allow-Credentials": true },
+                withCredentials: true,
             }
         );
         return response.data;

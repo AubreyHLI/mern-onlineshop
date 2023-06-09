@@ -73,13 +73,13 @@ const NewEventForm = ({setOpenAddForm}) => {
 	
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const newForm = new FormData();
-		newForm.append("productId", selectedProductId);
-		newForm.append("description", description);
-		newForm.append("discountPrice", discountPrice);
-		newForm.append("start_Date", startDate.toISOString());
-		newForm.append("finish_Date", endDate.toISOString());
-		dispatch(createEvent(newForm));
+		dispatch(createEvent({
+			productId: selectedProductId,
+			description: description,
+			discountPrice: discountPrice,
+			start_Date: startDate.toISOString(),
+			finish_Date: endDate.toISOString(),
+		}));
 	};
 	
 

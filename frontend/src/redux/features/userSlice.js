@@ -67,7 +67,17 @@ export const deleteUserAddress = createAsyncThunk('user/deleteAddress', async (i
     }
 });
 
-
+export const updateUserPW = createAsyncThunk('user/updatePassword', async (pwInfo, {rejectWithValue}) => {
+    try{
+        const response = await axios.patch(`${SERVER_URL}/users/updatePassword`, pwInfo, { withCredentials: true });     
+        return response.data;
+    } catch(err) {
+        if (!err.response) {
+            throw err;
+        }
+        return rejectWithValue(err.response.data);
+    }
+});
 
 
 export const logoutUser = createAsyncThunk('user/logoutUser', async (_, {rejectWithValue}) => {
@@ -119,7 +129,9 @@ export const userSlice = createSlice({
         loading: true,
         isAdmin: false,
         isSuccess: false,
-        isError: false
+        success: null,
+        isError: false,
+        error: null,
     },
     reducers: {
         clearError: (state, action) => {
@@ -128,6 +140,7 @@ export const userSlice = createSlice({
         },
         clearSuccess: (state, action) => {
             state.isSuccess = false;
+            state.success = null;
         },
     },
     extraReducers(builder) {
@@ -181,12 +194,22 @@ export const userSlice = createSlice({
         })
         .addCase(deleteUserAddress.fulfilled, (state, action) => {
             state.isSuccess = true;
+            state.success = action.payload.message;
             state.user = action.payload.user;
         })
         .addCase(deleteUserAddress.rejected, (state, action) => {
             state.isError = true;
             state.error = action.payload.message;
         })
+        .addCase(updateUserPW.fulfilled, (state, action) => {
+            state.isSuccess = true;
+            state.success = action.payload.message;
+        })
+        .addCase(updateUserPW.rejected, (state, action) => {
+            state.isError = true;
+            state.error = action.payload.message;
+        })
+
 
         .addCase(logoutUser.pending, (state) => {
             state.loading = true;

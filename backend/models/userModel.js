@@ -24,8 +24,6 @@ const UserSchema = new Schema({
     },
     addresses: [
         {
-            recipient: { type: String,},
-            phoneNumber: { type: Number, },
             country: { type: String, },
             state: { type: String, },
             city: { type: String, },

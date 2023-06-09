@@ -4,7 +4,7 @@ import { IoBagHandleOutline } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 import CartItem from './CartItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCartItems, updateProductInCart, deleteProductInCart, selectAllCartItems, getLoadingItems } from '../../redux/features/shoppingcartSlice';
+import { fetchCartItems, updateProductInCart, deleteProductInCart, selectAllCartItems } from '../../redux/features/shoppingcartSlice';
 
 
 const ShoppingCart = ({setOpenCart}) => {
@@ -22,6 +22,11 @@ const ShoppingCart = ({setOpenCart}) => {
     const handleRemoveItem = (itemId) => {
         dispatch(deleteProductInCart(itemId));
     }
+
+    const subTotalPrice = cartItems.reduce((total, item) => 
+        total + item.qty * item.product.discountPrice, 
+        0
+    );
 
     return (
     <div className="fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10">
@@ -58,7 +63,7 @@ const ShoppingCart = ({setOpenCart}) => {
                         <Link to="/checkout">
                             <div className={`h-[45px] flex items-center justify-center w-[100%] bg-[#e44343] rounded-[5px]`}>
                                 <h1 className="text-[#fff] text-[18px] font-[600]">
-                                    Checkout Now (RMB $1000)
+                                    {`Checkout Now (RMB $${subTotalPrice.toFixed(2)})`}
                                 </h1>
                             </div>
                         </Link>

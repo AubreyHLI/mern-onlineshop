@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useEffect } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Singup from './pages/Signup';
@@ -13,6 +13,7 @@ import { fetchAllProducts } from './redux/features/productsSlice';
 import { fetchAllBrands } from './redux/features/brandsSlice';
 import { fetchAllEvents } from './redux/features/eventsSlice';
 import { fetchCartItems } from './redux/features/shoppingcartSlice';
+import { fetchWishlist } from './redux/features/wishlistSlice';
 import Products from './pages/Products';
 import BestSelling from './pages/BestSelling';
 import FAQ from './pages/FAQ';
@@ -32,7 +33,11 @@ import AllBrands from './pages/Admin/AllBrands';
 import AllOrders from './pages/Admin/AllOrders';
 import AllEvents from './pages/Admin/AllEvents';
 import AllUsers from './pages/Admin/AllUsers';
-import { fetchWishlist } from './redux/features/wishlistSlice';
+import AllRefunds from './pages/Admin/AllRefunds';
+import AllCoupons from './pages/Admin/AllCoupons';
+import AdminMessages from './pages/Admin/AdminMessages';
+import AdminSettings from './pages/Admin/AdminSettings';
+import PaymentPage from './pages/PaymentPage';
 
 
 
@@ -68,6 +73,7 @@ const App = () => {
 				<Route path='/bestselling' element={<BestSelling />} />
 				<Route path='/products' element={<Products />} />
 				<Route path='/product/:id' element={<SingleProduct />} />
+				<Route path='/brand/:id' element={<BrandPage />} />
 				<Route path='/events' element={<Events />} />
 				<Route path='/faq' element={<FAQ />} />
 				<Route path='/profile' element={
@@ -80,7 +86,13 @@ const App = () => {
 						<CheckoutPage />
 					</ProtectedRoute>
 				}/>
-				<Route path='/brand/:id' element={<BrandPage />} />
+				<Route path='/payment' element={
+					<ProtectedRoute isAuthenticated={isAuthenticated}>
+						<PaymentPage />
+					</ProtectedRoute>
+				}/>
+				
+				
 
 				<Route path='/login' element={<Login />} />
 				<Route path='/signup' element={<Singup />} />
@@ -97,9 +109,11 @@ const App = () => {
 					<Route path='allOrders' element={<AllOrders />} />
 					<Route path='allEvents' element={<AllEvents />} />
 					<Route path='allUsers' element={<AllUsers />} />
+					<Route path='allRefunds' element={<AllRefunds />}/>
+					<Route path='allCoupons' element={<AllCoupons />}/>
+					<Route path='messages' element={<AdminMessages />}/>
+					<Route path='settings' element={<AdminSettings />}/>
 				</Route>
-
-				
 
 			</Routes>
 			<ToastContainer position='top-center' hideProgressBar={true}/>

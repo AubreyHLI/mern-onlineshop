@@ -1,12 +1,11 @@
 import React from "react";
-import { FiShoppingBag } from "react-icons/fi";
-import { GrWorkshop } from "react-icons/gr";
+import { FiPackage, FiShoppingBag } from "react-icons/fi";
+import { TbBrandSlack } from "react-icons/tb";
 import { RxDashboard } from "react-icons/rx";
-import { CiMoneyBill, CiSettings } from "react-icons/ci";
 import { Link } from "react-router-dom";
-import { HiOutlineUserGroup } from "react-icons/hi";
-import { BsHandbag } from "react-icons/bs";
+import { HiOutlineReceiptRefund, HiOutlineUserGroup } from "react-icons/hi";
 import { MdOutlineLocalOffer } from "react-icons/md";
+import { BiMoneyWithdraw } from "react-icons/bi";
 
 const sidebarData = [
     {
@@ -16,12 +15,12 @@ const sidebarData = [
     },
     {
         label: 'All Orders',
-        icon: <FiShoppingBag size={30} />,
+        icon: <FiPackage size={30} />,
         linkUrl: "/admin/allOrders",
     },
     {
         label: 'All Brands',
-        icon: <GrWorkshop size={30} />,
+        icon: <TbBrandSlack size={32} className="ml-[-2px]"/>,
         linkUrl: "/admin/allBrands",
     },
     {
@@ -31,7 +30,7 @@ const sidebarData = [
     },
     {
         label: 'All Products',
-        icon: <BsHandbag size={30} />,
+        icon: <FiShoppingBag size={30} />,
         linkUrl: "/admin/allProducts",
     },
     {
@@ -40,10 +39,15 @@ const sidebarData = [
         linkUrl: "/admin/allEvents",
     },
     {
-        label: ' Withdraw Request',
-        icon:  <CiMoneyBill size={30} />,
+        label: 'Withdraw Request',
+        icon:  <BiMoneyWithdraw size={30} />,
         linkUrl: "/admin/withdrawRequest",
     },
+    {
+        label: 'Refunds',
+        icon: <HiOutlineReceiptRefund size={30} />,
+        linkUrl: "/admin/allRefunds",
+    }
 ]
 
 
@@ -53,7 +57,7 @@ const AdminSidebar = ({ active, setActive }) => {
             {sidebarData && sidebarData.map((item, index) => {
                 return (
                     <div className="w-full flex items-center p-4 " onClick={() => setActive(index)} key={index}>
-                        <Link to={item.linkUrl} className={`w-full flex items-center ${active === index ? "text-[rgb(132,204,22)]" : "text-[#555]"}`}>
+                        <Link to={item.linkUrl} className={`w-full flex items-center ${active === index ? "text-[rgb(132,204,22)]" : "text-[#606060]"}`}>
                             {item.icon}
                             <h5 className='hidden 800px:block pl-2 text-[18px] font-[400]'>
                                 {item.label}

@@ -10,9 +10,7 @@ const {
     deleteEventsByProduct,
 } = require('../controllers/eventsController');
 
-const { upload } = require("../utils/multer");
-
-router.post("/createEvent", upload.single("file"), createNewEvent);
+router.post("/createEvent", createNewEvent);
 router.get("/getAllEvents", getAllEvents);
 router.get("/getBrandEvents/:id", getEventsByBrand);
 router.delete("/deleteEvent/:id", deleteEventById);

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RxCross1 } from "react-icons/rx";
 import { IoBagHandleOutline } from "react-icons/io5";
 import WishlistItem from './WishlistItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteInWishlist, selectAllWishItems } from '../../redux/features/wishlistSlice';
+import { deleteInWishlist, fetchWishlist, selectAllWishItems } from '../../redux/features/wishlistSlice';
 import { toast } from 'react-toastify';
 import { addProductToCart } from '../../redux/features/shoppingcartSlice';
 
@@ -11,6 +11,10 @@ import { addProductToCart } from '../../redux/features/shoppingcartSlice';
 const Wishlist = ({setOpenWishlist}) => {
     const wishlistData = useSelector(selectAllWishItems);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchWishlist());
+    }, [])
 
     const handleRemoveItem = (itemId) => {
         dispatch(deleteInWishlist(itemId));

@@ -1,7 +1,7 @@
 import React from 'react'
 import { AiOutlineGift } from 'react-icons/ai'
 import { BiMessageSquareDetail } from 'react-icons/bi'
-import { FiPackage, FiShoppingBag } from 'react-icons/fi'
+import { FiPackage, FiSettings, FiShoppingBag } from 'react-icons/fi'
 import { MdOutlineLocalOffer } from 'react-icons/md'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -9,7 +9,7 @@ import { BACKEND_URL } from '../../static/server'
 import logo from '../../assets/logo.png'
 import { RiAdminLine } from 'react-icons/ri'
 
-const AdminHeader = () => {
+const AdminHeader = ({active, setActive}) => {
     const {user} = useSelector((state) => state.user);
 
     return (
@@ -21,22 +21,22 @@ const AdminHeader = () => {
         </Link>
         
         <div className="flex items-center">
-            <div className="flex items-center mr-4">
-                <Link to="/dashboard/cupouns" className="800px:block hidden">
-                    <AiOutlineGift color="#555" size={30} className="mx-5 cursor-pointer" />
-                </Link>
-                <Link to="/dashboard-events" className="800px:block hidden">
-                    <MdOutlineLocalOffer color="#555" size={30} className="mx-5 cursor-pointer" />
-                </Link>
-                <Link to="/dashboard-products" className="800px:block hidden">
-                    <FiShoppingBag color="#555" size={30} className="mx-5 cursor-pointer" />
-                </Link>
-                <Link to="/dashboard-orders" className="800px:block hidden">
-                    <FiPackage color="#555" size={30} className="mx-5 cursor-pointer" />
-                </Link>
-                <Link to="/dashboard-messages" className="800px:block hidden">
-                    <BiMessageSquareDetail color="#555" size={30} className="mx-5 cursor-pointer" />
-                </Link>
+            <div className="hidden 500px:flex items-center mr-4 gap-5 800px:gap-8 800px:mr-8">
+                <div onClick={() => setActive(9)}>
+                    <Link to="/admin/allCoupons" className={`w-full flex items-center ${active === 9 ? "text-[rgb(132,204,22)]" : "text-[#606060]"}`}>
+                        <AiOutlineGift size={30} className="cursor-pointer" />
+                    </Link>
+                </div>
+                <div onClick={() => setActive(10)}>
+                    <Link to="/admin/messages" className={`w-full flex items-center ${active === 10 ? "text-[rgb(132,204,22)]": "text-[#606060]"}`}>
+                        <BiMessageSquareDetail size={30} className="cursor-pointer" />
+                    </Link>
+                </div>
+                <div onClick={() => setActive(11)} className={`w-full flex items-center ${active === 11 ? "text-[rgb(132,204,22)]" : "text-[#606060]"}`}>
+                    <Link to="/admin/settings">
+                        <FiSettings size={26} className="cursor-pointer" />
+                    </Link>
+                </div>
             </div>
             <span className='normalFlex rounded-full px-4 h-[30px] bg-lime-200'>
                 <RiAdminLine />

@@ -11,7 +11,7 @@ const {
     updateUserInfo,
     updateUserAddresses,
     deleteAddress,
-    
+    updateUserPw,
     loginAdmin,
     getAllUsers,
     deleteUserById,    
@@ -30,6 +30,7 @@ router.get('/logout', isAuthenticated, logoutUser);
 router.patch('/updateInfo', isAuthenticated, updateUserInfo);
 router.patch('/updateAddresses', isAuthenticated, updateUserAddresses);
 router.delete('/deleteAddress/:id', isAuthenticated, deleteAddress);
+router.patch('/updatePassword', isAuthenticated, updateUserPw);
 
 router.post('/loginAdmin', loginAdmin);
 router.get('/getAllUsers', getAllUsers);

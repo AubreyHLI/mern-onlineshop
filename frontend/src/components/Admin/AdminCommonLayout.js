@@ -8,7 +8,7 @@ const AdminCommonLayout = () => {
 
     return (
         <div className='flex flex-col w-full h-screen'>
-            <AdminHeader />
+            <AdminHeader active={active} setActive={setActive}/>
             <div className="flex items-start justify-between w-full h-[calc(100%-80px)]">
                 <AdminSidebar active={active} setActive={setActive}/>
                 <div className='w-[calc(100%-70px)] 800px:w-[calc(100%-240px)] px-8 h-full overflow-y-scroll'>

@@ -27,11 +27,13 @@ const userRoute = require('./routes/userRoute');
 const productsRoute = require('./routes/productsRoute');
 const brandsRoute = require('./routes/brandsRoute');
 const eventsRoute = require('./routes/eventsRoute');
+const couponsRoute = require('./routes/couponRoute');
 
 app.use('/api/users', userRoute);
 app.use('/api/products', productsRoute);
 app.use('/api/brands', brandsRoute);
 app.use('/api/events', eventsRoute);
+app.use('/api/coupons', couponsRoute);
 
 
 // error handling

@@ -6,8 +6,6 @@ import { Country, State, City }  from 'country-state-city';
 import { updateUserAddresses } from '../../redux/features/userSlice';
 
 const NewAddressForm = ({setOpenAddForm}) => {
-    const [recipient, setRecipient] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
     const [country, setCountry] = useState("");
     const [state, setState] = useState("");
     const [city, setCity] = useState("");
@@ -24,6 +22,7 @@ const NewAddressForm = ({setOpenAddForm}) => {
         { name: "Office", },
     ];
 
+
     const handleAddAddress = async (e) => {
         e.preventDefault();
 
@@ -31,8 +30,6 @@ const NewAddressForm = ({setOpenAddForm}) => {
             toast.error("Please fill all the fields!");
         } else {
             dispatch(updateUserAddresses({
-                recipient, 
-                phoneNumber, 
                 country, 
                 state,
                 city, 
@@ -57,15 +54,6 @@ const NewAddressForm = ({setOpenAddForm}) => {
 
             <form aria-required onSubmit={handleAddAddress} className="w-full">
                 <div className="w-full block p-4">
-                    <div className="w-full pb-2">
-                        <label className="block pb-2">Recipient</label>
-                        <input type="text" className='input' required value={recipient} onChange={(e) => setRecipient(e.target.value)} />
-                    </div>
-                    <div className="w-full pb-2">
-                        <label className="block pb-2">Phone Number</label>
-                        <input type="text" className='input' required value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-                    </div>
-
                     <div className="w-full pb-2">
                         <label className="block pb-2">Country</label>
                         <select name="" id="" value={country} onChange={(e) => setCountry(e.target.value)} className="w-[100%] border h-[36px] rounded-[5px]" >

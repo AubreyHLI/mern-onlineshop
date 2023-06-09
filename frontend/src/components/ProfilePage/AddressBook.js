@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai';
-import { RxCross1 } from 'react-icons/rx';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import NewAddressForm from './NewAddressForm';
@@ -11,20 +10,23 @@ const AddressBook = () => {
     const [openAddForm, setOpenAddForm] = useState(false);
     const { user } = useSelector((state) => state.user);
 
-    const {isSuccess, isError, error} = useSelector(state => state.user);
+    const {isSuccess, success, isError, error} = useSelector(state => state.user);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+		if(isSuccess) {
+			toast.success(success, {autoClose: 1500});
+			dispatch(clearSuccess());
+		}
+		if(isError) {
+			toast.error(error, {autoClose: 2000});
+			dispatch(clearError());
+		}
+	},[isError,isSuccess])
 
     const handleDelete = (item) => {
         const id = item._id;
         dispatch(deleteUserAddress(id));
-        if(isSuccess) {
-            toast.success('Address was deleted', {autoClose: 1000});
-            dispatch(clearSuccess());
-        }
-        if(isError) {
-            toast.error(error, {autoClose: 2000})
-            dispatch(clearError());
-        }
     };
 
     return (
@@ -40,21 +42,18 @@ const AddressBook = () => {
             </div>
 
             {user.addresses && user.addresses?.map((item, index) => (
-            <div key={index} className="w-full bg-white h-min 800px:h-[70px] rounded-[4px] flex items-center px-1 shadow justify-between pr-5 mb-5">
-                <div className="flex items-center">
-                    <h5 className="pl-5 font-[600]">{item?.addressType}</h5>
+            <div key={index} className="w-full bg-white rounded-[4px] flex items-center px-1 py-4 shadow justify-between pr-5 mb-5">
+                <div className='flex flex-col 1100px:flex-row pl-5'>
+                    <div className="flex items-center w-[100px]">
+                        <h5 className="font-[600]">{item?.addressType}</h5>
+                    </div>
+                    <div className="flex items-center">
+                        <h6 className="text-[15px] 800px:text-[unset]">
+                            {item?.address1} {item?.address2}, {item?.city}, {item?.state}, {item?.country}, {item?.zipCode}
+                        </h6>
+                    </div>
                 </div>
-                <div className="pl-8 flex items-center">
-                    <h6 className="text-[15px] 800px:text-[unset]">
-                        {item?.address1} {item?.address2}, {item?.city}, {item?.country}, {item?.zipCode}
-                    </h6>
-                </div>
-                <div className="pl-8 flex items-center">
-                    <h6 className="text-[15px] 800px:text-[unset]">
-                        {item?.recipient}, {item?.phoneNumber}
-                    </h6>
-                </div>
-                <div className="min-w-[10%] flex items-center justify-between pl-8">
+                <div className="flex items-center justify-between pl-8">
                     <AiOutlineDelete size={22} className="cursor-pointer" onClick={() => handleDelete(item)} />
                 </div>
             </div>
@@ -62,7 +61,7 @@ const AddressBook = () => {
 
             {user && user.addresses.length === 0 && (
             <h5 className="text-center pt-8 text-[18px]">
-                You not have any saved address!
+                You don't have any saved address!
             </h5>
             )}
         </div>

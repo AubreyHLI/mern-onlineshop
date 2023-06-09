@@ -3,7 +3,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from "react-redux";
-import { clearError, loginAdmin } from "../../redux/features/userSlice";
+import { clearError, loginAdmin, clearSuccess } from "../../redux/features/userSlice";
 
 const LoginAdmin = () => {
     const [email, setEmail] = useState("");
@@ -17,6 +17,7 @@ const LoginAdmin = () => {
     useEffect(() => {
         if(isSuccess) {
             toast.success(`Login admin successfully!`);
+            dispatch(clearSuccess());
             navigate('/admin');
         }
         if(isError) {

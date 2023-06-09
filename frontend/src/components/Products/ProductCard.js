@@ -16,7 +16,6 @@ const ProductCard = ({ data, isBrandPage }) => {
     
     const isAuthenticated = useSelector(state => state.user.isAuthenticated);
     const wishlist = useSelector(selectAllWishItems);
-    const {isSuccess, isError, error} = useSelector(state => state.shoppingCart);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -39,11 +38,14 @@ const ProductCard = ({ data, isBrandPage }) => {
                     _id: data._id,
                     name: data.name,
                     image: data.images[0],
+                    brandId: data.brandId,
                     stock: data.stock,
                     originalPrice: data.originalPrice,
                     discountPrice: data.discountPrice,
                 }
-            }));
+            }))
+            .then(resp => toast(resp.payload.message, {autoClose: 2000}));
+        
         } else {
             navigate('/login');
         }
@@ -60,6 +62,7 @@ const ProductCard = ({ data, isBrandPage }) => {
                         _id: data._id,
                         name: data.name,
                         image: data.images[0],
+                        brandId: data.brandId,
                         stock: data.stock,
                         originalPrice: data.originalPrice,
                         discountPrice: data.discountPrice,
@@ -67,7 +70,7 @@ const ProductCard = ({ data, isBrandPage }) => {
                     qty: 1,
                     repeat: false,
                 }))
-                .then(resp => toast.success(resp.payload.message, {autoClose: 1500}));
+                .then(resp => toast(resp.payload.message, {autoClose: 2000}));
             }
         } else {
             navigate('/login');
