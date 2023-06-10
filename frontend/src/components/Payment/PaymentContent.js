@@ -34,7 +34,6 @@ const PaymentContent = () => {
             toast.success("Order successful!");
             dispatch(clearSuccess());
             localStorage.setItem("latestOrder", JSON.stringify([]));
-            window.location.reload();
         }
         if(isError) {
             toast.error(error);
@@ -45,7 +44,7 @@ const PaymentContent = () => {
 
 
     const order = {
-        cart: orderData?.cart,
+        cart: orderData?.cartItems,
         shippingAddress: orderData?.shippingAddress,
         user: {
             _id: user?._id,
