@@ -1,5 +1,4 @@
 const Coupon = require("../models/couponModel");
-const Brand = require("../models/brandModel");
 const asyncHandler = require('../middlewares/asyncHandler');
 const CustomErrorClass = require('../utils/CustomErrorClass');
 
@@ -30,7 +29,7 @@ const getAllCoupons = asyncHandler(async (req, res, next) => {
     });
 })
 
-// get coupon code value by its name
+// get coupon value by its code
 const getCouponByCode = asyncHandler(async (req, res, next) => {
     const coupon = await Coupon.findOne({ code: req.params.code });
     if(!coupon) {
@@ -42,20 +41,7 @@ const getCouponByCode = asyncHandler(async (req, res, next) => {
     });
 })
 
-// get all coupons of a brand
-const getBrandCoupons = asyncHandler(async (req, res, next) => {
-//     try {
-//         const couponCodes = await couponCode.find({ shopId: req.seller.id });
-//         res.status(201).json({
-//             success: true,
-//             couponCodes,
-//         });
-//     } catch (error) {
-//         return next(new ErrorHandler(error, 400));
-//     }
-})
-
-// delete coupon code of a brand
+// delete coupon code
 const deleteCoupon =  asyncHandler(async (req, res, next) => {
 //     try {
 //         const couponCode = await couponCode.findByIdAndDelete(req.params.id);
@@ -78,7 +64,6 @@ const deleteCoupon =  asyncHandler(async (req, res, next) => {
 module.exports = {
     createNewCoupon,
     getAllCoupons,
-    getBrandCoupons,
     deleteCoupon,
     getCouponByCode,
 };

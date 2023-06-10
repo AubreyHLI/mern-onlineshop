@@ -10,6 +10,7 @@ const {
     deleteEventsByProduct,
 } = require('../controllers/eventsController');
 
+// middlewares
 router.post("/createEvent", createNewEvent);
 router.get("/getAllEvents", getAllEvents);
 router.get("/getBrandEvents/:id", getEventsByBrand);

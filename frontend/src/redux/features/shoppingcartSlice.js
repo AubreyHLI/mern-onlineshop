@@ -59,6 +59,7 @@ export const updateProductInCart = createAsyncThunk('cart/updateProductInCart', 
     }
 });
 
+
 // create and export slice
 export const shoppingCartSlice = createSlice({
     name: "shoppingCart",

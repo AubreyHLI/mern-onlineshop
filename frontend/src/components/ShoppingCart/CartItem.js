@@ -32,10 +32,10 @@ const CartItem = ({ data, quantityChange, removeFromCart }) => {
     return (
         <div className="border-b py-4 pl-2 pr-5">
             <div className="w-full flex items-center">
-                <img src={`${BACKEND_URL}${productItem.image}`} alt="" className="w-[50px] h-min ml-2 mr-2 rounded-[5px]"/>
+                <img src={`${BACKEND_URL}${productItem.image}`} alt="" className="w-[50px] ml-2 mr-2 rounded-[5px]"/>
                 <div className="pl-[5px] w-[calc(100%-50px)]">
                     <div className='flex justify-between w-full'>
-                        <h1 className='text-[15px] leading-'>{productItem.name}</h1>
+                        <h1 className='text-[15px]'>{productItem.name}</h1>
                         <span className='pl-3 pt-2'>
                             <RiDeleteBin5Line size={16} className="cursor-pointer" onClick={() => removeFromCart(data._id)} />
                         </span>

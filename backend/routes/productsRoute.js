@@ -10,6 +10,7 @@ const {
     updateProductInCart,
     getAllCartItems,
     deleteProductInCart,
+    clearCartItems,
     addProductToWishlist,
     getAllWishItems,
     deleteProductInWishlist,
@@ -27,6 +28,7 @@ router.post('/addToCart/:id', isAuthenticated, addProductToCart);
 router.get('/getCartItems', isAuthenticated, getAllCartItems);
 router.patch('/updateCartItem', isAuthenticated, updateProductInCart);
 router.delete('/deleteCartItem/:id', isAuthenticated, deleteProductInCart);
+router.delete('/clearCart', isAuthenticated, clearCartItems);
 
 router.post('/addToWishlist', isAuthenticated, addProductToWishlist);
 router.get('/getWishItems', isAuthenticated, getAllWishItems);

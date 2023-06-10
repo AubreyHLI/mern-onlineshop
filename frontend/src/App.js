@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -14,6 +14,10 @@ import { fetchAllBrands } from './redux/features/brandsSlice';
 import { fetchAllEvents } from './redux/features/eventsSlice';
 import { fetchCartItems } from './redux/features/shoppingcartSlice';
 import { fetchWishlist } from './redux/features/wishlistSlice';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import axios from 'axios';
+import { SERVER_URL } from './static/server';
 import Products from './pages/Products';
 import BestSelling from './pages/BestSelling';
 import FAQ from './pages/FAQ';
@@ -21,8 +25,9 @@ import Events from './pages/Events';
 import SingleProduct from './pages/SingleProduct';
 import ProfilePage from './pages/ProfilePage';
 import ProtectedRoute from './components/Layout/ProtectedRoute';
-import CheckoutPage from './pages/CheckoutPage';
 import BrandPage from './pages/BrandPage';
+import CheckoutPage from './pages/CheckoutPage';
+import PaymentPage from './pages/PaymentPage';
 
 import AdminHomepage from './pages/Admin/AdminHomepage';
 import AdminProtectedRoute from './pages/Admin/AdminProtectedRoute';
@@ -37,14 +42,19 @@ import AllRefunds from './pages/Admin/AllRefunds';
 import AllCoupons from './pages/Admin/AllCoupons';
 import AdminMessages from './pages/Admin/AdminMessages';
 import AdminSettings from './pages/Admin/AdminSettings';
-import PaymentPage from './pages/PaymentPage';
-
+import OrderSuccessPage from './pages/OrderSuccessPage';
 
 
 const App = () => {
-	const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
-	const isAdmin =  useSelector((state) => state.user.isAdmin);
+	const [stripeApiKey, setStripeApiKey] = useState(null);
+	const isAuthenticated = useSelector(state => state.user.isAuthenticated);
+	const isAdmin =  useSelector(state => state.user.isAdmin);
 	const dispatch = useDispatch();
+
+	const getStripeApikey = async () => {
+		const response = await axios.get(`${SERVER_URL}/payment/getStripeapikey`, { withCredentials: true });
+		setStripeApiKey(response.data.stripeApikey);
+	}
 
 	useEffect(() => {
 		dispatch(fetchAllProducts());
@@ -53,9 +63,12 @@ const App = () => {
 		dispatch(fetchUser());
 		dispatch(fetchCartItems());
 		dispatch(fetchWishlist());
+		getStripeApikey();
 
 		console.log('app reload');
 	},[])
+
+	const stripePromise = loadStripe(stripeApiKey);
 
 	// reload app when click back btn
 	useEffect(() => {    
@@ -88,10 +101,12 @@ const App = () => {
 				}/>
 				<Route path='/payment' element={
 					<ProtectedRoute isAuthenticated={isAuthenticated}>
-						<PaymentPage />
+						<Elements stripe={stripePromise}>
+							<PaymentPage />
+						</Elements>
 					</ProtectedRoute>
 				}/>
-				
+				 <Route path="/order/success" element={<OrderSuccessPage />} />
 				
 
 				<Route path='/login' element={<Login />} />

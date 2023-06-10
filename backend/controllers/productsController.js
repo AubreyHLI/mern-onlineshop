@@ -151,6 +151,17 @@ const updateProductInCart = asyncHandler(async (req, res, next) => {
     });
 })
 
+const clearCartItems = asyncHandler(async (req, res, next) => {
+    const userId = req.user.id;
+    const user = await User.findOneAndUpdate({_id: userId}, {$set: {shoppingCart: []}}, {new:true});
+
+    res.status(201).json({
+        success: true,
+        cartItems: user.shoppingCart,
+    });
+})
+
+
 
 // wishilist
 const addProductToWishlist = asyncHandler(async (req, res, next) => {
@@ -220,6 +231,7 @@ module.exports = {
     updateProductInCart,
     getAllCartItems,
     deleteProductInCart,
+    clearCartItems,
 
     addProductToWishlist,
     getAllWishItems,
