@@ -114,10 +114,10 @@ const ProductDetailsPreview = ({ setOpen, data }) => {
 
 							<div className="normalFlex pt-3">
 								<h4 className='productDiscountPrice'>
-									{data.discountPrice}$
+									{ data.discountPrice ? data.discountPrice : data.originalPrice} $
 								</h4>
 								<h3 className='price'>
-									{data.originalPrice ? data.originalPrice + "$" : null}
+									{ data.discountPrice ? data.originalPrice + " $" : null }
 								</h3>
 							</div>
 

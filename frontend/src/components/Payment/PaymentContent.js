@@ -80,10 +80,10 @@ const PaymentContent = () => {
                 toast.error(result.error.message);
             } else {
                 if (result.paymentIntent.status === "succeeded") {
-                    order.paymnentInfo = {
+                    order.paymentInfo = {
                         id: result.paymentIntent.id,
                         status: result.paymentIntent.status,
-                        type: "Credit Card",
+                        type: "Debit/Credit Card",
                     };
                     dispatch(createOrder(order));
                 }
@@ -96,48 +96,35 @@ const PaymentContent = () => {
 
     const handlePayInCash = async (e) => {
         e.preventDefault();
-
-        // const config = {
-        //     headers: { "Content-Type": "application/json",},
-        // };
-
-        // order.paymentInfo = {
-        //     type: "Cash On Delivery",
-        // };
-
-        // await axios.post(`${server}/order/create-order`, order, config)
-        // .then((res) => {
-        //     setOpenPaypal(false);
-        //     navigate("/order/success");
-        //     toast.success("Order successful!");
-        //     localStorage.setItem("cartItems", JSON.stringify([]));
-        //     localStorage.setItem("latestOrder", JSON.stringify([]));
-        //     window.location.reload();
-        // });
+        order.paymentInfo = {
+            type: "Cash On Delivery",
+        };
+        dispatch(createOrder(order));
     };
 
     return (
     <div className="w-full flex flex-col items-center py-8 mb-4">
-        <div className="w-[90%] 1000px:w-[80%] block 800px:flex">
-            <div className="w-full 800px:w-[65%]">
+        <div className="w-[90%] max-w-[1200px] block 800px:flex">
+            <div className="w-full 800px:w-[65%] 1000px:w-[80%]">
                 <PaymentInfo
                     user={user}
                     handlePayByCard={handlePayByCard}
                     handlePayInCash={handlePayInCash}
                 />
             </div>
+
             <div className="w-full 800px:w-[35%] 800px:mt-0 mt-8">
                 <div className="w-full bg-[#fff] rounded-md flex flex-col gap-1 px-5 py-4">
-                    <CartSummary 
-                        subTotalPrice={orderData?.subTotalPrice}
-                        shipping={orderData?.shipping}  
-                        discount={orderData?.discountTotal}
-                        totalPrice={orderData?.totalPrice}
-                    />                                       
-                </div>
-            </div>
-        </div>
-    </div>
+                     <CartSummary 
+                         subTotalPrice={orderData?.subTotalPrice}
+                         shipping={orderData?.shipping}  
+                         discount={orderData?.discountTotal}
+                         totalPrice={orderData?.totalPrice}
+                     />                                       
+                 </div>
+             </div>
+         </div>
+     </div>
     );
 };
 

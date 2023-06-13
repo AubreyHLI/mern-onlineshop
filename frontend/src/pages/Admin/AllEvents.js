@@ -61,8 +61,8 @@ const AllEvents = () => {
             discount_price: "US$ " + item.discountPrice,
             stock: item.product.stock,
             status: item.status,
-            start_date: item.start_Date,
-            finish_date: item.finish_Date,
+            start_date: item.start_Date.slice(0,10),
+            finish_date: item.finish_Date.slice(0,10),
         });
     });
 

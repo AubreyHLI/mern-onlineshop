@@ -15,7 +15,7 @@ const Banner = () => {
 					aliquam deserunt officia. Dolorum saepe nulla provident.
 				</p>
 				<Link to="/products" className="inline-block mt-6">
-					<div className='button'>
+					<div className='button !bg-[#f1c500] !text-[#2d333a]'>
 						<span className="">
 							Shop Now
 						</span>

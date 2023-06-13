@@ -6,7 +6,6 @@ import { SERVER_URL } from "../../static/server";
 export const fetchUser = createAsyncThunk('user/fetchUser', async (_, {rejectWithValue}) => {
     try{
         const response = await axios.get(`${SERVER_URL}/users/getuser`, { withCredentials: true });
-        console.log(response);
         return response.data;
     } catch(err) {
         if (!err.response) {

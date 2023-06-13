@@ -21,7 +21,11 @@ const Events = () => {
 			<div className='section'>
 				{ allEvents.length === 0 ? <h4>'No Events have!'</h4>
 				: <>
-					{allEvents && allEvents.map(event => <EventCard eventData={event}/>)}
+					{allEvents && allEvents.map(event => 
+					<div key={event._id}>
+						<EventCard eventData={event}/>
+					</div>
+					)}
 				</>
 				}
 			</div>

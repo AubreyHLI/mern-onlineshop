@@ -131,10 +131,10 @@ const ProductDetails = ({data}) => {
                             <div className='normalFlex justify-between mt-3 max-w-[300px]'>
                                 <div className="normalFlex">
                                     <h4 className='productDiscountPrice'>
-                                        {data.discountPrice}$
+                                        { data.discountPrice ? data.discountPrice : data.originalPrice} $
                                     </h4>
                                     <h3 className='price'>
-                                        {data.originalPrice ? data.originalPrice + "$" : null}
+                                        { data.discountPrice ? data.originalPrice + " $" : null }
                                     </h3>
                                 </div>
                                 {/* favorite icon */}
@@ -174,7 +174,7 @@ const ProductDetails = ({data}) => {
                                 </div>
                             </div>
                             {/* add to shopping cart */}
-                            <div  onClick={() => addToCartHandler()} className='button !rounded !h-11 flex items-center'>
+                            <div  onClick={() => addToCartHandler()} className='button2 w-[200px] !text-[white] !bg-[black]'>
                                 <span className="flex items-center">
                                     Add to cart <AiOutlineShoppingCart size={20} className="ml-1" />
                                 </span>

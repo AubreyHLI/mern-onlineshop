@@ -46,7 +46,7 @@ import OrderSuccessPage from './pages/OrderSuccessPage';
 
 
 const App = () => {
-	const [stripeApiKey, setStripeApiKey] = useState(null);
+	const [stripeApiKey, setStripeApiKey] = useState('');
 	const isAuthenticated = useSelector(state => state.user.isAuthenticated);
 	const isAdmin =  useSelector(state => state.user.isAdmin);
 	const dispatch = useDispatch();
@@ -57,14 +57,13 @@ const App = () => {
 	}
 
 	useEffect(() => {
+		getStripeApikey();
 		dispatch(fetchAllProducts());
 		dispatch(fetchAllBrands());
 		dispatch(fetchAllEvents());
 		dispatch(fetchUser());
 		dispatch(fetchCartItems());
 		dispatch(fetchWishlist());
-		getStripeApikey();
-
 		console.log('app reload');
 	},[])
 
@@ -108,7 +107,6 @@ const App = () => {
 				}/>
 				 <Route path="/order/success" element={<OrderSuccessPage />} />
 				
-
 				<Route path='/login' element={<Login />} />
 				<Route path='/signup' element={<Singup />} />
 				<Route path='/account-activation/:activation_token' element={<AccountActivation />} />

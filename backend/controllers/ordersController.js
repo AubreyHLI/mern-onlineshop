@@ -24,7 +24,7 @@ const createNewOrder = asyncHandler(async (req, res, next) => {
 
 // get all orders of user
 const getUserAllOrders = asyncHandler(async (req, res, next) => {
-	const orders = await Order.find({ "user._id": req.params.userId }).sort({
+	const orders = await Order.find({ "user._id": req.user.id }).sort({
 		createdAt: -1,
 	});
 	res.status(200).json({
@@ -74,7 +74,7 @@ const updateOrderStatus = asyncHandler(async (req, res, next) => {
 
 	if (req.body.status === "Transferred to delivery partner") {
 		existsOrder.cart.forEach(async (item) => {
-			const product = await Product.findById(item._id);
+			const product = await Product.findById(item.productId);
 			product.stock -= item.qty;
 			product.sold_out += item.qty;
 			await product.save({ validateBeforeSave: false });
@@ -106,7 +106,8 @@ const acceptOrderRefund = asyncHandler(async (req, res, next) => {
 	if (req.body.status === "Refund Success") {
 		existsOrder.cart.forEach(async (item) => {
 			// await updateOrder(item._id, item.qty);
-			const product = await Product.findById(item._id);
+			const product = await Product.findById(item.productId);
+			console.log('product:', product);
 			product.stock += qty;
 			product.sold_out -= qty;
 			await product.save({ validateBeforeSave: false });

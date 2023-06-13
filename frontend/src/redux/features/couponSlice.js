@@ -34,33 +34,6 @@ export const createCoupon = createAsyncThunk('events/createCounpon', async (newC
     }
 });
 
-
-// export const deleteEvent = createAsyncThunk('events/deleteEvent', async (eventId, {rejectWithValue}) => {
-//     try{
-//         const response = await axios.delete(`${SERVER_URL}/events/deleteEvent/${eventId}`);
-//         return response.data;
-//     } catch(err) {
-//         if (!err.response) {
-//             throw err;
-//         }
-//         return rejectWithValue(err.response.data);
-//     }
-// });
-
-
-// export const deleteEventsByProduct = createAsyncThunk('events/deleteEventsByProduct', async (productId, {rejectWithValue}) => {
-//     try{
-//         const response = await axios.delete(`${SERVER_URL}/events/deleteProductEvents/${productId}`);
-//         return response.data;
-//     } catch(err) {
-//         if (!err.response) {
-//             throw err;
-//         }
-//         return rejectWithValue(err.response.data);
-//     }
-// });
-
-
 // create and export slice
 export const couponsSlice = createSlice({
     name: "coupons",

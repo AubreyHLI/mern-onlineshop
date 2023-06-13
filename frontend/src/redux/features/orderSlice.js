@@ -2,9 +2,10 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { SERVER_URL } from "../../static/server";
 
-export const fetchUserOrders = createAsyncThunk('order/getUserAllOrders', async (userId, {rejectWithValue}) => {
+
+export const fetchUserOrders = createAsyncThunk('order/getUserAllOrders', async (_, {rejectWithValue}) => {
     try{
-        const response = await axios.get(`${SERVER_URL}/orders/getUserAllOrders/${userId}`, { withCredentials: true });
+        const response = await axios.get(`${SERVER_URL}/orders/getUserAllOrders`, { withCredentials: true });
         return response.data;
     } catch(err) {
         if (!err.response) {
@@ -21,10 +22,24 @@ export const createOrder = createAsyncThunk('order/createOrder', async (newForm,
             newForm, 
             { 
                 headers: { "Content-Type": "application/json", },
+                withCredentials: true,
             }
         );
         // clear cart items
         await axios.delete(`${SERVER_URL}/products/clearCart`, { withCredentials: true });
+        return response.data;
+    } catch(err) {
+        if (!err.response) {
+            throw err;
+        }
+        return rejectWithValue(err.response.data);
+    }
+});
+
+
+export const fetchAllOrders = createAsyncThunk('order/getAllOrders', async (_, {rejectWithValue}) => {
+    try{
+        const response = await axios.get(`${SERVER_URL}/orders/adminAllOrders`, { withCredentials: true });
         return response.data;
     } catch(err) {
         if (!err.response) {
@@ -76,12 +91,25 @@ export const orderSlice = createSlice({
             state.isError = true;
             state.error = action.payload.message;
         })
+
+        .addCase(fetchAllOrders.pending, (state) => {
+            // state.isLoading= true;
+        })
+        .addCase(fetchAllOrders.fulfilled, (state, action) => {
+            // state.isLoading= false;
+            state.allOrders = action.payload.orders;
+        })
+        .addCase(fetchAllOrders.rejected, (state, action) => {
+            // state.isLoading= false;
+            state.error = action.payload.message;
+        })
     }
 });
 
 
 // create selectors and export it because the component will use it
-
+export const selectUserAllOrders = (state) => state.order.userOrders;
+export const selectAllOrders = (state) => state.order.allOrders;
 
 // export actions
 export const { clearError, clearSuccess } = orderSlice.actions;

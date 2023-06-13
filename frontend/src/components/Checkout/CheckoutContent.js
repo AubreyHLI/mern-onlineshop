@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Country, State, City } from "country-state-city";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { SERVER_URL } from "../../static/server";
 import { toast } from "react-toastify";
 import axios from "axios";
 import AddressesList from "./AddressesList";
 import { selectAllCartItems } from "../../redux/features/shoppingcartSlice";
-import { getCouponByCode } from "../../redux/features/couponSlice";
 import CartSummary from "./CartSummary";
 
 
@@ -30,11 +29,6 @@ const CheckoutContent = () => {
     
     const cartItems = useSelector(selectAllCartItems);
     const navigate = useNavigate();
-
-
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
 
 
     const handleChooseAddress = (item) => {
@@ -69,7 +63,11 @@ const CheckoutContent = () => {
     };
 
 
-    const subTotalPrice = cartItems.reduce((total, item) => total + item.qty * item.product.discountPrice,  0);
+    const subTotalPrice = cartItems.reduce((total, item) => {
+        const itemPrice = item.product.discountPrice ? item.product.discountPrice : item.product.originalPrice;
+        return total + item.qty * itemPrice;
+     }, 0
+    );
     const shipping = subTotalPrice * 0.1;
     const discount = couponValid ? discountTotal : "";
     const totalPrice = couponValid ? (subTotalPrice + shipping - discount).toFixed(2) : (subTotalPrice + shipping).toFixed(2);
@@ -186,7 +184,7 @@ const CheckoutContent = () => {
             </div>
         </div>
 
-        <div className='button w-[150px] 800px:w-[280px] !mt-8 !bg-black !text-white font-[600]' onClick={handleClickPayment}>
+        <div className='button w-[150px] 800px:w-[280px] !mt-8 font-[600]' onClick={handleClickPayment}>
             <h5>Go to Payment</h5>
         </div>
     </div>

@@ -1,22 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
-import { AiOutlineArrowRight, AiOutlineCamera, AiOutlineDelete } from "react-icons/ai";
 import Button from '@mui/material/Button';
 import { DataGrid } from '@mui/x-data-grid';
+import { useSelector } from 'react-redux';
+import { selectUserAllOrders } from '../../redux/features/orderSlice';
+import { Link } from 'react-router-dom';
+import { AiOutlineArrowRight } from "react-icons/ai";
 
-const AllOrders = () => {
-  const orders = [
-    {
-      _id: "mnhukijhyt6754371628",
-      orderItems: [
-        {
-          name: 'iphone 14 pro max'
-        }
-      ],
-      totalPrice: 120,
-      orderStatus: "Processing"
-    },
-  ];
+const UserAllOrders = () => {
+  const orders = useSelector(selectUserAllOrders);
 
   const gridColumns = [
     { field: "id", headerName: "Order ID",  flex: 0.2, },
@@ -39,11 +30,12 @@ const AllOrders = () => {
   const gridRows = [];
 
   orders && orders.forEach(item => {
+    console.log('item:', item)
     gridRows.push({
       id: item._id,
-      itemsQty: item.orderItems.length,
+      itemsQty: item.cart.length,
       total: "US$ " + item.totalPrice,
-      status: item.orderStatus,
+      status: item.status,
     });
   });
 
@@ -60,4 +52,4 @@ const AllOrders = () => {
   )
 }
 
-export default AllOrders
+export default UserAllOrders

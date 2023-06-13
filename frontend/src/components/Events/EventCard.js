@@ -3,6 +3,7 @@ import CountDown from "./CountDown";
 import { Link } from "react-router-dom";
 import { BACKEND_URL } from "../../static/server";
 import { toast } from "react-toastify";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 const EventCard = ({ eventData }) => {
     const addToCartHandler = (data) => {
@@ -21,11 +22,11 @@ const EventCard = ({ eventData }) => {
     }
 
     return (
-        <div key={eventData._id} className={`w-full block bg-white rounded-lg my-4 800px:flex p-4`}>
-            <div className="w-[80%] max-w-[360px] 800px:w-[50%] m-auto">
+        <div className={`w-full flex bg-white rounded-lg my-4 flex-col 800px:flex-row p-4 800px:px-10 800px:py-6`}>
+            <div className="w-[80%] max-w-[360px] 800px:w-[50%] m-auto 800px:pr-20">
                 <img src={`${BACKEND_URL}${eventData.product.images[0]}`} alt="" />
             </div>
-            <div className="w-full lg:[w-50%] flex flex-col justify-between">
+            <div className="w-full lg:[w-45%] flex flex-col justify-between">
                 <h2 className='productTitle'>{eventData.product.name}</h2>
                 <div className="normalFlex py-2 justify-between">
                     <div className="normalFlex">
@@ -41,13 +42,18 @@ const EventCard = ({ eventData }) => {
                     </span>
                 </div>
                 <p>{eventData.description}</p>
-                <br />
-                <CountDown data={eventData}/>
+                <div className="my-6">
+                    <CountDown data={eventData}/>
+                </div>
                 <div className="flex items-center">
                     <Link to={`/product/${eventData.productId}?isEvent=true`}>
-                        <div className='button text-[#fff]'>See Details</div>
+                        <div className='button2'>See Details</div>
                     </Link>
-                    <div className='button text-[#fff] ml-5' onClick={() => addToCartHandler(eventData)}>Add to cart</div>
+                    <div className='button2 ml-5 !bg-[black] !text-[white]' onClick={() => addToCartHandler(eventData)}>
+                        <span className="flex items-center">
+                            Add to cart <AiOutlineShoppingCart size={20} className="ml-1" />
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>

@@ -101,11 +101,11 @@ const ProductCard = ({ data, isBrandPage }) => {
                     <div className="py-2 flex items-center justify-between">
                         <div className="normalFlex">
                             <h5 className='productDiscountPriceSm'>
-                                { data.originalPrice === 0 ? data.originalPrice : data.discountPrice }
+                                { data.discountPrice ? data.discountPrice : data.originalPrice}
                                 $
                             </h5>
                             <h4 className='priceSm'>
-                                { data.originalPrice ? data.originalPrice + " $" : null }
+                                { data.discountPrice ? data.originalPrice + " $" : null }
                             </h4>
                         </div>
                         <span className="font-[400] text-[17px] text-[#68d284]">

@@ -18,8 +18,8 @@ const createNewProduct = asyncHandler( async(request, response, next) => {
 
             const productData = request.body;
             productData.images = imageUrls;
-            productData.brand = brand;
-
+            productData.brand = brand;           
+            
             const product = await Product.create(productData);
             const products = await Product.find().sort({ createdAt: -1 });
 

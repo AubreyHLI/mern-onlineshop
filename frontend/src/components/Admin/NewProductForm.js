@@ -56,7 +56,11 @@ const NewProductForm = ({setOpenAddForm}) => {
 		newForm.append("category", category);
 		newForm.append("tags", tags);
 		newForm.append("originalPrice", originalPrice);
-		newForm.append("discountPrice", discountPrice);
+		if(!discountPrice) {
+			newForm.append("discountPrice", 0);
+		} else {
+			newForm.append("discountPrice", discountPrice);
+		}
 		newForm.append("stock", stock);
 
 		dispatch(createProduct(newForm));
@@ -142,7 +146,9 @@ const NewProductForm = ({setOpenAddForm}) => {
 
 				<br />
 				<div>
-					<label className="pb-2">Original Price</label>
+					<label className="pb-2">
+						Original Price <span className="text-red-500">*</span>
+					</label>
 					<input
 						type="number"
 						name="price"
@@ -156,7 +162,7 @@ const NewProductForm = ({setOpenAddForm}) => {
 				<br />
 				<div>
 					<label className="pb-2">
-						Price (With Discount) <span className="text-red-500">*</span>
+						Price (With Discount) 
 					</label>
 					<input
 						type="number"

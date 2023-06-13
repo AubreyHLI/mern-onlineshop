@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
-import { fetchCartItems, selectAllCartItems } from '../../redux/features/shoppingcartSlice';
+import { selectAllCartItems } from '../../redux/features/shoppingcartSlice';
 import { BACKEND_URL } from '../../static/server';
-import { HiOutlineMinus } from 'react-icons/hi';
+
 
 const CartSummary = ({subTotalPrice, shipping, discount, totalPrice}) => {
     const cartItems = useSelector(selectAllCartItems);
@@ -10,7 +10,9 @@ const CartSummary = ({subTotalPrice, shipping, discount, totalPrice}) => {
     return (
     <>
         <div>
-            {cartItems && cartItems.map((item, index) => 
+            {cartItems && cartItems.map((item, index) => {
+            const itemPrice = item.product.discountPrice ? item.product.discountPrice : item.product.originalPrice;
+            return (
             <div className="border-b" key={index}>
                 <div className="w-full flex items-center">
                     <img src={`${BACKEND_URL}${item.product.image}`} alt="" className="w-[30px] mr-2 rounded-[5px]"/>
@@ -19,13 +21,14 @@ const CartSummary = ({subTotalPrice, shipping, discount, totalPrice}) => {
                             <h1 className='text-[13px] 800px:text-[11px]'>{item.product.name}</h1>
                         </div>
                         <div className='flex justify-between pt-[4px] font-[400] text-[14px] text-[#00000082]'>
-                            <h4>${item.product.discountPrice} * {item.qty}</h4>
-                            <h4>${item.product.discountPrice * item.qty}</h4>
+                            <h4>${itemPrice} * {item.qty}</h4>
+                            <h4>${itemPrice * item.qty}</h4>
                         </div>
                     </div>
                 </div>
             </div>
-            )}
+            )
+            })}
         </div>
         <div className='flex flex-col gap-2 mt-2'>
             <div className="flex justify-between">

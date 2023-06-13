@@ -65,7 +65,7 @@ const AllProducts = () => {
             id: item._id,
             name: item.name,
             image: item.images[0],
-            price: "US$ " + item.discountPrice,
+            price: `US$ ${item.discountPrice ? item.discountPrice : item.originalPrice}`,
             stock: item?.stock,
             sold: item?.sold_out,
         });

@@ -9,7 +9,8 @@ import { BACKEND_URL } from '../../static/server';
 const CartItem = ({ data, quantityChange, removeFromCart }) => {
     const [value, setValue] = useState(data.qty);
     const productItem = data.product;
-    const totalPrice = productItem.discountPrice * value;
+    const productPrice =  productItem.discountPrice ? productItem.discountPrice : productItem.originalPrice;
+    const totalPrice = productPrice * value;
     
     const increment = () => {
         if (value < productItem.stock) {
@@ -42,7 +43,7 @@ const CartItem = ({ data, quantityChange, removeFromCart }) => {
                     </div>
                     <div className='flex justify-between pt-[4px]'>
                         <h4 className="font-[400] text-[14px] text-[#00000082]">
-                            ${productItem.discountPrice} * {value}
+                            ${productPrice} * {value}
                         </h4>
                         <div className='normalFlex w-[70px] justify-between'>
                             <button  onClick={() => decrement()} className={`${value < 2 ? 'bg-[#a7abb14f] text-[#7d879c]': 'bg-[#34b351] text-[#fff]'} w-[20px] h-[20px] normalFlex justify-center cursor-pointer`}>

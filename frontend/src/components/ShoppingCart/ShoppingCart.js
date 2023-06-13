@@ -23,9 +23,10 @@ const ShoppingCart = ({setOpenCart}) => {
         dispatch(deleteProductInCart(itemId));
     }
 
-    const subTotalPrice = cartItems.reduce((total, item) => 
-        total + item.qty * item.product.discountPrice, 
-        0
+    const subTotalPrice = cartItems.reduce((total, item) => {
+        const itemPrice = item.product.discountPrice ? item.product.discountPrice : item.product.originalPrice;
+        return total + item.qty * itemPrice;
+     }, 0
     );
 
     return (

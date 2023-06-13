@@ -12,9 +12,11 @@ const {
 } = require('../controllers/ordersController');
 
 // middlewares
-router.post("/createOrder", createNewOrder);
-router.get("/getUserOrders/:userId", getUserAllOrders);
-router.put("/requestOrderRefund/:orderId", requestOrderRefund);
+const { isAuthenticated } = require('../middlewares/auth');
+
+router.post("/createOrder", isAuthenticated, createNewOrder);
+router.get("/getUserAllOrders", isAuthenticated, getUserAllOrders);
+router.put("/requestOrderRefund/:orderId", isAuthenticated, requestOrderRefund);
 
 router.get("/adminAllOrders", getAllOrders);
 router.put("/updateOrderStatus/:orderId", updateOrderStatus);
