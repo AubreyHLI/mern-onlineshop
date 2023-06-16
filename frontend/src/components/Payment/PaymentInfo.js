@@ -93,7 +93,7 @@ const PaymentInfo = ({ user, handlePayByCard, handlePayInCash }) => {
             {select === 2 &&
             <div className="w-full flex justify-center py-2 border-b">
                 <div onClick={handlePayInCash} className='button !bg-[black] !text-white font-[600]' >
-                    Confirm2
+                    Confirm
                 </div>
             </div>
             }

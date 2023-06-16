@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Header from '../components/Layout/Header/Header2';
 import AddressBook from '../components/ProfilePage/AddressBook';
 import UserAllOrders from '../components/ProfilePage/UserAllOrders';
@@ -9,16 +9,14 @@ import Inbox from '../components/ProfilePage/Inbox';
 import ProfileContent from '../components/ProfilePage/ProfileContent'
 import ProfileSidebar from '../components/ProfilePage/ProfileSidebar'
 import TrackOrder from '../components/ProfilePage/TrackOrder';
-import { fetchUserOrders } from '../redux/features/orderSlice';
+import Footer from '../components/Layout/Footer';
 
 const ProfilePage = () => {
     const user = useSelector(state => state.user.user);
     const [active, setActive] = useState(1);
 
-    const dispatch = useDispatch();
-
     useEffect(() => {
-        dispatch(fetchUserOrders());
+        window.scrollTo(0, 0);
     }, [])
     
     return (
@@ -40,6 +38,7 @@ const ProfilePage = () => {
                 </div>
             </div>
             }
+            <Footer />
         </div>
     )
 }

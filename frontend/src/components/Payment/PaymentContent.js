@@ -30,10 +30,10 @@ const PaymentContent = () => {
 
     useEffect(() => {
         if(isSuccess) {
-            navigate("/order/success");
             toast.success("Order successful!");
             dispatch(clearSuccess());
             localStorage.setItem("latestOrder", JSON.stringify([]));
+            navigate("/order/success");
         }
         if(isError) {
             toast.error(error);
@@ -51,7 +51,12 @@ const PaymentContent = () => {
             name: user?.name,
             email: user?.email,
         },
-        totalPrice: orderData?.totalPrice,
+        priceSummary: {
+            subTotalPrice: orderData?.subTotalPrice,
+            shipping: orderData?.shipping,
+            discount: orderData?.discountTotal,
+            totalPrice: orderData?.totalPrice,
+        },
     };
 
     
@@ -116,10 +121,10 @@ const PaymentContent = () => {
             <div className="w-full 800px:w-[35%] 800px:mt-0 mt-8">
                 <div className="w-full bg-[#fff] rounded-md flex flex-col gap-1 px-5 py-4">
                      <CartSummary 
-                         subTotalPrice={orderData?.subTotalPrice}
-                         shipping={orderData?.shipping}  
-                         discount={orderData?.discountTotal}
-                         totalPrice={orderData?.totalPrice}
+                        subTotalPrice={orderData?.subTotalPrice}
+                        shipping={orderData?.shipping}  
+                        discount={orderData?.discountTotal}
+                        totalPrice={orderData?.totalPrice}
                      />                                       
                  </div>
              </div>

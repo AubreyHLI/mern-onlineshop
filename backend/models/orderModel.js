@@ -13,9 +13,19 @@ const orderSchema = new mongoose.Schema({
         type: Object,
         required: true,
     },
-    totalPrice:{
-        type: Number,
-        required: true,
+    priceSummary: {
+        subTotalPrice: {
+            type: Number,
+        },
+        shipping: {
+            type: Number,
+        },
+        discount: {
+            type: Number,
+        },
+        totalPrice:{
+            type: Number,
+        },
     },
     status:{
         type: String,

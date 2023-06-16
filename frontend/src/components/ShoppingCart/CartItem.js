@@ -9,8 +9,8 @@ import { BACKEND_URL } from '../../static/server';
 const CartItem = ({ data, quantityChange, removeFromCart }) => {
     const [value, setValue] = useState(data.qty);
     const productItem = data.product;
-    const productPrice =  productItem.discountPrice ? productItem.discountPrice : productItem.originalPrice;
-    const totalPrice = productPrice * value;
+    const productPrice =  productItem.price;
+    const totalPrice = (productPrice * value).toFixed(2);
     
     const increment = () => {
         if (value < productItem.stock) {

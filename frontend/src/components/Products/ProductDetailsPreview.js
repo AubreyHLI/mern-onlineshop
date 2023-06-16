@@ -50,6 +50,7 @@ const ProductDetailsPreview = ({ setOpen, data }) => {
                         image: data.images[0],
 						brandId: data.brandId,
                         stock: data.stock,
+						price: (data.discountPrice ? data.discountPrice : data.originalPrice).toFixed(2),
                         originalPrice: data.originalPrice,
                         discountPrice: data.discountPrice,
                     },
@@ -74,6 +75,7 @@ const ProductDetailsPreview = ({ setOpen, data }) => {
                     image: data.images[0],
 					brandId: data.brandId,
                     stock: data.stock,
+					price: (data.discountPrice ? data.discountPrice : data.originalPrice).toFixed(2),
                     originalPrice: data.originalPrice,
                     discountPrice: data.discountPrice,
                 }

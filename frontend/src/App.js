@@ -43,6 +43,7 @@ import AllCoupons from './pages/Admin/AllCoupons';
 import AdminMessages from './pages/Admin/AdminMessages';
 import AdminSettings from './pages/Admin/AdminSettings';
 import OrderSuccessPage from './pages/OrderSuccessPage';
+import SingleOrder from './pages/SingleOrder';
 
 
 const App = () => {
@@ -105,7 +106,12 @@ const App = () => {
 						</Elements>
 					</ProtectedRoute>
 				}/>
-				 <Route path="/order/success" element={<OrderSuccessPage />} />
+				<Route path="/order/success" element={<OrderSuccessPage />} />
+				<Route path='/order/:id' element={
+					<ProtectedRoute isAuthenticated={isAuthenticated}>
+						<SingleOrder />
+					</ProtectedRoute>
+				}/>
 				
 				<Route path='/login' element={<Login />} />
 				<Route path='/signup' element={<Singup />} />

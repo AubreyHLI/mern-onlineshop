@@ -40,6 +40,7 @@ const ProductCard = ({ data, isBrandPage }) => {
                     image: data.images[0],
                     brandId: data.brandId,
                     stock: data.stock,
+                    price: (data.discountPrice ? data.discountPrice : data.originalPrice).toFixed(2),
                     originalPrice: data.originalPrice,
                     discountPrice: data.discountPrice,
                 }
@@ -64,6 +65,7 @@ const ProductCard = ({ data, isBrandPage }) => {
                         image: data.images[0],
                         brandId: data.brandId,
                         stock: data.stock,
+                        price: (data.discountPrice ? data.discountPrice : data.originalPrice).toFixed(2),
                         originalPrice: data.originalPrice,
                         discountPrice: data.discountPrice,
                     },

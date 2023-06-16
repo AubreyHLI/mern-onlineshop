@@ -6,6 +6,7 @@ import { BACKEND_URL } from '../../static/server';
 
 const WishlistItem = ({ data, removeFromWishlist, addToCart }) => {
     const productData = data.product;
+    const productPrice = productData.price;
 
     return (
         <div className="border-b py-4 pl-2 pr-5">
@@ -20,7 +21,7 @@ const WishlistItem = ({ data, removeFromWishlist, addToCart }) => {
                     </div>
                     <div className='normalFlex pt-[8px] justify-between'>
                         <h4 className="font-[600] text-[#d02222]">
-                            US${productData.discountPrice}
+                            US${productPrice}
                         </h4>
                         <button className='normalFlex gap-x-2 py-1 px-3 rounded-full bg-lime-400 text-sm' onClick={() => addToCart(productData)}>
                             <BsCartPlus size={20} className="cursor-pointer"/>

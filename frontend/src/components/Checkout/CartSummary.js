@@ -11,7 +11,7 @@ const CartSummary = ({subTotalPrice, shipping, discount, totalPrice}) => {
     <>
         <div>
             {cartItems && cartItems.map((item, index) => {
-            const itemPrice = item.product.discountPrice ? item.product.discountPrice : item.product.originalPrice;
+            const itemPrice = item.product.price;
             return (
             <div className="border-b" key={index}>
                 <div className="w-full flex items-center">
@@ -22,7 +22,7 @@ const CartSummary = ({subTotalPrice, shipping, discount, totalPrice}) => {
                         </div>
                         <div className='flex justify-between pt-[4px] font-[400] text-[14px] text-[#00000082]'>
                             <h4>${itemPrice} * {item.qty}</h4>
-                            <h4>${itemPrice * item.qty}</h4>
+                            <h4>${(itemPrice * item.qty).toFixed(2)}</h4>
                         </div>
                     </div>
                 </div>

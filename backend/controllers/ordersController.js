@@ -5,12 +5,12 @@ const CustomErrorClass = require('../utils/CustomErrorClass');
 
 // create new order
 const createNewOrder = asyncHandler(async (req, res, next) => {
-	const { cart, shippingAddress, user, totalPrice, paymentInfo } = req.body;
+	const { cart, shippingAddress, user, priceSummary, paymentInfo } = req.body;
 	const order = await Order.create({
 		cart,
 		shippingAddress,
 		user,
-		totalPrice,
+		priceSummary,
 		paymentInfo,
 	});
 	const orders = await Order.find().sort({ createdAt: -1 });
