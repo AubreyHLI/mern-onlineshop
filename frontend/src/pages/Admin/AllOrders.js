@@ -36,22 +36,18 @@ const AllOrders = () => {
 	 	gridRows.push({
 	 		id: item._id,
 			itemsQty: item?.cart?.reduce((acc, item) => acc + item.qty, 0),
-			total: item?.totalPrice + " $",
+			total: item?.priceSummary?.totalPrice + " $",
 			status: item?.status,
 			createdAt: item?.createdAt.slice(0,10),
 		});
 	});
 
-	const handleClick = () => {
-		console.log('orders:', allOrders);
-	}
 
 	return (
 	<>
 		 <div className="w-full mt-4 px-1 normalFlex justify-between">
             <h1 className="text-[22px] 800px:text-[26px]">All Orders</h1>
         </div>
-		<button onClick={handleClick}>click me</button>
         <div className="w-full my-4 bg-white">
             <DataGrid
 				rows={gridRows}

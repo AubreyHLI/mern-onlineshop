@@ -33,7 +33,7 @@ const PaymentContent = () => {
             toast.success("Order successful!");
             dispatch(clearSuccess());
             localStorage.setItem("latestOrder", JSON.stringify([]));
-            navigate("/order/success");
+            navigate("/checkout/orderSuccess");
         }
         if(isError) {
             toast.error(error);

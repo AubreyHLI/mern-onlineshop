@@ -81,7 +81,7 @@ const CheckoutContent = () => {
             const orderData = { cartItems, totalPrice, subTotalPrice, shipping, discountTotal, shippingAddress, user, };
             // update local storage with the updated orders array
             localStorage.setItem("latestOrder", JSON.stringify(orderData));
-            navigate("/payment");
+            navigate("/checkout/payment");
         }
     };
 

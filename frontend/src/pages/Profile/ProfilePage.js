@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { FaUserCircle } from "react-icons/fa";
-import { CiEdit } from "react-icons/ci";
-import { clearSuccess, clearError, updateUserInfo } from "../../redux/features/userSlice";
-import { toast } from "react-toastify";
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { clearError, clearSuccess, updateUserInfo } from '../../redux/features/userSlice';
+import { toast } from 'react-toastify';
+import { FaUserCircle } from 'react-icons/fa';
+import { CiEdit } from 'react-icons/ci';
 
-const ProfileContent = ({ active }) => {
+const ProfilePage = () => {
 	const user = useSelector(state => state.user.user);
 	const [name, setName] = useState(user?.name);
 	const [email, setEmail] = useState(user?.email);
@@ -16,6 +16,22 @@ const ProfileContent = ({ active }) => {
 
 	const {isSuccess, isError, error} = useSelector(state => state.user);
 	const dispatch = useDispatch();
+
+    useEffect(() => {
+        window.scrollTo(0,0);
+    }, [])
+
+    useEffect(() => {
+        if(isSuccess) {
+			toast.success("Account infomation updated successfully!", {autoClose: 1000});
+			dispatch(clearSuccess());
+		} 
+		if(isError) {
+			toast.error(error, {autoClose: 2000});
+			dispatch(clearError());
+		}
+    }, [isSuccess, isError])
+
 	
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -24,14 +40,6 @@ const ProfileContent = ({ active }) => {
 			email,
 			phoneNumber,
 		}));
-		if(isSuccess) {
-			toast.success("Account infomation updated successfully!", {autoClose: 1000});
-			dispatch(clearSuccess());
-		} 
-		if(isError) {
-			toast.error(error, {autoClose: 2000});
-			dispatch(clearError());
-		}
 	}
 
 	return (
@@ -77,4 +85,4 @@ const ProfileContent = ({ active }) => {
 	);
 };
 
-export default ProfileContent;
+export default ProfilePage

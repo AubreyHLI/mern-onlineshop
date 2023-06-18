@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import NewAddressForm from './NewAddressForm';
 import { MdAdd } from 'react-icons/md';
 import { clearError, clearSuccess, deleteUserAddress } from '../../redux/features/userSlice';
+import NewAddressForm from '../../components/Profile/NewAddressForm';
 
 const AddressBook = () => {
     const [openAddForm, setOpenAddForm] = useState(false);
@@ -12,6 +12,10 @@ const AddressBook = () => {
 
     const {isSuccess, success, isError, error} = useSelector(state => state.user);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        window.scrollTo(0,0);
+    }, [])
 
     useEffect(() => {
 		if(isSuccess) {

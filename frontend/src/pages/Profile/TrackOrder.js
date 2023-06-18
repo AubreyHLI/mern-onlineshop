@@ -7,6 +7,7 @@ import { DataGrid } from '@mui/x-data-grid';
 
 const TrackOrder = () => {
   const { user } = useSelector((state) => state.user);
+
   const orders = [
     {
       _id: "mnhukijhyt6754371628",
@@ -19,6 +20,10 @@ const TrackOrder = () => {
       orderStatus: "Processing"
     },
   ];
+
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, [])
 
   const gridColumns = [
     { field: "id", headerName: "Order ID",  flex: 0.2, },

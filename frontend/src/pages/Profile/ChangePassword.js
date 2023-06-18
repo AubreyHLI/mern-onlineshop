@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
-import PwInput from '../atmos/PwInput';
+import PwInput from '../../components/atmos/PwInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserPW, clearError, clearSuccess } from '../../redux/features/userSlice';
-
 
 const ChangePassword = () => {
 	const [oldPassword, setOldPassword] = useState("");
@@ -27,6 +26,10 @@ const ChangePassword = () => {
 		}
 	},[isError,isSuccess])
 
+	useEffect(() => {
+        window.scrollTo(0,0);
+    }, [])
+
 	const passwordChangeHandler = async (e) => {
 		e.preventDefault();
 		dispatch(updateUserPW({ oldPassword, newPassword, confirmPassword }));
@@ -35,7 +38,7 @@ const ChangePassword = () => {
 	return (
 		<div className="w-full px-5">
 			<h1 className="block text-[25px] text-center font-[600] text-[#000000ba] pb-2">
-			Change Password
+				Change Password
 			</h1>
 			<div className="w-full">
 				<form	onSubmit={passwordChangeHandler} className="flex flex-col items-center" >
