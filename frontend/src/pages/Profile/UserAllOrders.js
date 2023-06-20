@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Button from '@mui/material/Button';
 import { DataGrid } from '@mui/x-data-grid';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { fetchUserOrders, selectUserAllOrders } from '../../redux/features/orderSlice';
 
@@ -10,11 +10,14 @@ const UserAllOrders = () => {
 	const orders = useSelector(selectUserAllOrders);
 
 	const dispatch = useDispatch();
+	const {setActive} = useOutletContext();
 
     useEffect(() => {
-        window.scrollTo(0, 0);
-        dispatch(fetchUserOrders());
+		setActive(1);
+        window.scrollTo(0,0);
+		dispatch(fetchUserOrders());
     }, [])
+
 
 	const gridColumns = [
 		{ field: "id", headerName: "Order ID", minWidth: 100, flex: 0.2, },

@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import PwInput from '../../components/atmos/PwInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserPW, clearError, clearSuccess } from '../../redux/features/userSlice';
+import { useOutletContext } from 'react-router-dom';
 
 const ChangePassword = () => {
 	const [oldPassword, setOldPassword] = useState("");
@@ -14,6 +15,12 @@ const ChangePassword = () => {
 
 	const {isSuccess, isError, error, success} = useSelector(state => state.user);
 	const dispatch = useDispatch();
+	const {setActive} = useOutletContext();
+
+	useEffect(() => {
+		setActive(5);
+		window.scrollTo(0,0);
+	},[])
 
 	useEffect(() => {
 		if(isSuccess) {
@@ -26,9 +33,6 @@ const ChangePassword = () => {
 		}
 	},[isError,isSuccess])
 
-	useEffect(() => {
-        window.scrollTo(0,0);
-    }, [])
 
 	const passwordChangeHandler = async (e) => {
 		e.preventDefault();

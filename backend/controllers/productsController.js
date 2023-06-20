@@ -1,7 +1,7 @@
 const Product = require("../models/productModel");
 const Brand = require("../models/brandModel");
 const User = require("../models/userModel");
-// const Order = require("../model/order");
+const Order = require("../models/orderModel");
 const asyncHandler = require('../middlewares/asyncHandler');
 const CustomErrorClass = require('../utils/CustomErrorClass');
 
@@ -74,15 +74,18 @@ const createReview = asyncHandler( async(request, response, next) => {
 
     // save the review
     await product.save({ validateBeforeSave: false });
-    // await Order.findByIdAndUpdate(
-    //     orderId,
-    //     { $set: { "cart.$[elem].isReviewed": true } },
-    //     { arrayFilters: [{ "elem._id": productId }], new: true }
-    // );
+    await Order.findByIdAndUpdate(
+        orderId,
+        { $set: { "cart.$[elem].isReviewed": true } },
+        { arrayFilters: [{ "elem.product._id": productId }], new: true }
+    );
+
+    const products = await Product.find().sort({ createdAt: -1 });
 
     response.status(200).json({
         success: true,
         message: "Reviwed succesfully!",
+        products,
     });
 })
 

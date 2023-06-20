@@ -2,7 +2,7 @@ import React, { useEffect, useState }  from "react";
 import Button from '@mui/material/Button';
 import { DataGrid } from '@mui/x-data-grid';
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 // import { deleteProduct } from "../../redux/actions/product";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllProducts, selectAllProducts } from "../../redux/features/productsSlice";
@@ -19,8 +19,10 @@ const AllProducts = () => {
     const [openAddForm, setOpenAddForm] = useState(false);
     
 	const dispatch = useDispatch();
+    const {setActive} = useOutletContext();	        
 
     useEffect(() => {
+        setActive(4);
         dispatch(fetchAllProducts());
     }, [])
 

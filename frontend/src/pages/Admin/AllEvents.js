@@ -7,7 +7,7 @@ import { fetchAllEvents, selectAllEvents } from '../../redux/features/eventsSlic
 import { MdAdd } from 'react-icons/md';
 import DeleteConfirm from '../../components/Admin/DeleteConfirm';
 import { AiOutlineDelete, AiOutlineEye } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 
 
 const AllEvents = () => {
@@ -17,8 +17,10 @@ const AllEvents = () => {
     const [openAddForm, setOpenAddForm] = useState(false);
 
     const dispatch = useDispatch();
+    const {setActive} = useOutletContext();	        
 
     useEffect(() => {
+        setActive(5);
         dispatch(fetchAllEvents());
     }, [])
 
@@ -70,7 +72,7 @@ const AllEvents = () => {
     return (
     <>
         <div className="w-full mt-4 px-1 normalFlex justify-between">
-            <h1 className="text-[22px] 800px:text-[26px]">All Brands</h1>
+            <h1 className="text-[22px] 800px:text-[26px]">All Events</h1>
             <button className="p-2 rounded-lg text-white bg-pink-400 normalFlex gap-1" onClick={() => setOpenAddForm(true)}>
                 <MdAdd size={24}/>
                 <span className="hidden 500px:inline-block mr-2">Create New Event</span>

@@ -35,6 +35,24 @@ export const createProduct = createAsyncThunk('products/createProduct', async (n
     }
 });
 
+export const createNewReview = createAsyncThunk('products/createNewReview', async (newObj, {rejectWithValue}) => {
+    try{
+        const response = await axios.patch(
+            `${SERVER_URL}/products/createNewReview`, 
+            newObj, 
+            { 
+                withCredentials: true 
+            }
+        );
+        return response.data;
+    } catch(err) {
+        if (!err.response) {
+            throw err;
+        }
+        return rejectWithValue(err.response.data);
+    }
+});
+
 
 // create and export slice
 export const productsSlice = createSlice({
@@ -43,6 +61,7 @@ export const productsSlice = createSlice({
        isLoadingProducts: true,
        allProducts: null,
        isSuccess: false,
+       success: null,
        isError: false,
        error: null,
     },
@@ -53,6 +72,7 @@ export const productsSlice = createSlice({
         },
         clearSuccess: (state, action) => {
             state.isSuccess = false;
+            state.success = null;
         },
     },
     extraReducers(builder) {
@@ -79,6 +99,15 @@ export const productsSlice = createSlice({
         .addCase(createProduct.rejected, (state, action) => {
             state.isLoadingProducts = false;
             state.isSuccess = false;
+            state.isError = true;
+            state.error = action.payload.message;
+        })
+        .addCase(createNewReview.fulfilled, (state, action) => {
+            state.isSuccess = true;
+            state.success = action.payload.message;
+            state.allProducts = action.payload.products;
+        })
+        .addCase(createNewReview.rejected, (state, action) => {
             state.isError = true;
             state.error = action.payload.message;
         })

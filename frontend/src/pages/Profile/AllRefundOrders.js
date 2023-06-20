@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { AiOutlineArrowRight, AiOutlineCamera, AiOutlineDelete } from "react-icons/ai";
 import Button from '@mui/material/Button';
 import { DataGrid } from '@mui/x-data-grid';
 
 const AllRefundOrders = () => {
+  const {setActive} = useOutletContext();
 
   useEffect(() => {
+    setActive(2);
     window.scrollTo(0,0);
-}, [])
+  },[])
 
   const orders = [
     {

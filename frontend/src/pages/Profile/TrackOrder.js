@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { MdTrackChanges } from 'react-icons/md';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { DataGrid } from '@mui/x-data-grid';
 
@@ -21,9 +21,12 @@ const TrackOrder = () => {
     },
   ];
 
+  const {setActive} = useOutletContext();
+
   useEffect(() => {
+    setActive(4);
     window.scrollTo(0,0);
-  }, [])
+  },[])
 
   const gridColumns = [
     { field: "id", headerName: "Order ID",  flex: 0.2, },

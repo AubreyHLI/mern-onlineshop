@@ -6,11 +6,13 @@ import FeaturedProduct from '../components/HomePage/FeaturedProduct';
 import Sponsored from '../components/HomePage/Sponsored';
 import Footer from '../components/Layout/Footer';
 import Header from '../components/Layout/Header/Header2';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllProducts } from '../redux/features/productsSlice';
 
 const Home = () => {
   const loading = useSelector((state) => state.user.loading);
   const isLoadingProducts = useSelector((state) => state.products.isLoadingProducts);
+  const dispatch = useDispatch();
 
   useEffect(() => {
 		window.scrollTo(0,0);

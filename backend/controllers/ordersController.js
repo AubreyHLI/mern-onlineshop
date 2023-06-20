@@ -36,7 +36,7 @@ const getUserAllOrders = asyncHandler(async (req, res, next) => {
 
 // request a refund
 const requestOrderRefund= asyncHandler(async (req, res, next) => {
-	const existsOrder = await Order.findById(req.params.id);
+	const existsOrder = await Order.findById(req.params.orderId);
 	if (!existsOrder) {
 		return next(new CustomErrorClass(400, "Order not found with this id"));
 	}
@@ -44,10 +44,14 @@ const requestOrderRefund= asyncHandler(async (req, res, next) => {
 	existsOrder.status = req.body.status;
 	await existsOrder.save({ validateBeforeSave: false });
 
+	const orders = await Order.find({ "user._id": req.user.id }).sort({
+		createdAt: -1,
+	});
+
 	res.status(200).json({
 		success: true,
-		order: existsOrder,
-		message: "Order Refund Request successfully!",
+		orders: orders,
+		message: "Refund request sent",
 	});
 })
 
@@ -67,7 +71,8 @@ const getAllOrders = asyncHandler(async (req, res, next) => {
 
 // update order status ---- admin
 const updateOrderStatus = asyncHandler(async (req, res, next) => {
-	const existsOrder = await Order.findById(req.params.id);
+	console.log('req.params.orderId:', req.params.orderId)
+	const existsOrder = await Order.findById(req.params.orderId);
 	if (!existsOrder) {
 		return next(new CustomErrorClass(400, "Order not found with this id"));
 	}
@@ -92,24 +97,24 @@ const updateOrderStatus = asyncHandler(async (req, res, next) => {
 	res.status(200).json({
 		success: true,
 		order: existsOrder,
+		message: "Order Updated successfully!"
 	});
 })
 
 
 // accept the refund ---- admin
 const acceptOrderRefund = asyncHandler(async (req, res, next) => {
-	const existsOrder = await Order.findById(req.params.id);
+	const existsOrder = await Order.findById(req.params.orderId);
 	if (!existsOrder) {
 		return next(new CustomErrorClass(400, "Order not found with this id"));
 	}
 
 	if (req.body.status === "Refund Success") {
 		existsOrder.cart.forEach(async (item) => {
-			// await updateOrder(item._id, item.qty);
 			const product = await Product.findById(item.productId);
 			console.log('product:', product);
-			product.stock += qty;
-			product.sold_out -= qty;
+			product.stock += item.qty;
+			product.sold_out -= item.qty;
 			await product.save({ validateBeforeSave: false });
 		});
 	}
@@ -117,9 +122,15 @@ const acceptOrderRefund = asyncHandler(async (req, res, next) => {
 	existsOrder.status = req.body.status;
 	await existsOrder.save();
 
+	const orders = await Order.find().sort({
+		deliveredAt: -1,
+		createdAt: -1,
+	});
+
 	res.status(200).json({
 		success: true,
-		message: "Order Refund successfull!",
+		message: "Order Refund successfully!",
+		orders: orders,
 	});
 })
 

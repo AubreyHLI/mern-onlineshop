@@ -1,15 +1,36 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsBagCheck } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
 import { BACKEND_URL } from '../../static/server';
 import NewReviewForm from './NewReviewForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { requestRefund, clearSuccess, clearError } from '../../redux/features/orderSlice';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const OrderDetails = ({data}) => {
     const [open, setOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
+    const {isSuccess, success, isError, error} = useSelector(state => state.order);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(isSuccess) {
+            toast.success(success);
+            dispatch(clearSuccess());
+            if(data.status === "Processing Refund") {
+                navigate('./profile/orders')
+            }
+        }
+        if(isError) {
+            toast.error(error);
+            dispatch(clearError());
+        }
+    }, [isSuccess, isError])
 
     const handleRefund = () => {
-        
+        dispatch(requestRefund(data._id))
     }
 
     return (
@@ -19,8 +40,7 @@ const OrderDetails = ({data}) => {
                 <BsBagCheck size={25} />
                 <h1 className="pl-2 text-[25px]">Order Details</h1>
             </div>
-        </div>
-
+        </div>      
         <div className="w-full 800px:flex items-start">
             <div className="w-full 800px:w-[60%]">
                 <h4 className="pt-3 font-[600] text-[20px]">Shipping Address:</h4>
@@ -33,14 +53,14 @@ const OrderDetails = ({data}) => {
                 <h4 className="pt-3 font-[600] text-[20px]">Payment Info:</h4>
                 <h4 className="pt-3">Method: {data?.paymentInfo.type}</h4>
                 <h4 className="pt-3">Status: {data?.paymentInfo?.status ? data?.paymentInfo?.status : "Not Paid"}</h4>
-                {data?.status === "Delivered" &&
-                <button onClike={handleRefund} className="button3 !mt-6">
+                { data?.status === "Delivered" &&
+                <button onClick={handleRefund} className="button3 !mt-6 !bg-[green] !text-[white]">
                     Request a Refund
                 </button>}
             </div>
         </div>
     
-        <div className="w-full flex items-center justify-between mt-8">
+        <div className="w-full flex flex-col items-start 500px:flex-row 500px:items-center justify-between mt-8">
             <h5 className="text-[#00000084]">
                 Order ID: <span>#{data?._id?.slice(0, 8)}</span>
             </h5>
@@ -51,7 +71,7 @@ const OrderDetails = ({data}) => {
     
         {/* order items */}
         <div className='mt-6'>
-            {data && data?.cart.map((item, index) => 
+            { data && data?.cart.map((item, index) => 
             <div className='w-full mb-5 flex items-start' key={index}>
                 <img src={`${BACKEND_URL}/${item.product.image}`} alt="" className="w-[90x] h-[90px]" />
                 <div className="w-full flex flex-col justify-between 800px:flex-row">
@@ -62,7 +82,7 @@ const OrderDetails = ({data}) => {
                         </h5>
                     </div>
                     <div className='w-full 800px:w-[200px]'>
-                        <button onClike={() => setOpen(true) || setSelectedItem(item)} disabled={!(item.isReviewed && data?.status === "Delivered")} className="button3 ml-[auto] mr-0 w-[150px] !h-10 !mt-0">
+                        <button onClick={() => setOpen(true) || setSelectedItem(item)} disabled={item.isReviewed || data?.status !== "Delivered"} className="button3 ml-[auto] mr-0 w-[150px] !h-10 !mt-0">
                             Write a review
                         </button>
                     </div>
@@ -87,7 +107,7 @@ const OrderDetails = ({data}) => {
         </div>
         
         {open && 
-        <NewReviewForm open={open} setOpen={setOpen} selectedItem={selectedItem} setSelectedItem={setSelectedItem}/>
+        <NewReviewForm orderId={data._id} open={open} setOpen={setOpen} selectedItem={selectedItem} setSelectedItem={setSelectedItem}/>
         }
     </div>
     );

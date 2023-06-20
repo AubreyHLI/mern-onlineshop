@@ -4,6 +4,7 @@ import { clearError, clearSuccess, updateUserInfo } from '../../redux/features/u
 import { toast } from 'react-toastify';
 import { FaUserCircle } from 'react-icons/fa';
 import { CiEdit } from 'react-icons/ci';
+import { useOutletContext } from 'react-router-dom';
 
 const ProfilePage = () => {
 	const user = useSelector(state => state.user.user);
@@ -16,8 +17,10 @@ const ProfilePage = () => {
 
 	const {isSuccess, isError, error} = useSelector(state => state.user);
 	const dispatch = useDispatch();
+	const {setActive} = useOutletContext();
 
     useEffect(() => {
+		setActive(0);
         window.scrollTo(0,0);
     }, [])
 

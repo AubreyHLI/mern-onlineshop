@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Header from './Header/Header2';
 import Footer from './Footer';
 
-const CkeckoutCommonLayout = () => {
+const CheckoutCommonLayout = () => {
     return (
     <div>
         <Header />
@@ -13,4 +13,4 @@ const CkeckoutCommonLayout = () => {
     )
 }
 
-export default CkeckoutCommonLayout
+export default CheckoutCommonLayout

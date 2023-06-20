@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { MdAdd } from 'react-icons/md';
 import { clearError, clearSuccess, deleteUserAddress } from '../../redux/features/userSlice';
 import NewAddressForm from '../../components/Profile/NewAddressForm';
+import { useOutletContext } from 'react-router-dom';
 
 const AddressBook = () => {
     const [openAddForm, setOpenAddForm] = useState(false);
@@ -12,10 +13,12 @@ const AddressBook = () => {
 
     const {isSuccess, success, isError, error} = useSelector(state => state.user);
     const dispatch = useDispatch();
+    const {setActive} = useOutletContext();
 
-    useEffect(() => {
-        window.scrollTo(0,0);
-    }, [])
+	useEffect(() => {
+		setActive(6);
+		window.scrollTo(0,0);
+	},[])
 
     useEffect(() => {
 		if(isSuccess) {

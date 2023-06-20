@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Button from '@mui/material/Button';
 import { DataGrid } from '@mui/x-data-grid';
 import { AiOutlineEye } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllOrders, selectAllOrders } from "../../redux/features/orderSlice";
 
@@ -10,8 +10,10 @@ import { fetchAllOrders, selectAllOrders } from "../../redux/features/orderSlice
 const AllOrders = () => {
 	const allOrders = useSelector(selectAllOrders);
 	const dispatch = useDispatch();
+	const {setActive} = useOutletContext();
 
 	useEffect(() => {
+		setActive(1);
 		dispatch(fetchAllOrders());
 	}, []);
 
@@ -22,7 +24,7 @@ const AllOrders = () => {
 		{ field: "total", headerName: "Total", type: "number", minWidth: 100, flex: 0.2, },
 		{ field: "createdAt", headerName: "Order Date", type: "number", minWidth: 100, flex: 0.2, },
 		{ field: "preview", headerName: "Preview", flex: 0.1, minWidth: 80, type: "number", sortable: false, renderCell: (params) => 
-			<Link to={`/orders/${params.id}`}>
+			<Link to={`/admin/order/${params.id}`}>
 				<Button>
 					<AiOutlineEye size={20} />
 				</Button>

@@ -4,7 +4,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import { fetchAllBrands, selectAllBrands } from "../../redux/features/brandsSlice";
 import { MdAdd } from "react-icons/md";
 import { BACKEND_URL } from "../../static/server";
@@ -18,8 +18,10 @@ const AllBrands = () => {
     const [openAddForm, setOpenAddForm] = useState(false);
 
     const dispatch = useDispatch();
+    const {setActive} = useOutletContext();		
 
     useEffect(() => {
+        setActive(2);
         dispatch(fetchAllBrands());
     }, [])
 

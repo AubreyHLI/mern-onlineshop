@@ -4,26 +4,35 @@ import Footer from '../components/Layout/Footer';
 import OrderDetails from '../components/Profile/OrderDetails';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectUserAllOrders } from '../redux/features/orderSlice';
+import { selectUserAllOrders, selectUserOrdersLoading } from '../redux/features/orderSlice';
+import { BsBagCheck } from 'react-icons/bs';
 
 const SingleOrder = () => {
     const { id } = useParams();
     const [order, setOrder] = useState(null);
-    const allOrders = useSelector(selectUserAllOrders);
+    const userAllOrders = useSelector(selectUserAllOrders);
+    const userOrdersLoading = useSelector(selectUserOrdersLoading);
 
     useEffect(() => {
-        const o = allOrders?.find(item => item._id === id);
-        setOrder(o);
-        window.scrollTo(0,0);
-    }, [id])
+        if(!userOrdersLoading) {
+            const o = userAllOrders?.find(item => item._id === id);
+            setOrder(o);
+            window.scrollTo(0,0);
+        }
+    }, [userOrdersLoading])
 
 
     return (
+    <>
+        {!userOrdersLoading && 
         <div>
             <Header />
-            <OrderDetails data={order}/>
+            <OrderDetails data={order} />
             <Footer />
         </div>
+        }
+
+    </>
     )
 }
 

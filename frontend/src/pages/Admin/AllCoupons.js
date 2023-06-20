@@ -10,6 +10,7 @@ import NewCouponForm from "../../components/Admin/NewCouponForm";
 import DeleteConfirm from "../../components/Admin/DeleteConfirm";
 import { MdAdd } from "react-icons/md";
 import { fetchAllCoupons, selectAllCoupons } from "../../redux/features/couponSlice";
+import { useOutletContext } from "react-router-dom";
 
 const AllCoupons = () => {
     const [openAddForm, setOpenAddForm] = useState(false);
@@ -18,8 +19,10 @@ const AllCoupons = () => {
 
     const coupons = useSelector(selectAllCoupons);
     const dispatch = useDispatch();
+    const {setActive} = useOutletContext();	        
 
     useEffect(() => {
+        setActive(9);
         dispatch(fetchAllCoupons());
     }, []);
 

@@ -48,13 +48,12 @@ const sidebarData = [
 	},  
 ]
 
-const ProfileSidebar = ({ active, setActive }) => {
+const ProfileSidebar = ({ active }) => {
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
     
     const handleLogout = () => {
-		setActive(7);
         dispatch(logoutUser())
         .then((response) => {
 			toast.success(response.payload.message); 
@@ -66,7 +65,7 @@ const ProfileSidebar = ({ active, setActive }) => {
 	<div className="w-full h-full sticky left-0 p-4 pt-6 overflow-y-scroll bg-white shadow-sm rounded-[10px]">
 		{sidebarData && sidebarData.map((item, index) => {
 			return (
-				<div className="w-full flex items-center py-4 px-3 lg:p-4" onClick={() => setActive(index)} key={index}>
+				<div className="w-full flex items-center py-4 px-3 lg:p-4" key={index}>
 					<Link to={item.linkUrl} className={`w-full flex items-center ${active === index ? "text-[red]" : " "}`}>
 						{item.icon}
 						<h5 className='hidden lg:block pl-2 font-[400]'>

@@ -22,7 +22,7 @@ const { upload } = require("../utils/multer");
 
 router.post("/createProduct", upload.array("images"), createNewProduct);
 router.get("/getAllProducts", getAllProducts);
-router.put("/createNewReview", isAuthenticated, createReview);
+router.patch("/createNewReview", isAuthenticated, createReview);
 
 router.post('/addToCart/:id', isAuthenticated, addProductToCart);
 router.get('/getCartItems', isAuthenticated, getAllCartItems);

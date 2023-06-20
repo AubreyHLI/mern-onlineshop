@@ -16,10 +16,10 @@ const { isAuthenticated } = require('../middlewares/auth');
 
 router.post("/createOrder", isAuthenticated, createNewOrder);
 router.get("/getUserAllOrders", isAuthenticated, getUserAllOrders);
-router.put("/requestOrderRefund/:orderId", isAuthenticated, requestOrderRefund);
+router.patch("/requestOrderRefund/:orderId", isAuthenticated, requestOrderRefund);
 
 router.get("/adminAllOrders", getAllOrders);
-router.put("/updateOrderStatus/:orderId", updateOrderStatus);
-router.put("/acceptOrderRefund/:orderId", acceptOrderRefund);
+router.patch("/updateOrderStatus/:orderId", updateOrderStatus);
+router.patch("/acceptOrderRefund/:orderId", acceptOrderRefund);
 
 module.exports = router;

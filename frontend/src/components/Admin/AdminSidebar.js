@@ -51,12 +51,12 @@ const sidebarData = [
 ]
 
 
-const AdminSidebar = ({ active, setActive }) => {
+const AdminSidebar = ({ active }) => {
     return (
         <div className="w-[70px] 800px:w-[240px] h-full sticky left-0 pt-3 overflow-y-scroll bg-white shadow-sm">
             {sidebarData && sidebarData.map((item, index) => {
                 return (
-                    <div className="w-full flex items-center p-4 " onClick={() => setActive(index)} key={index}>
+                    <div className="w-full flex items-center p-4 " key={index}>
                         <Link to={item.linkUrl} className={`w-full flex items-center ${active === index ? "text-[rgb(132,204,22)]" : "text-[#606060]"}`}>
                             {item.icon}
                             <h5 className='hidden 800px:block pl-2 text-[18px] font-[400]'>

@@ -6,6 +6,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import NewBrandForm from "../../components/Admin/NewBrandForm";
 import DeleteConfirm from "../../components/Admin/DeleteConfirm";
 import { fetchAllUsers } from "../../redux/features/userSlice";
+import { useOutletContext } from "react-router-dom";
 
 
 const AllUsers = () => {
@@ -15,8 +16,10 @@ const AllUsers = () => {
     const [openAddForm, setOpenAddForm] = useState(false);
 
     const dispatch = useDispatch();
+    const {setActive} = useOutletContext();		
 
     useEffect(() => {
+        setActive(3);
         dispatch(fetchAllUsers());
     }, [])
 

@@ -23,6 +23,16 @@ import ProtectedRoute from './components/Layout/ProtectedRoute';
 import BrandPage from './pages/BrandPage';
 import CheckoutPage from './pages/CheckoutPage';
 import PaymentPage from './pages/PaymentPage';
+import OrderSuccessPage from './pages/OrderSuccessPage';
+import SingleOrder from './pages/SingleOrder';
+import CheckoutCommonLayout from './components/Layout/CheckoutCommonLayout';
+import ProfileCommontLayout from './components/Layout/ProfileCommontLayout';
+import UserAllOrders from './pages/Profile/UserAllOrders';
+import ProfilePage from './pages/Profile/ProfilePage';
+import ChangePassword from './pages/Profile/ChangePassword';
+import AddressBook from './pages/Profile/AddressBook';
+import AllRefundOrders from './pages/Profile/AllRefundOrders';
+import TrackOrder from './pages/Profile/TrackOrder';
 
 import AdminHomepage from './pages/Admin/AdminHomepage';
 import AdminProtectedRoute from './pages/Admin/AdminProtectedRoute';
@@ -37,16 +47,8 @@ import AllRefunds from './pages/Admin/AllRefunds';
 import AllCoupons from './pages/Admin/AllCoupons';
 import AdminMessages from './pages/Admin/AdminMessages';
 import AdminSettings from './pages/Admin/AdminSettings';
-import OrderSuccessPage from './pages/OrderSuccessPage';
-import SingleOrder from './pages/SingleOrder';
-import CkeckoutCommonLayout from './components/Layout/CkeckoutCommonLayout';
-import ProfileCommontLayout from './components/Layout/ProfileCommontLayout';
-import UserAllOrders from './pages/Profile/UserAllOrders';
-import ProfilePage from './pages/Profile/ProfilePage';
-import ChangePassword from './pages/Profile/ChangePassword';
-import AddressBook from './pages/Profile/AddressBook';
-import AllRefundOrders from './pages/Profile/AllRefundOrders';
-import TrackOrder from './pages/Profile/TrackOrder';
+import AdminSingleOrder from './pages/Admin/AdminSingleOrder';
+import { fetchUserOrders } from './redux/features/orderSlice';
 
 
 const App = () => {
@@ -61,6 +63,7 @@ const App = () => {
 		dispatch(fetchUser());
 		dispatch(fetchCartItems());
 		dispatch(fetchWishlist());
+		dispatch(fetchUserOrders());
 		console.log('app reload');
 	},[])
 
@@ -89,7 +92,7 @@ const App = () => {
 												</ProtectedRoute>
 				}/>
 				<Route path='/checkout' element={<ProtectedRoute isAuthenticated={isAuthenticated}>
-													<CkeckoutCommonLayout />
+													<CheckoutCommonLayout />
 											 	</ProtectedRoute>} >
 					<Route index element={<CheckoutPage />}/>
 					<Route path='payment' element={<PaymentPage />} />
@@ -120,6 +123,7 @@ const App = () => {
 					<Route path='allProducts' element={<AllProducts />} />
 					<Route path='allBrands' element={<AllBrands />} />
 					<Route path='allOrders' element={<AllOrders />} />
+					<Route path='order/:id' element={<AdminSingleOrder />} />
 					<Route path='allEvents' element={<AllEvents />} />
 					<Route path='allUsers' element={<AllUsers />} />
 					<Route path='allRefunds' element={<AllRefunds />}/>

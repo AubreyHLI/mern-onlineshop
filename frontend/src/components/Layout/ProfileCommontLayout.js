@@ -12,10 +12,10 @@ const ProfileCommontLayout = () => {
             <Header />
             <div className="section flex items-start justify-between w-full py-8">
                 <div className="w-[80px] lg:w-[300px] sticky">
-                    <ProfileSidebar active={active} setActive={setActive} />
+                    <ProfileSidebar active={active} />
                 </div>
                 <div className='w-[calc(100%-80px)] lg:w-[calc(100%-300px)] px-8 h-full overflow-y-scroll'>
-                    <Outlet />
+                    <Outlet context={{setActive}} />
                 </div>
             </div>
             <Footer />
