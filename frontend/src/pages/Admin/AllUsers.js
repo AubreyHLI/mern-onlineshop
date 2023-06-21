@@ -38,7 +38,7 @@ const AllUsers = () => {
         { field: "id", headerName: "User ID", minWidth: 120, flex: 0.2 },
         { field: "name", headerName: "Name", minWidth: 120, flex: 0.2, },
         { field: "email", headerName: "Email", type: "text", minWidth: 120, flex: 0.2, },
-        { field: "joinedAt", headerName: "JoinedAt", type: "text", minWidth: 80, flex: 0.1, },
+        { field: "joinedAt", headerName: "Joined At", type: "text", minWidth: 80, flex: 0.1, },
         { field: " ", flex: 0.1, minWidth: 80, headerName: "Delete User", type: "number", sortable: false, renderCell: (params) => {
             return (
                 <Button onClick={() => setUserId(params.id) || setOpenDelete(true)}>

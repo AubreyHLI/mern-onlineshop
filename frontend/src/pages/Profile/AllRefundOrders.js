@@ -1,70 +1,73 @@
 import React, { useEffect } from 'react'
 import { Link, useOutletContext } from 'react-router-dom';
 import { AiOutlineArrowRight, AiOutlineCamera, AiOutlineDelete } from "react-icons/ai";
-import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import { DataGrid } from '@mui/x-data-grid';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserOrders, selectUserAllOrders } from '../../redux/features/orderSlice';
 
 const AllRefundOrders = () => {
-  const {setActive} = useOutletContext();
+	const orders = useSelector(selectUserAllOrders);
 
-  useEffect(() => {
-    setActive(2);
-    window.scrollTo(0,0);
-  },[])
+	const dispatch = useDispatch();
+	const {setActive} = useOutletContext();
 
-  const orders = [
-    {
-      _id: "mnhukijhyt6754371628",
-      orderItems: [
-        {
-          name: 'iphone 14 pro max'
-        }
-      ],
-      totalPrice: 120,
-      orderStatus: "Processing"
-    },
-  ];
+    useEffect(() => {
+		setActive(2);
+        window.scrollTo(0,0);
+		dispatch(fetchUserOrders());
+    }, [])
 
-  const gridColumns = [
-    { field: "id", headerName: "Order ID",  flex: 0.2, },
+	const refundOrders = orders?.filter(order => order.status === "Processing refund" || order.status === "Refund Success" );
 
-    { field: "status", headerName: "Status", flex: 0.1,},
+	const gridColumns = [
+		{ field: "id", headerName: "Order ID", minWidth: 100, flex: 0.2, },
+		{ field: "status", headerName: "Status", minWidth: 100, flex: 0.2,},
+		{ field: "itemsQty", headerName: "Items Qty", type: "number", minWidth: 60, flex: 0.1, },
+		{ field: "total", headerName: "Total", type: "number", minWidth: 100, flex: 0.2, },
+		{ field: "createdAt", headerName: "Order Date", type: "number", minWidth: 100, flex: 0.2, },
+		{ field: " ",  headerName: "Details", type: "number", minWidth: 80, flex: 0.1, sortable: false, renderCell: (params) => 
+			<Link to={`/order/${params.id}`}>
+				<IconButton color="primary">
+					<AiOutlineArrowRight size={20} />
+				</IconButton>
+			</Link>
+		},
+	];
 
-    { field: "itemsQty", headerName: "Items Qty", type: "number", flex: 0.1, },
+	const gridRows = [];
 
-    { field: "total", headerName: "Total", type: "number",  flex: 0.2, },
+	refundOrders?.forEach(ord => {
+		gridRows.push({
+			id: ord._id,
+			itemsQty: ord.cart.reduce((total, item) => total + item.qty, 0),
+			total: "US$ " + ord.priceSummary.totalPrice.toFixed(2),
+			status: ord.status,
+			createdAt: ord?.createdAt.slice(0,10),
+		});
+	});
 
-    { field: " ", flex: 0.1, headerName: "", type: "number", sortable: false, renderCell: (params) => 
-        <Link to={`/user/order/${params.id}`}>
-          <Button>
-            <AiOutlineArrowRight size={20} />
-          </Button>
-        </Link>
-    },
-  ];
-
-  const gridRows = [];
-
-  orders && orders.forEach(item => {
-    gridRows.push({
-      id: item._id,
-      itemsQty: item.orderItems.length,
-      total: "US$ " + item.totalPrice,
-      status: item.orderStatus,
-    });
-  });
-
-  return (
-    <div className="pl-2 pt-1">
-      <DataGrid
-        columns={gridColumns}
-        rows={gridRows}
-        pageSize={10}
-        disableSelectionOnClick
-        autoHeight
-      />
-    </div>
-  )
+	return (
+	<>
+		<div className="w-full pl-2 normalFlex justify-between">
+            <h1 className="text-[22px] 800px:text-[26px]">Refund Orders</h1>
+        </div>
+        <div className="w-full my-4">
+            <DataGrid
+				rows={gridRows}
+				columns={gridColumns}
+				initialState={{
+					pagination: {
+						paginationModel: { page: 0, pageSize: 5 },
+					},
+				}}
+				pageSizeOptions={[5, 10, 25]}
+				disableSelectionOnClick
+				autoHeight
+            />
+        </div>
+	</>
+	)
 }
 
 export default AllRefundOrders

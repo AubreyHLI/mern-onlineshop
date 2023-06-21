@@ -123,7 +123,6 @@ export const getIsLoadingProducts = (state) => state.products.isLoadingProducts;
 export const selectProductsByBrand = createSelector(
     [selectAllProducts, (state, brandId) => brandId], 
     (allProducts, brandId) => {
-        console.log('call me');
         return allProducts.filter(p => p.brandId === brandId);
     }
 );

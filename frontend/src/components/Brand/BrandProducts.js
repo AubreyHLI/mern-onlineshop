@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import ProductCard from "../Products/ProductCard";
-import { selectProductsByBrand } from "../../redux/features/productsSlice";
 import { BACKEND_URL } from "../../static/server";
 
 
-const BrandProducts = ({brandId}) => {
+const BrandProducts = ({brandProducts}) => {
     const [active, setActive] = useState(1);
-    const brandProducts = useSelector(state => selectProductsByBrand(state, brandId));
     // const { events } = useSelector((state) => state.events);
 
 

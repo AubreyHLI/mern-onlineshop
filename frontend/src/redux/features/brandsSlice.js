@@ -36,12 +36,28 @@ export const createBrand = createAsyncThunk('brands/createBrand', async (newForm
 });
 
 
+export const getSingleBrand = createAsyncThunk('brands/getBrand', async (id, {rejectWithValue}) => {
+    try{
+        const response = await axios.get(`${SERVER_URL}/brands/getBrand/${id}`,  { withCredentials: true });
+        return response.data;
+    } catch(err) {
+        if (!err.response) {
+            throw err;
+        }
+        return rejectWithValue(err.response.data);
+    }
+});
+
+
+
+
 // create and export slice
 export const brandsSlice = createSlice({
     name: "brands",
     initialState: {
        isLoadingBrands: true,
        allBrands: null,
+       brand: null,
        isSuccess: false,
        isError: false,
        error: null,
@@ -79,6 +95,14 @@ export const brandsSlice = createSlice({
         .addCase(createBrand.rejected, (state, action) => {
             state.isLoadingBrands = false;
             state.isSuccess = false;
+            state.isError = true;
+            state.error = action.payload.message;
+        })
+        .addCase(getSingleBrand.fulfilled, (state, action) => {
+            state.isSuccess = true;
+            state.brand = action.payload.brand;
+        })
+        .addCase(getSingleBrand.rejected, (state, action) => {
             state.isError = true;
             state.error = action.payload.message;
         })

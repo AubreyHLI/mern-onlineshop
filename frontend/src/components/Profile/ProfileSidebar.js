@@ -29,12 +29,8 @@ const sidebarData = [
 	{
 		label: 'Inbox',
 		icon: <AiOutlineMessage size={25} />,
-		linkUrl: "/profile/inbox",
-	},
-	{
-		label: 'Track Order',
-		icon: <MdOutlineTrackChanges size={25} />,
-		linkUrl: "/profile/track-order",
+		// linkUrl: "/profile/inbox",
+		linkUrl: '/',
 	},
 	{
 		label: 'Change Password',

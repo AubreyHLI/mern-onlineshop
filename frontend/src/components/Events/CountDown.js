@@ -6,20 +6,20 @@ const CountDown = ({ data }) => {
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setTimeLeft(calculateTimeLeft());
-        }, 1000);
+    // useEffect(() => {
+    //     const timer = setTimeout(() => {
+    //         setTimeLeft(calculateTimeLeft());
+    //     }, 1000);
     
-        if ( typeof timeLeft.days === 'undefined' &&
-            typeof timeLeft.hours === 'undefined' &&
-            typeof timeLeft.minutes === 'undefined' &&
-            typeof timeLeft.seconds === 'undefined'
-        ) {
-            dispatch(deleteEvent(data._id));
-        }
-        return () => clearTimeout(timer);
-    });
+    //     if ( typeof timeLeft.days === 'undefined' &&
+    //         typeof timeLeft.hours === 'undefined' &&
+    //         typeof timeLeft.minutes === 'undefined' &&
+    //         typeof timeLeft.seconds === 'undefined'
+    //     ) {
+    //         dispatch(deleteEvent(data._id));
+    //     }
+    //     return () => clearTimeout(timer);
+    // });
 
 
     function calculateTimeLeft() {

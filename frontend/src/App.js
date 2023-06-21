@@ -32,7 +32,6 @@ import ProfilePage from './pages/Profile/ProfilePage';
 import ChangePassword from './pages/Profile/ChangePassword';
 import AddressBook from './pages/Profile/AddressBook';
 import AllRefundOrders from './pages/Profile/AllRefundOrders';
-import TrackOrder from './pages/Profile/TrackOrder';
 
 import AdminHomepage from './pages/Admin/AdminHomepage';
 import AdminProtectedRoute from './pages/Admin/AdminProtectedRoute';
@@ -49,6 +48,7 @@ import AdminMessages from './pages/Admin/AdminMessages';
 import AdminSettings from './pages/Admin/AdminSettings';
 import AdminSingleOrder from './pages/Admin/AdminSingleOrder';
 import { fetchUserOrders } from './redux/features/orderSlice';
+import AdminDashboard from './pages/Admin/AdminDashboard';
 
 
 const App = () => {
@@ -104,7 +104,7 @@ const App = () => {
 					<Route index element={<ProfilePage />}/>
 					<Route path='orders' element={<UserAllOrders />} />
 					<Route path='refunds' element={<AllRefundOrders />} />
-					<Route path='track-order' element={<TrackOrder />} />
+					{/* <Route path='track-order' element={<TrackOrder />} /> */}
 					<Route path='change-password' element={<ChangePassword />} />
 					<Route path='addresses' element={<AddressBook />} />
 					
@@ -119,7 +119,8 @@ const App = () => {
 				<Route path='/admin' element={<AdminProtectedRoute isAdmin={isAdmin}>
 												<AdminCommonLayout />
 											 </AdminProtectedRoute>} >
-					<Route index element={<AdminHomepage />}/>
+					{/* <Route index element={<AdminHomepage />}/> */}
+					<Route index element={<AdminDashboard />}/>
 					<Route path='allProducts' element={<AllProducts />} />
 					<Route path='allBrands' element={<AllBrands />} />
 					<Route path='allOrders' element={<AllOrders />} />

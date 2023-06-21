@@ -18,7 +18,7 @@ const ChangePassword = () => {
 	const {setActive} = useOutletContext();
 
 	useEffect(() => {
-		setActive(5);
+		setActive(4);
 		window.scrollTo(0,0);
 	},[])
 

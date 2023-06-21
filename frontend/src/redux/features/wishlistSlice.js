@@ -39,7 +39,6 @@ export const addProductToWishlist = createAsyncThunk('wishlist/addToWishlist', a
 export const deleteInWishlist = createAsyncThunk('wishlist/deleteProductInWishlist', async (id, {rejectWithValue}) => {
     try{
         const response = await axios.delete(`${SERVER_URL}/products/deleteWishItem/${id}`, { withCredentials: true });
-        console.log('itemid:', id);
         return response.data;
     } catch(err) {
         if (!err.response) {

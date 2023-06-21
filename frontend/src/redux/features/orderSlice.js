@@ -52,7 +52,6 @@ export const fetchAllOrders = createAsyncThunk('order/getAllOrders', async (_, {
 
 export const requestRefund = createAsyncThunk('order/requestRefund', async (orderId, {rejectWithValue}) => {
     try{
-        console.log('1');
         const response = await axios.patch(`${SERVER_URL}/orders/requestOrderRefund/${orderId}`, 
         { 
             status: "Processing refund"

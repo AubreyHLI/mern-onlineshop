@@ -16,7 +16,7 @@ const AddressBook = () => {
     const {setActive} = useOutletContext();
 
 	useEffect(() => {
-		setActive(6);
+		setActive(5);
 		window.scrollTo(0,0);
 	},[])
 

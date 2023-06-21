@@ -5,7 +5,6 @@ import OrderDetails from '../components/Profile/OrderDetails';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUserAllOrders, selectUserOrdersLoading } from '../redux/features/orderSlice';
-import { BsBagCheck } from 'react-icons/bs';
 
 const SingleOrder = () => {
     const { id } = useParams();
@@ -19,7 +18,7 @@ const SingleOrder = () => {
             setOrder(o);
             window.scrollTo(0,0);
         }
-    }, [userOrdersLoading])
+    }, [userOrdersLoading, id])
 
 
     return (
@@ -31,7 +30,6 @@ const SingleOrder = () => {
             <Footer />
         </div>
         }
-
     </>
     )
 }

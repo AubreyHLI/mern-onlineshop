@@ -11,7 +11,7 @@ const ProfileCommontLayout = () => {
         <div className='w-full'>
             <Header />
             <div className="section flex items-start justify-between w-full py-8">
-                <div className="w-[80px] lg:w-[300px] sticky">
+                <div className="w-[80px] lg:w-[300px] sticky pb-2">
                     <ProfileSidebar active={active} />
                 </div>
                 <div className='w-[calc(100%-80px)] lg:w-[calc(100%-300px)] px-8 h-full overflow-y-scroll'>
