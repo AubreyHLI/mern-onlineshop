@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineDelete } from "react-icons/ai";
 import NewBrandForm from "../../components/Admin/NewBrandForm";
 import DeleteConfirm from "../../components/Admin/DeleteConfirm";
-import { fetchAllUsers } from "../../redux/features/userSlice";
+import { deleteUserById, fetchAllUsers, clearSuccess, clearError } from "../../redux/features/userSlice";
 import { useOutletContext } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 const AllUsers = () => {
-    const { users } = useSelector((state) => state.user);
+    const {users, isSuccess, success, isError, error} = useSelector(state => state.user);
     const [userId, setUserId] = useState("");
     const [openDelete, setOpenDelete] = useState(false);
     const [openAddForm, setOpenAddForm] = useState(false);
@@ -23,15 +24,20 @@ const AllUsers = () => {
         dispatch(fetchAllUsers());
     }, [])
 
+    useEffect(() => {
+        if(isSuccess) {
+            toast.success(success);
+            dispatch(clearSuccess());
+        }
+        if(isError) {
+            toast.error(error);
+            dispatch(clearError());
+        }
+    }, [isSuccess, isError])
 
-    const handleDelete = async (id) => {
-        // await axios
-        // .delete(`${server}/user/delete-user/${id}`, { withCredentials: true })
-        // .then((res) => {
-        // toast.success(res.data.message);
-        // });
 
-        // dispatch(getAllUsers());
+    const handleDelete = (id) => {
+        dispatch(deleteUserById(id))
     };
 
     const gridColumns = [

@@ -3,13 +3,13 @@ import Button from '@mui/material/Button';
 import { DataGrid } from '@mui/x-data-grid';
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { Link, useOutletContext } from "react-router-dom";
-// import { deleteProduct } from "../../redux/actions/product";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllProducts, selectAllProducts } from "../../redux/features/productsSlice";
+import { deleteProductById, fetchAllProducts, selectAllProducts, clearSuccess, clearError } from "../../redux/features/productsSlice";
 import { MdAdd } from "react-icons/md";
 import { BACKEND_URL } from "../../static/server";
 import NewProductForm from "../../components/Admin/NewProductForm";
 import DeleteConfirm from "../../components/Admin/DeleteConfirm";
+import { toast } from "react-toastify";
 
 
 const AllProducts = () => {
@@ -17,6 +17,7 @@ const AllProducts = () => {
     const [productId, setProductId] = useState("");
     const [openDelete, setOpenDelete] = useState(false);
     const [openAddForm, setOpenAddForm] = useState(false);
+    const {isSuccess, success, isError, error} = useSelector(state => state.products);
     
 	const dispatch = useDispatch();
     const {setActive} = useOutletContext();	        
@@ -26,15 +27,20 @@ const AllProducts = () => {
         dispatch(fetchAllProducts());
     }, [])
 
+    useEffect(() => {
+        if(isSuccess) {
+            toast.success(success);
+            dispatch(clearSuccess());
+        }
+        if(isError) {
+            toast.error(error);
+            dispatch(clearError());
+        }
+    }, [isSuccess, isError])
 
-    const handleDelete = async (id) => {
-        //     await axios
-        //     .delete(`${server}/shop/delete-seller/${id}`, { withCredentials: true })
-        //     .then((res) => {
-        //     toast.success(res.data.message);
-        //     });
-    
-        //     dispatch(getAllSellers());
+
+    const handleDelete = (id) => {    
+        dispatch(deleteProductById(id));
     };
 
     const gridColumns = [

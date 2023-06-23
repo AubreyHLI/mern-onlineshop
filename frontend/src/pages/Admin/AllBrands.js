@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { Link, useOutletContext } from "react-router-dom";
-import { fetchAllBrands, selectAllBrands } from "../../redux/features/brandsSlice";
+import { deleteBrandById, fetchAllBrands, selectAllBrands, clearError, clearSuccess } from "../../redux/features/brandsSlice";
 import { MdAdd } from "react-icons/md";
 import { BACKEND_URL } from "../../static/server";
 import NewBrandForm from "../../components/Admin/NewBrandForm";
@@ -16,6 +16,7 @@ const AllBrands = () => {
     const [brandId, setBrandId] = useState("");
     const [openDelete, setOpenDelete] = useState(false);
     const [openAddForm, setOpenAddForm] = useState(false);
+    const {isSuccess, success, isError, error} = useSelector(state => state.brands);
 
     const dispatch = useDispatch();
     const {setActive} = useOutletContext();		
@@ -25,14 +26,20 @@ const AllBrands = () => {
         dispatch(fetchAllBrands());
     }, [])
 
-    const handleDelete = async (id) => {
-    //     await axios
-    //     .delete(`${server}/shop/delete-seller/${id}`, { withCredentials: true })
-    //     .then((res) => {
-    //     toast.success(res.data.message);
-    //     });
+    useEffect(() => {
+        if(isSuccess) {
+            toast.success(success);
+            dispatch(clearSuccess());
+        }
+        if(isError) {
+            toast.error(error);
+            dispatch(clearError());
+        }
+    }, [isSuccess, isError])
 
-    //     dispatch(getAllSellers());
+
+    const handleDelete = (id) => {
+        dispatch(deleteBrandById(id))
      };
 
     const gridColumns = [

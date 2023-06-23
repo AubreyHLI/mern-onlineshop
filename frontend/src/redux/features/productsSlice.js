@@ -35,6 +35,18 @@ export const createProduct = createAsyncThunk('products/createProduct', async (n
     }
 });
 
+export const deleteProductById = createAsyncThunk('products/deleteProduct', async (id, {rejectWithValue}) => {
+    try{
+        const response = await axios.delete(`${SERVER_URL}/products/deleteProduct/${id}`, { withCredentials: true });
+        return response.data;
+    } catch(err) {
+        if (!err.response) {
+            throw err;
+        }
+        return rejectWithValue(err.response.data);
+    }
+});
+
 export const createNewReview = createAsyncThunk('products/createNewReview', async (newObj, {rejectWithValue}) => {
     try{
         const response = await axios.patch(
@@ -88,20 +100,25 @@ export const productsSlice = createSlice({
             state.isLoadingProducts = false;
             state.error = action.payload.message;
         })
-        .addCase(createProduct.pending, (state) => {
-            state.isLoadingProducts = true;
-        })
         .addCase(createProduct.fulfilled, (state, action) => {
-            state.isLoadingProducts = false;
             state.isSuccess = true;
             state.allProducts = action.payload.products;
         })
         .addCase(createProduct.rejected, (state, action) => {
-            state.isLoadingProducts = false;
-            state.isSuccess = false;
             state.isError = true;
             state.error = action.payload.message;
         })
+        .addCase(deleteProductById.fulfilled, (state, action) => {
+            state.isSuccess = true;
+            state.allProducts = action.payload.products;
+            state.success = action.payload.message;
+        })
+        .addCase(deleteProductById.rejected, (state, action) => {
+            state.isError = true;
+            state.error = action.payload.message;
+        })
+
+
         .addCase(createNewReview.fulfilled, (state, action) => {
             state.isSuccess = true;
             state.success = action.payload.message;

@@ -24,11 +24,6 @@ const AdminHeader = ({active}) => {
         <div className="flex items-center">
             <div className="hidden 500px:flex items-center mr-4 gap-5 800px:gap-8 800px:mr-8">
                 <div>
-                    <Link to="/admin/allCoupons" className={`w-full flex items-center ${active === 9 ? "text-[rgb(132,204,22)]" : "text-[#606060]"}`}>
-                        <AiOutlineGift size={30} className="cursor-pointer" />
-                    </Link>
-                </div>
-                <div>
                     <Link to="/admin/messages" className={`w-full flex items-center ${active === 10 ? "text-[rgb(132,204,22)]": "text-[#606060]"}`}>
                         <BiMessageSquareDetail size={30} className="cursor-pointer" />
                     </Link>

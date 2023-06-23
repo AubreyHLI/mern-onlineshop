@@ -48,6 +48,18 @@ export const getSingleBrand = createAsyncThunk('brands/getBrand', async (id, {re
     }
 });
 
+export const deleteBrandById = createAsyncThunk('cart/deleteBrand', async (id, {rejectWithValue}) => {
+    try{
+        const response = await axios.delete(`${SERVER_URL}/brands/deleteBrand/${id}`, { withCredentials: true });
+        return response.data;
+    } catch(err) {
+        if (!err.response) {
+            throw err;
+        }
+        return rejectWithValue(err.response.data);
+    }
+});
+
 
 
 
@@ -59,6 +71,7 @@ export const brandsSlice = createSlice({
        allBrands: null,
        brand: null,
        isSuccess: false,
+       success: null,
        isError: false,
        error: null,
     },
@@ -69,6 +82,7 @@ export const brandsSlice = createSlice({
         },
         clearSuccess: (state, action) => {
             state.isSuccess = false;
+            state.success = null;
         },
     },
     extraReducers(builder) {
@@ -84,17 +98,11 @@ export const brandsSlice = createSlice({
             state.isLoadingBrands = false;
             state.error = action.payload.message;
         })
-        .addCase(createBrand.pending, (state) => {
-            state.isLoadingBrands = true;
-        })
         .addCase(createBrand.fulfilled, (state, action) => {
-            state.isLoadingBrands = false;
             state.isSuccess = true;
             state.allBrands = action.payload.brands;
         })
         .addCase(createBrand.rejected, (state, action) => {
-            state.isLoadingBrands = false;
-            state.isSuccess = false;
             state.isError = true;
             state.error = action.payload.message;
         })
@@ -103,6 +111,15 @@ export const brandsSlice = createSlice({
             state.brand = action.payload.brand;
         })
         .addCase(getSingleBrand.rejected, (state, action) => {
+            state.isError = true;
+            state.error = action.payload.message;
+        })
+        .addCase(deleteBrandById.fulfilled, (state, action) => {
+            state.isSuccess = true;
+            state.allBrands = action.payload.brands;
+            state.success = action.payload.message;
+        })
+        .addCase(deleteBrandById.rejected, (state, action) => {
             state.isError = true;
             state.error = action.payload.message;
         })

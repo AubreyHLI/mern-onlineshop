@@ -43,6 +43,23 @@ const getAllProducts = asyncHandler( async(request, response, next) => {
     });
 })
 
+// delete product
+const deleteProductById = asyncHandler(async (req, res, next) => {
+    const product = await Product.findByIdAndDelete(req.params.id);
+    if (!product) {
+        return next(new CustomErrorClass(400, "Product is not available with this id"));
+    }
+
+    const products = await Product.find().sort({ createdAt: -1 });
+
+    res.status(201).json({
+        success: true,
+        message: "Product deleted successfully!",
+        products,
+    });
+})
+
+
 
 // review for a product
 const createReview = asyncHandler( async(request, response, next) => { 
@@ -177,7 +194,8 @@ const addProductToWishlist = asyncHandler(async (req, res, next) => {
         const user1 = await User.findOneAndUpdate({_id: userId}, {$pull: {wishlist: { productId: productId }}}, {new:true});
         res.status(201).json({
             success: true,
-            wishItems: user1.wishlist, 
+            wishItems: user1.wishlist,
+            message:'Item removed from wishlist',
         });
     } else { // add the new product to the wishlist array
         const user2 = await User.findOneAndUpdate(
@@ -191,6 +209,7 @@ const addProductToWishlist = asyncHandler(async (req, res, next) => {
         res.status(201).json({
             success: true,
             wishItems: user2.wishlist, 
+            message:'Item added to wishlist successfully!'
         });
     }
 })
@@ -228,6 +247,7 @@ const deleteProductInWishlist = asyncHandler(async (req, res, next) => {
 module.exports = {
     createNewProduct,
     getAllProducts,
+    deleteProductById,
     createReview,
 
     addProductToCart,

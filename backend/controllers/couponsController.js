@@ -22,7 +22,6 @@ const createNewCoupon = asyncHandler(async (req, res, next) => {
 // get all coupons 
 const getAllCoupons = asyncHandler(async (req, res, next) => {
     const coupons = await Coupon.find().sort({ createdAt: -1 });
-    console.log('coupons:', coupons);
     res.status(201).json({
         success: true,
         coupons,
@@ -41,24 +40,19 @@ const getCouponByCode = asyncHandler(async (req, res, next) => {
     });
 })
 
-// delete coupon code
-const deleteCoupon =  asyncHandler(async (req, res, next) => {
-//     try {
-//         const couponCode = await couponCode.findByIdAndDelete(req.params.id);
-
-//         if (!couponCode) {
-//             return next(new ErrorHandler("Coupon code dosen't exists!", 400));
-//         }
-//         res.status(201).json({
-//             success: true,
-//             message: "Coupon code deleted successfully!",
-//         });
-//     } catch (error) {
-//         return next(new ErrorHandler(error, 400));
-//     }
+// delete coupon
+const deleteCoupon = asyncHandler(async (req, res, next) => {
+    const coupon = await Coupon.findByIdAndDelete(req.params.id);
+    if (!coupon) {
+        return next(new CustomErrorClass(400, "Coupon dosen't exists!"));
+    }
+    const coupons = await Coupon.find().sort({ createdAt: -1 });
+    res.status(201).json({
+        success: true,
+        message: "Coupon deleted successfully!",
+        coupons,
+    });
 })
-
-
 
 
 module.exports = {

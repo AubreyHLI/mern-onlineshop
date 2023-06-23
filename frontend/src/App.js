@@ -33,7 +33,6 @@ import ChangePassword from './pages/Profile/ChangePassword';
 import AddressBook from './pages/Profile/AddressBook';
 import AllRefundOrders from './pages/Profile/AllRefundOrders';
 
-import AdminHomepage from './pages/Admin/AdminHomepage';
 import AdminProtectedRoute from './pages/Admin/AdminProtectedRoute';
 import LoginAdmin from './pages/Admin/LoginAdmin';
 import AdminCommonLayout from './components/Admin/AdminCommonLayout';
@@ -119,7 +118,6 @@ const App = () => {
 				<Route path='/admin' element={<AdminProtectedRoute isAdmin={isAdmin}>
 												<AdminCommonLayout />
 											 </AdminProtectedRoute>} >
-					{/* <Route index element={<AdminHomepage />}/> */}
 					<Route index element={<AdminDashboard />}/>
 					<Route path='allProducts' element={<AllProducts />} />
 					<Route path='allBrands' element={<AllBrands />} />

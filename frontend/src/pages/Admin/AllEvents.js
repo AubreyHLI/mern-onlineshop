@@ -3,11 +3,12 @@ import Button from '@mui/material/Button';
 import { DataGrid } from '@mui/x-data-grid';
 import { useDispatch, useSelector } from 'react-redux';
 import NewEventForm from '../../components/Admin/NewEventForm'
-import { fetchAllEvents, selectAllEvents } from '../../redux/features/eventsSlice';
+import { fetchAllEvents, selectAllEvents, deleteEventById, clearError, clearSuccess } from '../../redux/features/eventsSlice';
 import { MdAdd } from 'react-icons/md';
 import DeleteConfirm from '../../components/Admin/DeleteConfirm';
 import { AiOutlineDelete, AiOutlineEye } from 'react-icons/ai';
 import { Link, useOutletContext } from 'react-router-dom';
+import { toast } from "react-toastify";
 
 
 const AllEvents = () => {
@@ -15,6 +16,7 @@ const AllEvents = () => {
     const [eventId, setEventId] = useState("");
     const [openDelete, setOpenDelete] = useState(false);
     const [openAddForm, setOpenAddForm] = useState(false);
+    const {isSuccess, success, isError, error} = useSelector(state => state.events);
 
     const dispatch = useDispatch();
     const {setActive} = useOutletContext();	        
@@ -24,9 +26,19 @@ const AllEvents = () => {
         dispatch(fetchAllEvents());
     }, [])
 
+    useEffect(() => {
+        if(isSuccess) {
+            toast.success(success);
+            dispatch(clearSuccess());
+        }
+        if(isError) {
+            toast.error(error);
+            dispatch(clearError());
+        }
+    }, [isSuccess, isError]);
+
     const handleDelete = (id) => {
-        // dispatch(deleteEvent(id));
-        // window.location.reload();
+        dispatch(deleteEventById(id));
     }
     
     const gridColumns = [

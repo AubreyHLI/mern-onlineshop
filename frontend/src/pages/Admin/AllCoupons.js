@@ -3,13 +3,11 @@ import Button from '@mui/material/Button';
 import { DataGrid } from '@mui/x-data-grid';
 import { AiOutlineDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { SERVER_URL } from "../../static/server";
 import { toast } from "react-toastify";
-import axios from "axios";
 import NewCouponForm from "../../components/Admin/NewCouponForm";
 import DeleteConfirm from "../../components/Admin/DeleteConfirm";
 import { MdAdd } from "react-icons/md";
-import { fetchAllCoupons, selectAllCoupons } from "../../redux/features/couponSlice";
+import { deleteCouponById, fetchAllCoupons, selectAllCoupons, clearError, clearSuccess } from "../../redux/features/couponSlice";
 import { useOutletContext } from "react-router-dom";
 
 const AllCoupons = () => {
@@ -18,19 +16,29 @@ const AllCoupons = () => {
     const [couponId, setCouponId] = useState("");
 
     const coupons = useSelector(selectAllCoupons);
+    const {isSuccess, success, isError, error} = useSelector(state => state.coupons);
+
     const dispatch = useDispatch();
     const {setActive} = useOutletContext();	        
 
     useEffect(() => {
-        setActive(9);
+        setActive(7);
         dispatch(fetchAllCoupons());
     }, []);
 
-    const handleDelete = async (id) => {
-        // axios.delete(`${SERVER_URL}/coupon/delete-coupon/${id}`,{withCredentials: true}).then((res) => {
-        // toast.success("Coupon code deleted succesfully!")
-        // })
-        // window.location.reload();
+    useEffect(() => {
+        if(isSuccess) {
+            toast.success(success);
+            dispatch(clearSuccess());
+        }
+        if(isError) {
+            toast.error(error);
+            dispatch(clearError());
+        }
+    }, [isSuccess, isError])
+
+    const handleDelete = (id) => {
+        dispatch(deleteCouponById(id));
     };
 
     const gridColumns = [

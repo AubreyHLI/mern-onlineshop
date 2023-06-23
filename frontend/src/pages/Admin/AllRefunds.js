@@ -12,7 +12,7 @@ const AllRefunds = () => {
 	const {setActive} = useOutletContext();
 
 	useEffect(() => {
-		setActive(7);
+		setActive(6);
 		dispatch(fetchAllOrders());
 	}, []);
 

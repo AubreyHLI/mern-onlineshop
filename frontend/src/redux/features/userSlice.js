@@ -118,6 +118,18 @@ export const fetchAllUsers = createAsyncThunk('user/fetchAllUsers', async (_, {r
     }
 });
 
+export const deleteUserById = createAsyncThunk('user/deleteUser', async (id, {rejectWithValue}) => {
+    try{
+        const response = await axios.delete(`${SERVER_URL}/users/deleteUser/${id}`, { withCredentials: true });
+        return response.data;
+    } catch(err) {
+        if (!err.response) {
+            throw err;
+        }
+        return rejectWithValue(err.response.data);
+    }
+});
+
 
 // create and export slice
 export const userSlice = createSlice({
@@ -235,7 +247,6 @@ export const userSlice = createSlice({
         })
         .addCase(loginAdmin.rejected, (state, action) => {
             state.loading = false;
-            state.isSuccess = false;
             state.isError = true;
             state.error = action.payload.message;
         })
@@ -248,6 +259,15 @@ export const userSlice = createSlice({
         })
         .addCase(fetchAllUsers.rejected, (state, action) => {
             state.loading = false;
+            state.error = action.payload.message;
+        })
+        .addCase(deleteUserById.fulfilled, (state, action) => {
+            state.isSuccess = true;
+            state.success = action.payload.message;
+            state.users = action.payload.users;
+        })
+        .addCase(deleteUserById.rejected, (state, action) => {
+            state.isError = true;
             state.error = action.payload.message;
         })
     }

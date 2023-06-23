@@ -48,7 +48,7 @@ export const fetchEventsByBrand = createAsyncThunk('events/fetchEventsByBrand', 
 });
 
 
-export const deleteEvent = createAsyncThunk('events/deleteEvent', async (eventId, {rejectWithValue}) => {
+export const deleteEventById = createAsyncThunk('events/deleteEvent', async (eventId, {rejectWithValue}) => {
     try{
         const response = await axios.delete(`${SERVER_URL}/events/deleteEvent/${eventId}`);
         return response.data;
@@ -81,6 +81,7 @@ export const eventsSlice = createSlice({
         isLoading: true,
         allEvents: null,
         isSuccess: false,
+        success: null,
         isError: false,
         error: null,
     },
@@ -91,6 +92,7 @@ export const eventsSlice = createSlice({
         },
         clearSuccess: (state, action) => {
             state.isSuccess = false;
+            state.success = null;
         },
     },
     extraReducers(builder) {
@@ -106,17 +108,12 @@ export const eventsSlice = createSlice({
             state.isLoading= false;
             state.error = action.payload.message;
         })
-        .addCase(createEvent.pending, (state) => {
-            state.isLoading= true;
-        })
+        
         .addCase(createEvent.fulfilled, (state, action) => {
-            state.isLoading= false;
             state.isSuccess = true;
             state.allEvents = action.payload.events;
         })
         .addCase(createEvent.rejected, (state, action) => {
-            state.isLoading= false;
-            state.isSuccess = false;
             state.isError = true;
             state.error = action.payload.message;
         })
@@ -131,20 +128,17 @@ export const eventsSlice = createSlice({
             state.isLoading= false;
             state.error = action.payload.message;
         })
-        .addCase(deleteEvent.pending, (state) => {
-            state.isLoading= true;
+       
+        .addCase(deleteEventById.fulfilled, (state, action) => {
+            state.isSuccess = true;
+            state.success = action.payload.message;
+            state.allEvents = action.payload.events;
         })
-        .addCase(deleteEvent.fulfilled, (state, action) => {
-            state.isLoading= false;
-            state.message = action.payload.message;
-        })
-        .addCase(deleteEvent.rejected, (state, action) => {
-            state.isLoading= false;
+        .addCase(deleteEventById.rejected, (state, action) => {
+            state.isError = true;
             state.error = action.payload.message;
         })
-        .addCase(deleteEventsByProduct.pending, (state) => {
-            state.isLoading= true;
-        })
+      
         .addCase(deleteEventsByProduct.fulfilled, (state, action) => {
             state.isLoading= false;
             state.message = action.payload.message;

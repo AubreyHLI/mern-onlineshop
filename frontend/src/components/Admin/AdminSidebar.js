@@ -5,7 +5,7 @@ import { RxDashboard } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { HiOutlineReceiptRefund, HiOutlineUserGroup } from "react-icons/hi";
 import { MdOutlineLocalOffer } from "react-icons/md";
-import { BiMoneyWithdraw } from "react-icons/bi";
+import { AiOutlineGift } from "react-icons/ai";
 
 const sidebarData = [
     {
@@ -39,14 +39,14 @@ const sidebarData = [
         linkUrl: "/admin/allEvents",
     },
     {
-        label: 'Withdraw Request',
-        icon:  <BiMoneyWithdraw size={30} />,
-        linkUrl: "/admin/withdrawRequest",
-    },
-    {
         label: 'Refunds',
         icon: <HiOutlineReceiptRefund size={30} />,
         linkUrl: "/admin/allRefunds",
+    },
+    {
+        label: 'All Coupons',
+        icon: <AiOutlineGift size={30} />,
+        linkUrl: "/admin/allCoupons",
     }
 ]
 

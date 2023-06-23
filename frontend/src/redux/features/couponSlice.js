@@ -3,7 +3,7 @@ import axios from "axios";
 import { SERVER_URL } from "../../static/server";
 
 /* aynsc actions defined by createAsyncThunk, outside of slice */
-export const fetchAllCoupons = createAsyncThunk('events/fetchAllCoupons', async (_, {rejectWithValue}) => {
+export const fetchAllCoupons = createAsyncThunk('coupon/fetchAllCoupons', async (_, {rejectWithValue}) => {
     try{
         const response = await axios.get(`${SERVER_URL}/coupons/getAllCoupons`, { withCredentials: true });
         return response.data;
@@ -16,7 +16,7 @@ export const fetchAllCoupons = createAsyncThunk('events/fetchAllCoupons', async 
 });
 
 
-export const createCoupon = createAsyncThunk('events/createCounpon', async (newCoupon, {rejectWithValue}) => {
+export const createCoupon = createAsyncThunk('coupon/createCounpon', async (newCoupon, {rejectWithValue}) => {
     try{
         const response = await axios.post(`${SERVER_URL}/coupons/createCoupon`, 
             newCoupon, 
@@ -33,6 +33,19 @@ export const createCoupon = createAsyncThunk('events/createCounpon', async (newC
         return rejectWithValue(err.response.data);
     }
 });
+
+export const deleteCouponById = createAsyncThunk('coupon/deleteCoupon', async (id, {rejectWithValue}) => {
+    try{
+        const response = await axios.delete(`${SERVER_URL}/coupons/deleteCoupon/${id}`, { withCredentials: true });
+        return response.data;
+    } catch(err) {
+        if (!err.response) {
+            throw err;
+        }
+        return rejectWithValue(err.response.data);
+    }
+});
+
 
 // create and export slice
 export const couponsSlice = createSlice({
@@ -72,13 +85,20 @@ export const couponsSlice = createSlice({
             state.isLoading= true;
         })
         .addCase(createCoupon.fulfilled, (state, action) => {
-            state.isLoading= false;
             state.isSuccess = true;
             state.success =  action.payload.message;
             state.allCoupons = action.payload.coupons;
         })
         .addCase(createCoupon.rejected, (state, action) => {
-            state.isLoading= false;
+            state.isError = true;
+            state.error = action.payload.message;
+        })
+        .addCase(deleteCouponById.fulfilled, (state, action) => {
+            state.isSuccess = true;
+            state.success =  action.payload.message;
+            state.allCoupons = action.payload.coupons;
+        })
+        .addCase(deleteCouponById.rejected, (state, action) => {
             state.isError = true;
             state.error = action.payload.message;
         })

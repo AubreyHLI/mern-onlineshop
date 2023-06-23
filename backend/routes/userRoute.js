@@ -36,5 +36,4 @@ router.post('/loginAdmin', loginAdmin);
 router.get('/getAllUsers', getAllUsers);
 router.delete('/deleteUser/:id', deleteUserById);
 
-
 module.exports = router;

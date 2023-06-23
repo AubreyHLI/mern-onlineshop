@@ -5,6 +5,7 @@ const router = express.Router();
 const {
     createNewProduct,
     getAllProducts,
+    deleteProductById,
     createReview,
     addProductToCart,
     updateProductInCart,
@@ -22,6 +23,7 @@ const { upload } = require("../utils/multer");
 
 router.post("/createProduct", upload.array("images"), createNewProduct);
 router.get("/getAllProducts", getAllProducts);
+router.delete("/deleteProduct/:id", deleteProductById);
 router.patch("/createNewReview", isAuthenticated, createReview);
 
 router.post('/addToCart/:id', isAuthenticated, addProductToCart);

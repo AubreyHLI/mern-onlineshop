@@ -201,35 +201,31 @@ const loginAdmin = asyncHandler( async (request, response, next) => {
 
 
 const getAllUsers =  asyncHandler( async (req, res, next) => {
-    try {
-        const users = await User.find().sort({
-            createdAt: -1,
-        });
-        res.status(200).json({
-            success: true,
-            users,
-        });
-    } catch (error) {
-        return next(new CustomErrorClass(500, error.message));
-    }
+    const users = await User.find().sort({
+        createdAt: -1,
+    });
+    res.status(200).json({
+        success: true,
+        users,
+    });
 })
   
 
 const deleteUserById = asyncHandler(async (req, res, next) => {
-    try {
-        const user = await User.findById(req.params.id);
-        if (!user) {
-            return next(new CustomErrorClass(400, "User is not available with this id"));
-        }
-        await User.findByIdAndDelete(req.params.id);
-
-        res.status(201).json({
-            success: true,
-            message: "User deleted successfully!",
-        });
-    } catch (error) {
-        return next(new CustomErrorClass(500, error.message));
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) {
+        return next(new CustomErrorClass(400, "User is not available with this id"));
     }
+
+    const users = await User.find().sort({
+        createdAt: -1,
+    });
+
+    res.status(201).json({
+        success: true,
+        message: "User deleted successfully!",
+        users,
+    });
 })
 
 
