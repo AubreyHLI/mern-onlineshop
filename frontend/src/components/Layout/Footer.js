@@ -6,10 +6,10 @@ import logoWhite from '../../assets/logo-white.png';
 
 const Footer = () => {
   return (
-    <div className="bg-[#000] text-white">
-      <div className="md:flex md:justify-between md:items-center sm:px-12 px-4 bg-[#342ac8] py-7">
+    <div className="bg-lime-600 text-white">
+      {/* <div className="md:flex md:justify-between md:items-center sm:px-12 px-4 bg-lime-500 py-7">
         <h1 className="lg:text-4xl text-3xl md:mb-0 mb-6 lg:leading-normal font-semibold md:w-2/5">
-          <span className="text-[#56d879]">Subscribe</span> us for get news{" "}
+          <span className="text-[#3957db]">Subscribe</span> us for get news{" "}
           <br />
           events and offers
         </h1>
@@ -21,11 +21,11 @@ const Footer = () => {
             className="text-gray-800
                 sm:w-72 w-full sm:mr-5 mr-1 lg:mb-0 mb-4 py-2.5 rounded px-2 focus:outline-none"
           />
-          <button className="bg-[#56d879] hover:bg-teal-500 duration-300 px-5 py-2.5 rounded-md text-whie md:w-auto w-full">
+          <button className="bg-[#cccccc] hover:bg-teal-500 duration-300 px-5 py-2.5 rounded-md text-whie md:w-auto w-full">
             Submit
           </button>
         </div>
-      </div>
+      </div> */}
       <div className="sm:px-8">
         <div className="grid grid-cols-1 500px:grid-cols-3 1100px:grid-cols-5 gap-6 py-16 sm:text-center">
           <ul className="text-center sm:text-start flex flex-col items-center 500px:col-span-3 1100px:col-span-2 sm:block">
@@ -52,11 +52,7 @@ const Footer = () => {
             <h1 className="mb-1 font-semibold">Company</h1>
             {footerProductLinks.map((link,index) => (
               <li key={index}>
-                <Link
-                  className="text-gray-400 hover:text-teal-400 duration-300
-                    text-sm cursor-pointer leading-6"
-                  to={link.link}
-                >
+                <Link to={link.link} className="text-white hover:text-[#333333] duration-300 text-sm cursor-pointer leading-6" >
                   {link.name}
                 </Link>
               </li>
@@ -67,11 +63,7 @@ const Footer = () => {
             <h1 className="mb-1 font-semibold">Shop</h1>
             {footercompanyLinks.map((link,index) => (
               <li key={index}>
-                <Link
-                  className="text-gray-400 hover:text-teal-400 duration-300
-                    text-sm cursor-pointer leading-6"
-                  to={link.link}
-                >
+                <Link to={link.link} className="text-white hover:text-[#333333] duration-300 text-sm cursor-pointer leading-6" >
                   {link.name}
                 </Link>
               </li>
@@ -82,11 +74,7 @@ const Footer = () => {
             <h1 className="mb-1 font-semibold">Support</h1>
             {footerSupportLinks.map((link,index) => (
               <li key={index}>
-                <Link
-                  className="text-gray-400 hover:text-teal-400 duration-300
-                    text-sm cursor-pointer leading-6"
-                  to={link.link}
-                >
+                <Link to={link.link} className="text-white hover:text-[#333333] duration-300 text-sm cursor-pointer leading-6" >
                   {link.name}
                 </Link>
               </li>
@@ -94,7 +82,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className="grid items-end grid-cols-1 500px:grid-cols-2 lg:grid-cols-3 gap-6 text-center text-gray-400 text-sm pb-6 pl-3">
+        <div className="grid items-end grid-cols-1 500px:grid-cols-2 lg:grid-cols-3 gap-6 text-center text-white text-sm pb-6 pl-3">
           <span>© 2023 Aubrey. All rights reserved.</span>
           <span>Terms · Privacy Policy</span>
           <div className="flex items-center justify-center w-full 500px:col-span-2 lg:col-span-1">

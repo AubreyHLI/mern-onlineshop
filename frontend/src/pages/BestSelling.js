@@ -21,10 +21,15 @@ const BestSelling = () => {
     return (
     <div>
         <Header activeHeading={2}/>
-        <div className='section mt-6'>
-            <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12">
-                {data.length > 0 && data?.map((i, index) => <ProductCard data={i} key={index} />)}
+        <div className='section mt-6 min-h-[60vh]'>
+            { data?.length === 0 
+            ? <div className='h-[60vh] normalFlex justify-center'>
+                <h4 className='text-[24px]'>No products found!</h4>
             </div>
+            :<div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12">
+                {data?.map((i, index) => <ProductCard data={i} key={index} />)}
+            </div>
+            }
         </div>
         <Footer />
     </div>

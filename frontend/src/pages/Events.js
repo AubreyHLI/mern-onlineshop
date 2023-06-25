@@ -18,8 +18,11 @@ const Events = () => {
 		{!isLoadingEvents && 
 		<div>
 			<Header activeHeading={4} />
-			<div className='section'>
-				{ allEvents.length === 0 ? <h4>'No Events have!'</h4>
+			<div className='section min-h-[60vh] mt-6'>
+				{ allEvents?.length === 0 
+				? <div className='normalFlex justify-center h-[60vh]'>
+					<h4 className='text-[24px]'>No events have!</h4>
+				</div>
 				: <>
 					{allEvents && allEvents.map(event => 
 					<div key={event._id}>

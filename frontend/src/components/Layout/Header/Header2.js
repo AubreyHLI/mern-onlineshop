@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { categoriesData } from "../../../static/data";
 import { AiOutlineHeart, AiOutlineSearch, AiOutlineShoppingCart } from "react-icons/ai";
-import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { RxCross1 } from "react-icons/rx";
@@ -32,8 +32,6 @@ const Header = ({ activeHeading }) => {
     const cartItems = useSelector(selectAllCartItems);
     const wishlist = useSelector(selectAllWishItems);
 
-    const dispatch = useDispatch();    
-
 
     const handleSearchChange = (e) => {
         setSearchInput(e.target.value);
@@ -46,7 +44,7 @@ const Header = ({ activeHeading }) => {
 
     return (
     <>
-    <div className="shadow-md sticky top-0 left-0 z-10 bg-gray-100">
+    <div className="shadow-md sticky top-0 left-0 z-10 bg-white">
         <div className='section'>
             <div className="h-[80px] py-[20px] flex items-center justify-between">
                 {/* menu */}
@@ -63,7 +61,7 @@ const Header = ({ activeHeading }) => {
 
                 {/* search box */}
                 <div className="w-[50%] relative hidden 800px:block">
-                    <input type="text" placeholder="Search Product..." value={searchInput} onChange={handleSearchChange} className="h-[40px] w-full px-3 border-[#3957db] border-[2px] rounded-md" />
+                    <input type="text" placeholder="Search Product..." value={searchInput} onChange={handleSearchChange} className="h-[40px] w-full px-3 hover:border-[#4b3dc4] border-[2px] rounded-md" />
                     <AiOutlineSearch size={30} className="absolute right-3 top-1.5 cursor-pointer" />
                     
                     { searchData && searchData.length !== 0 && searchInput
@@ -98,17 +96,17 @@ const Header = ({ activeHeading }) => {
         
 
         {/* navigation */}
-        <div className='transition hidden 800px:flex items-center justify-between w-full bg-[#3321c8] h-[70px]'>
+        <div className='transition hidden 800px:flex items-center justify-between w-full h-[60px]'>
             
             <div className='section relative normalFlex justify-between'>
 
                 {/* categories box*/}
-                <div onClick={() => setDropDown(!dropDown)} className="relative h-[60px] mt-[10px] w-[270px] hidden 1100px:block">
-                    <BiMenuAltLeft size={30} className="absolute top-3 left-2" />
-                    <button className='h-[100%] w-full flex justify-between items-center pl-10 bg-white font-sans text-lg font-[500] select-none rounded-t-md' >
+                <div onClick={() => setDropDown(!dropDown)} className="relative h-[50px]  w-[200px] hidden 1100px:block">
+                    <BiMenuAltLeft size={26} className="absolute top-3" />
+                    <button className='h-[100%] w-full flex justify-between items-center pl-10 bg-white font-sans text-lg font-[500] select-none rounded-t-md text-[#333333]' >
                         All Categories
                     </button>
-                    <IoIosArrowDown size={20} onClick={() => setDropDown(!dropDown)} className="absolute right-2 top-4 cursor-pointer" />
+                    <IoIosArrowDown size={22} onClick={() => setDropDown(!dropDown)} className="absolute right-2 top-4 cursor-pointer" />
                     { dropDown 
                     ? <DropDown categoriesData={categoriesData} setDropDown={setDropDown} />
                     : null 
@@ -116,7 +114,7 @@ const Header = ({ activeHeading }) => {
                 </div>
                 
                 {/* navitems */}
-                <div className='normalFlex'>
+                <div className='normalFlex '>
                     <Navbar activeHeading={activeHeading} />
                 </div>
 
@@ -126,8 +124,8 @@ const Header = ({ activeHeading }) => {
                     {/* favorite */}
                     <div className='normalFlex'>
                         <div className="relative cursor-pointer mr-[15px]" onClick={() => setOpenWishlist(true)}>
-                            <AiOutlineHeart size={30} color="rgb(255 255 255 / 83%)" />
-                            <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
+                            <AiOutlineHeart size={30} color="#333333" />
+                            <span className="absolute right-0 top-0 rounded-full bg-[#78be20] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
                                 {wishlist?.length}
                             </span>
                         </div>
@@ -135,17 +133,17 @@ const Header = ({ activeHeading }) => {
                     {/* shopping cart */}
                     <div className='normalFlex'>
                         <div className="relative cursor-pointer mr-[15px]" onClick={() => setOpenCart(true)}>
-                            <AiOutlineShoppingCart size={30} color="rgb(255 255 255 / 83%)"/>
-                            <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
+                            <AiOutlineShoppingCart size={30} color="#333333"/>
+                            <span className="absolute right-0 top-0 rounded-full bg-[#78be20] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
                                 {cartItems?.length}
                             </span>
                         </div>
                     </div>
                     {/* account */}
                     <div className='normalFlex'>
-                        <div className="relative flex cursor-pointer mr-[15px]">
+                        <div className="relative flex cursor-pointer">
                             <Link to="/profile">
-                                <CgProfile size={30} color="rgb(255 255 255 / 83%)" />
+                                <CgProfile size={30} color="#333333" />
                             </Link>
                         </div>
                     </div>
@@ -184,7 +182,7 @@ const Header = ({ activeHeading }) => {
                 <div>
                     <div className="relative mx-2" onClick={() => setOpenWishlist(true) || setOpenMenu(false)}>
                         <AiOutlineHeart size={30} className="mt-6 ml-3" />
-                        <span class="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px]  leading-tight text-center">
+                        <span class="absolute right-0 top-0 rounded-full bg-[#78be20] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px]  leading-tight text-center">
                             0
                         </span>
                     </div>
