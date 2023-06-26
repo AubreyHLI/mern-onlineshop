@@ -4,10 +4,10 @@ import { navItems } from '../../../static/data'
 
 const Navbar = ({activeHeading}) => {
     return (
-        <div className='flex items-start flex-col 800px:flex-row 800px:items-center overflow-y-scroll'>
+        <div className='flex flex-col items-start 800px:flex-row 800px:items-end 800px:h-full gap-[30px] 800px:gap-3'>
              { navItems && navItems.map((item,index) => (
-                <div className="normalFlex" key={index}>
-                    <Link to={item.url} className={`${activeHeading === index + 1 ? "text-[#78be20]" : "text-[#333333]"} pb-[30px] text-lg 800px:pb-0 font-[500] px-6 cursor-pointer}`}>
+                <div key={index} className={`${activeHeading === index + 1 ? "bg-lime-500 text-white" : "bg-white text-[#333333]"} normalFlex 800px:h-[40px] font-[500] px-4 cursor-pointer}`}>
+                    <Link to={item.url} >
                         {item.title}
                     </Link>
                 </div>

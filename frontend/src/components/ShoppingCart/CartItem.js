@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import { RxCross1 } from "react-icons/rx";
+import React, { useEffect, useState } from 'react';
 import { HiOutlineMinus, HiPlus } from "react-icons/hi";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { toast } from "react-toastify";
-import { BACKEND_URL } from '../../static/server';
 
 
 const CartItem = ({ data, quantityChange, removeFromCart }) => {
@@ -11,6 +9,10 @@ const CartItem = ({ data, quantityChange, removeFromCart }) => {
     const productItem = data.product;
     const productPrice =  productItem.price;
     const totalPrice = (productPrice * value).toFixed(2);
+
+    useEffect(() => {
+        setValue(data.qty);
+    }, [data.productId])
     
     const increment = () => {
         if (value < productItem.stock) {
@@ -33,7 +35,7 @@ const CartItem = ({ data, quantityChange, removeFromCart }) => {
     return (
         <div className="border-b py-4 pl-2 pr-5">
             <div className="w-full flex items-center">
-                <img src={`${BACKEND_URL}${productItem.image}`} alt="" className="w-[50px] ml-2 mr-2 rounded-[5px]"/>
+                <img src={productItem.image} alt="" className="w-[50px] ml-2 mr-2 rounded-[5px]"/>
                 <div className="pl-[5px] w-[calc(100%-50px)]">
                     <div className='flex justify-between w-full'>
                         <h1 className='text-[15px]'>{productItem.name}</h1>

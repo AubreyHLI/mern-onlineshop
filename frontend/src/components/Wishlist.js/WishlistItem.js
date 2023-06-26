@@ -1,7 +1,6 @@
 import React from 'react';
 import { BsCartPlus } from "react-icons/bs";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { BACKEND_URL } from '../../static/server';
 
 
 const WishlistItem = ({ data, removeFromWishlist, addToCart }) => {
@@ -11,7 +10,7 @@ const WishlistItem = ({ data, removeFromWishlist, addToCart }) => {
     return (
         <div className="border-b py-4 pl-2 pr-5">
             <div className="w-full flex items-center">
-                <img src={`${BACKEND_URL}${productData.image}`} alt="" className="w-[50px] h-min ml-2 mr-2 rounded-[5px]"/>
+                <img src={productData.image} alt="" className="w-[50px] h-min ml-2 mr-2 rounded-[5px]"/>
                 <div className="pl-[5px] w-full">
                     <div className='flex justify-between w-full'>
                         <h1 className='text-[15px] leading-'>{productData.name}</h1>

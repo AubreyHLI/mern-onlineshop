@@ -50,7 +50,7 @@ const ProductDetails = ({data}) => {
                     product: {
                         _id: data._id,
                         name: data.name,
-                        image: data.images[0],
+                        image: data.images[0].url,
                         brandId: data.brandId,
                         stock: data.stock,
                         price: (data.discountPrice ? data.discountPrice : data.originalPrice).toFixed(2),
@@ -75,7 +75,7 @@ const ProductDetails = ({data}) => {
                 product: {
                     _id: data._id,
                     name: data.name,
-                    image: data.images[0],
+                    image: data.images[0].url,
                     brandId: data.brandId,
                     stock: data.stock,
                     price: (data.discountPrice ? data.discountPrice : data.originalPrice).toFixed(2),
@@ -104,7 +104,7 @@ const ProductDetails = ({data}) => {
                                 { data?.images?.map((i, index) => (
                                 <div key={index} className={`w-full border ${selectedImgIndex === index ?  "border-slate-300" : "border-transparent"} cursor-pointer`}>
                                     <img
-                                        src={`${BACKEND_URL}${data?.images[index]}`}  alt=""
+                                        src={data?.images[index].url}  alt=""
                                         className="w-full overflow-hidden"
                                         onClick={() => setSelectedImgIndex(index)}
                                     />
@@ -112,13 +112,13 @@ const ProductDetails = ({data}) => {
                                 ))}
                             </div>
                             {/* big img */}
-                            <img src={`${BACKEND_URL}${data?.images[selectedImgIndex]}`} alt="" className="w-[80%]"/>
+                            <img src={data?.images[selectedImgIndex].url} alt="" className="w-[80%]"/>
                             {/* preview imgs for mobile*/}
                             <div className="w-full flex justify-center mt-3 gap-3 overflow-x-scroll 800px:hidden">
                                 { data?.images?.map((i, index) => (
                                 <div key={index} className={`w-[25%] border ${selectedImgIndex === index ?  "border-slate-300" : "border-transparent"} cursor-pointer`}>
                                     <img
-                                        src={`${BACKEND_URL}${data?.images[index]}`}  alt=""
+                                        src={data?.images[index].url}  alt=""
                                         className="w-full overflow-hidden"
                                         onClick={() => setSelectedImgIndex(index)}
                                     />

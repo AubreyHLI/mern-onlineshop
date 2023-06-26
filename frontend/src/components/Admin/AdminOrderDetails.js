@@ -116,7 +116,7 @@ const AdminOrderDetails = ({data}) => {
             <div className='mt-6'>
                 { data && data?.cart.map((item, index) => 
                 <div className='w-full mb-5 flex items-start' key={index}>
-                    <img src={`${BACKEND_URL}/${item.product.image}`} alt="" className="w-[90x] h-[90px]" />
+                    <img src={item.product.image} alt="" className="w-[90x] h-[90px]" />
                     <div className="w-full flex flex-col justify-between 1000px:flex-row">
                         <h5 className="pl-3 text-[18px] max-w-[70%]">{item.product.name}</h5>
                         <h5 className="pl-3 text-[16px] text-[#00000091]">

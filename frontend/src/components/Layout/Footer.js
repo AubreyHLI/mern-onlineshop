@@ -82,7 +82,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className="grid items-end grid-cols-1 500px:grid-cols-2 lg:grid-cols-3 gap-6 text-center text-white text-sm pb-6 pl-3">
+        <div className="grid items-end grid-cols-1 500px:grid-cols-2 lg:grid-cols-3 gap-6 text-center text-[#dfdfdf] text-sm pb-6 pl-3">
           <span>© 2023 Aubrey. All rights reserved.</span>
           <span>Terms · Privacy Policy</span>
           <div className="flex items-center justify-center w-full 500px:col-span-2 lg:col-span-1">

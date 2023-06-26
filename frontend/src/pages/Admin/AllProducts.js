@@ -6,7 +6,6 @@ import { Link, useOutletContext } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProductById, fetchAllProducts, selectAllProducts, clearSuccess, clearError } from "../../redux/features/productsSlice";
 import { MdAdd } from "react-icons/md";
-import { BACKEND_URL } from "../../static/server";
 import NewProductForm from "../../components/Admin/NewProductForm";
 import DeleteConfirm from "../../components/Admin/DeleteConfirm";
 import { toast } from "react-toastify";
@@ -47,7 +46,7 @@ const AllProducts = () => {
         { field: "id", headerName: "Product ID", minWidth: 120, flex: 0.2 },
         { field: "name", headerName: "Name", minWidth: 120, flex: 0.2, },
         { field: "image", headerName: "Image", minWidth: 80, flex: 0.1, sortable: false, renderCell: (params) => 
-            <img src={`${BACKEND_URL}${params.value}`}  alt="" className="w-[40px] h-[40px]" />
+            <img src={params.value}  alt="" className="w-[40px] h-[40px]" />
         },
         { field: "price", headerName: "Price", minWidth: 100, flex: 0.1, },
         { field: "stock", headerName: "Stock", type: "number", minWidth: 60, flex: 0.1, },
@@ -72,7 +71,7 @@ const AllProducts = () => {
         gridRows.push({
             id: item._id,
             name: item.name,
-            image: item.images[0],
+            image: item.images[0].url,
             price: `US$ ${item.discountPrice ? item.discountPrice : item.originalPrice}`,
             stock: item?.stock,
             sold: item?.sold_out,

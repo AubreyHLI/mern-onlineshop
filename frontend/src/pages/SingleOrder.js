@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Header from '../components/Layout/Header/Header2';
 import Footer from '../components/Layout/Footer';
 import OrderDetails from '../components/Profile/OrderDetails';
+import Loader from '../components/Layout/Loader';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUserAllOrders, selectUserOrdersLoading } from '../redux/features/orderSlice';
@@ -23,13 +24,12 @@ const SingleOrder = () => {
 
     return (
     <>
-        {!userOrdersLoading && 
         <div>
             <Header />
-            <OrderDetails data={order} />
+            {userOrdersLoading && <Loader />}
+            {!userOrdersLoading && <OrderDetails data={order} />}
             <Footer />
         </div>
-        }
     </>
     )
 }

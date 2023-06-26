@@ -47,7 +47,7 @@ const ProductDetailsPreview = ({ setOpen, data }) => {
                     product: {
                         _id: data._id,
                         name: data.name,
-                        image: data.images[0],
+                        image: data.images[0].url,
 						brandId: data.brandId,
                         stock: data.stock,
 						price: (data.discountPrice ? data.discountPrice : data.originalPrice).toFixed(2),
@@ -72,7 +72,7 @@ const ProductDetailsPreview = ({ setOpen, data }) => {
                 product: {
                     _id: data._id,
                     name: data.name,
-                    image: data.images[0],
+                    image: data.images[0].url,
 					brandId: data.brandId,
                     stock: data.stock,
 					price: (data.discountPrice ? data.discountPrice : data.originalPrice).toFixed(2),
@@ -97,7 +97,7 @@ const ProductDetailsPreview = ({ setOpen, data }) => {
 
 					<div className="block w-full 800px:flex">
 						<div className="w-full 800px:w-[40%]">
-							<img src={`${BACKEND_URL}${data?.images[0]}`} alt='' className="max-w-[400px] w-full py-4 m-auto "/>
+							<img src={data?.images[0]?.url} alt='' className="max-w-[400px] w-full py-4 m-auto "/>
 							<div className="flex">
 								<Link to={`/brand/${data?.brand?._id}`} className="flex">
 									<img src={`${BACKEND_URL}${data?.brand?.avatar}`} alt="" className="w-[50px] h-[50px] rounded-full mr-2" />

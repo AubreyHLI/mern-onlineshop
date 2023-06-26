@@ -5,7 +5,6 @@ import { FiPackage, FiSettings, FiShoppingBag } from 'react-icons/fi'
 import { MdOutlineLocalOffer } from 'react-icons/md'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { BACKEND_URL } from '../../static/server'
 import logo from '../../assets/logo.png'
 import { RiAdminLine } from 'react-icons/ri'
 

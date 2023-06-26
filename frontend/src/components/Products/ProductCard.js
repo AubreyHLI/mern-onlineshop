@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AiFillHeart, AiFillStar, AiOutlineEye, AiOutlineHeart, AiOutlineShoppingCart, AiOutlineStar } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
-import { BACKEND_URL } from '../../static/server';
 import ProductDetailsPreview from "./ProductDetailsPreview";
 import Ratings from "./Ratings";
 import { toast } from "react-toastify";
@@ -37,7 +36,7 @@ const ProductCard = ({ data, isBrandPage }) => {
                 product: {
                     _id: data._id,
                     name: data.name,
-                    image: data.images[0],
+                    image: data.images[0].url,
                     brandId: data.brandId,
                     stock: data.stock,
                     price: (data.discountPrice ? data.discountPrice : data.originalPrice).toFixed(2),
@@ -62,7 +61,7 @@ const ProductCard = ({ data, isBrandPage }) => {
                     product: {
                         _id: data._id,
                         name: data.name,
-                        image: data.images[0],
+                        image: data.images[0].url,
                         brandId: data.brandId,
                         stock: data.stock,
                         price: (data.discountPrice ? data.discountPrice : data.originalPrice).toFixed(2),
@@ -83,7 +82,7 @@ const ProductCard = ({ data, isBrandPage }) => {
         <>
             <div className="w-full bg-white rounded-lg shadow-sm p-3 relative cursor-pointer">
                 <Link to={`/product/${data._id}`}>
-                    <img className="w-full h-[170px] px-5 object-contain" alt="" src={`${BACKEND_URL}${data.images && data.images[0]}`}/>
+                    <img className="w-full h-[170px] px-5 object-contain" alt="" src={data.images && data.images[0].url}/>
                 </Link>
                 { !isBrandPage && 
                 <Link to={`/brand/${data.brand._id}`}>

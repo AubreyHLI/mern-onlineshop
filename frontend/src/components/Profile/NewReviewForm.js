@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
 import { RxCross1 } from 'react-icons/rx'
-import { BACKEND_URL } from '../../static/server'
 import { useDispatch, useSelector } from 'react-redux'
 import { createNewReview, clearSuccess, clearError } from '../../redux/features/productsSlice'
 import { toast } from 'react-toastify'
 import { fetchUserOrders } from '../../redux/features/orderSlice'
 
-const NewReviewForm = ({orderId, open, setOpen, selectedItem, setSelectedItem }) => {
+const NewReviewForm = ({orderId, open, setOpen, selectedItem }) => {
     const [comment, setComment] = useState("");
     const [rating, setRating] = useState(1);
     const user = useSelector(state => state.user.user);
@@ -57,7 +56,7 @@ const NewReviewForm = ({orderId, open, setOpen, selectedItem, setSelectedItem })
                     Product
                 </h5>
                 <div className="w-full flex mt-2">
-                    <img src={`${BACKEND_URL}/${selectedItem?.product?.image}`} alt="" className="w-[80px] h-[80px]" />
+                    <img src={selectedItem?.product?.image} alt="" className="w-[80px] h-[80px]" />
                     <div className='pl-3'>
                         <div className="text-[18px]">{selectedItem?.product?.name}</div>
                         <h4 className="pt-3 text-[#00000091]">US${selectedItem?.product?.price} x {selectedItem?.qty}</h4>

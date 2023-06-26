@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { BsBagCheck } from 'react-icons/bs';
-import { BACKEND_URL } from '../../static/server';
 import NewReviewForm from './NewReviewForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { requestRefund, clearSuccess, clearError } from '../../redux/features/orderSlice';
@@ -74,7 +73,7 @@ const OrderDetails = ({data}) => {
         <div className='mt-6'>
             { data && data?.cart.map((item, index) => 
             <div className='w-full mb-5 flex items-start' key={index}>
-                <img src={`${BACKEND_URL}/${item.product.image}`} alt="" className="w-[90x] h-[90px]" />
+                <img src={item.product.image} alt="" className="w-[90x] h-[90px]" />
                 <div className="w-full flex flex-col justify-between 800px:flex-row">
                     <div>
                         <h5 className="pl-3 text-[18px]">{item.product.name}</h5>
@@ -108,7 +107,7 @@ const OrderDetails = ({data}) => {
         </div>
         
         {open && 
-        <NewReviewForm orderId={data._id} open={open} setOpen={setOpen} selectedItem={selectedItem} setSelectedItem={setSelectedItem}/>
+        <NewReviewForm orderId={data._id} setOpen={setOpen} selectedItem={selectedItem} />
         }
     </div>
     );

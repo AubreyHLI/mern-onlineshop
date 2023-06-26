@@ -71,7 +71,6 @@ const getAllOrders = asyncHandler(async (req, res, next) => {
 
 // update order status ---- admin
 const updateOrderStatus = asyncHandler(async (req, res, next) => {
-	console.log('req.params.orderId:', req.params.orderId)
 	const existsOrder = await Order.findById(req.params.orderId);
 	if (!existsOrder) {
 		return next(new CustomErrorClass(400, "Order not found with this id"));
@@ -112,7 +111,6 @@ const acceptOrderRefund = asyncHandler(async (req, res, next) => {
 	if (req.body.status === "Refund Success") {
 		existsOrder.cart.forEach(async (item) => {
 			const product = await Product.findById(item.productId);
-			console.log('product:', product);
 			product.stock += item.qty;
 			product.sold_out -= item.qty;
 			await product.save({ validateBeforeSave: false });

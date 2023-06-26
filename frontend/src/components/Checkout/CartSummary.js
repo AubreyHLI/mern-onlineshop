@@ -1,8 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { selectAllCartItems } from '../../redux/features/shoppingcartSlice';
-import { BACKEND_URL } from '../../static/server';
-
 
 const CartSummary = ({subTotalPrice, shipping, discount, totalPrice}) => {
     const cartItems = useSelector(selectAllCartItems);
@@ -15,7 +13,7 @@ const CartSummary = ({subTotalPrice, shipping, discount, totalPrice}) => {
             return (
             <div className="border-b" key={index}>
                 <div className="w-full flex items-center">
-                    <img src={`${BACKEND_URL}${item.product.image}`} alt="" className="w-[30px] mr-2 rounded-[5px]"/>
+                    <img src={item.product.image} alt="" className="w-[30px] mr-2 rounded-[5px]"/>
                     <div className="px-[5px] w-[calc(100%-30px)]">
                         <div className='flex justify-between w-full'>
                             <h1 className='text-[13px] 800px:text-[11px]'>{item.product.name}</h1>

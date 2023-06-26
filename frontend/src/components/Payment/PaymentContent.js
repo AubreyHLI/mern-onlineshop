@@ -42,9 +42,15 @@ const PaymentContent = () => {
 
     }, [isError, isSuccess]);
 
+    const orderItems = orderData?.cartItems?.map(item => {
+        return {
+            ...item,
+            isReviewed: false
+        }
+    })
 
     const order = {
-        cart: orderData?.cartItems,
+        cart: orderItems,
         shippingAddress: orderData?.shippingAddress,
         user: {
             _id: user?._id,

@@ -47,6 +47,7 @@ const NewProductForm = ({setOpenAddForm}) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const newForm = new FormData();
+		console.log('brandId:',brandId);
 		images.forEach((image) => {
 			newForm.append("images", image);
 		});

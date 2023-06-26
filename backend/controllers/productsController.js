@@ -4,6 +4,7 @@ const User = require("../models/userModel");
 const Order = require("../models/orderModel");
 const asyncHandler = require('../middlewares/asyncHandler');
 const CustomErrorClass = require('../utils/CustomErrorClass');
+const { uploadToCloudinary } = require("../utils/cloudinary");
 
 // create new product 
 const createNewProduct = asyncHandler( async(request, response, next) => { 
@@ -14,8 +15,13 @@ const createNewProduct = asyncHandler( async(request, response, next) => {
             return next(new CustomErrorClass(400, "Brand Id is invalid!"));
         } else {
             const files = request.files;
-            const imageUrls = files.map((file) => `${file.filename}`);
-
+            const imageUrls = [];
+            for(let i = 0; i < files.length; i++) {
+                let localFilePath = files[i].path;
+                let result = await uploadToCloudinary(localFilePath, 'products', 800);
+                imageUrls.push(result.image);
+            }
+    
             const productData = request.body;
             productData.images = imageUrls;
             productData.brand = brand;           

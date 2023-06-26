@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { RxCross1 } from 'react-icons/rx'
-import { BACKEND_URL } from '../../static/server'
 import { useSelector } from 'react-redux';
 import { selectUserAllOrders, selectUserOrdersLoading } from '../../redux/features/orderSlice';
 
