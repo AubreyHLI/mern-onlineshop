@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { selectAllProducts } from "../../redux/features/productsSlice";
-import { productData } from "../../static/data";
 import ProductCard from "../Products/ProductCard";
 
 const FeaturedProduct = () => {

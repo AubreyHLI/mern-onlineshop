@@ -41,20 +41,6 @@ const createNewBrand = asyncHandler( async (req, res, next) => {
 
 
 
-// get brand info
-const getBrandById = asyncHandler(async (req, res, next) => {
-    const brand = await Brand.findById(req.params.id);
-    if (!brand) {
-        return next(new CustomErrorClass("Brand doesn't exists", 400));
-    }
-
-    res.status(201).json({
-        success: true,
-        brand: brand
-    });
-})
-
-
 
 // get all Brands
 const getAllBrands = asyncHandler(async (req, res, next) => {
@@ -89,7 +75,6 @@ const deleteBrandById = asyncHandler(async (req, res, next) => {
 // export
 module.exports = {
     createNewBrand,
-    getBrandById,
     getAllBrands,
     deleteBrandById,
 }

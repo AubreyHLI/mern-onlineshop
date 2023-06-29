@@ -18,19 +18,19 @@ const Events = () => {
 		{!isLoadingEvents && 
 		<div>
 			<Header activeHeading={4} />
-			<div className='section min-h-[60vh] mt-6'>
-				{ allEvents?.length === 0 
-				? <div className='normalFlex justify-center h-[60vh]'>
+			<div className='section min-h-[80vh] mt-6'>
+				{ allEvents?.length === 0 &&
+				<div className='normalFlex justify-center h-[70vh]'>
 					<h4 className='text-[24px]'>No events have!</h4>
-				</div>
-				: <>
+				</div>}
+				{ allEvents?.length > 0 &&
+				<>
 					{allEvents && allEvents.map(event => 
 					<div key={event._id}>
 						<EventCard eventData={event}/>
 					</div>
 					)}
-				</>
-				}
+				</>}
 			</div>
 			<Footer />
 		</div>}

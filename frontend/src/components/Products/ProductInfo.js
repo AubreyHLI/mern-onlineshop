@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import { CgProfile } from 'react-icons/cg';
 import { Link } from 'react-router-dom';
 import Ratings from './Ratings';
 import { BACKEND_URL } from '../../static/server';
-import { useDispatch, useSelector } from 'react-redux';
-import { getSingleBrand } from '../../redux/features/brandsSlice';
+import { useSelector } from 'react-redux';
 import { selectProductsByBrand } from '../../redux/features/productsSlice';
 import { Avatar } from '@mui/material';
+import { getIsLoadingBrands, selectAllBrands } from '../../redux/features/brandsSlice';
 
 
 const ProductInfo = ({data}) => {
+    const id = data.brandId;
     const [active, setActive] = useState(1);
-    const brand = useSelector(state => state.brands.brand);
-    const brandProducts = useSelector(state => selectProductsByBrand(state, data.brandId));
-
-    const dispatch = useDispatch();
+    const [brand, setBrand] = useState(null);
+    const allBrands = useSelector(selectAllBrands);
+    const isLoading = useSelector(getIsLoadingBrands);
+    const brandProducts = useSelector(state => selectProductsByBrand(state, id));
 
     useEffect(() => {
-        dispatch(getSingleBrand(data.brandId));
-    }, [])
+        if(!isLoading) {
+            console.log('allbrands:', allBrands)
+            const b = allBrands?.find(item => item._id === id);
+            setBrand(b);
+        }
+    },[isLoading, id])
 
     return (
     <div className="bg-[#fff] px-3 800px:px-10 py-2 rounded">
@@ -74,7 +78,7 @@ const ProductInfo = ({data}) => {
         </div>
         ) : null}
 
-        {active === 3 && (
+        {active === 3 && !isLoading &&
         <div className="w-full block 800px:flex p-5">
             <div className="w-full 800px:w-[50%]">
                 <Link to={`/brand/${data.brand._id}`}>
@@ -107,7 +111,7 @@ const ProductInfo = ({data}) => {
                 </div>
             </div>
         </div>
-        )}
+        }
     </div>
     );
 }

@@ -10,35 +10,36 @@ import Loader from '../components/Layout/Loader';
 
 
 const Products = () => {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(null);
     const [searchParams] = useSearchParams();
     const categoryData = searchParams.get("category");
     const allProducts = useSelector(selectAllProducts);
     const isLoading = useSelector(getIsLoadingProducts);
 
     useEffect(() => {
-        if(!categoryData) {
-            const allProductsData = allProducts ? [...allProducts] : [];
-            const d = allProductsData.sort((a,b) => a.sold_out - b.sold_out);
-            setData(d);
-        } else {
-            const d = allProducts && allProducts.filter(item => item.category === categoryData);
-            setData(d);
+        if(!isLoading) {
+            if(!categoryData) {
+                setData(allProducts);
+            } else {
+                const d = allProducts && allProducts.filter(item => item.category === categoryData);
+                setData(d);
+            }
+            window.scrollTo(0,0);
         }
-        window.scrollTo(0,0);
-    }, [categoryData])
+    }, [isLoading, categoryData])
 
     return (
     <div>
         <Header activeHeading={3}/>
         {isLoading ? <Loader />
         :
-        <div className='section mt-6 min-h-[60vh]'>
-            { data?.length > 0 
-            ? <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12">
+        <div className='section mt-6 min-h-[80vh]'>
+            { data?.length > 0 &&
+            <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12">
                 {data?.map((i, index) => <ProductCard data={i} key={index} />)}
-            </div>
-            : <div className='h-[60vh] normalFlex justify-center'>
+            </div>}
+            { data?.length === 0 &&
+            <div className='h-[70vh] normalFlex justify-center'>
                 <h4 className='text-[24px]'>No products found!</h4>
             </div>
             }

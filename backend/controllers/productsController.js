@@ -49,6 +49,7 @@ const getAllProducts = asyncHandler( async(request, response, next) => {
     });
 })
 
+
 // delete product
 const deleteProductById = asyncHandler(async (req, res, next) => {
     const product = await Product.findByIdAndDelete(req.params.id);

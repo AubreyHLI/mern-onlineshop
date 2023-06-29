@@ -103,10 +103,9 @@ const App = () => {
 					<Route index element={<ProfilePage />}/>
 					<Route path='orders' element={<UserAllOrders />} />
 					<Route path='refunds' element={<AllRefundOrders />} />
-					{/* <Route path='track-order' element={<TrackOrder />} /> */}
 					<Route path='change-password' element={<ChangePassword />} />
 					<Route path='addresses' element={<AddressBook />} />
-					
+					{/* <Route path='inbox' element={< />} /> */}
 				</Route>
 				
 				<Route path='/login' element={<Login />} />

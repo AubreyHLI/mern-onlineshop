@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { AiFillHeart, AiOutlineHeart, AiOutlineMessage, AiOutlineShoppingCart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import ProductInfo from './ProductInfo';
 import { BACKEND_URL } from '../../static/server';

@@ -29,7 +29,6 @@ const sidebarData = [
 	{
 		label: 'Inbox',
 		icon: <AiOutlineMessage size={25} />,
-		// linkUrl: "/profile/inbox",
 		linkUrl: '/',
 	},
 	{

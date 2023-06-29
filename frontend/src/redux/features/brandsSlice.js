@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, createSelector } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { SERVER_URL } from "../../static/server";
 
@@ -35,18 +35,6 @@ export const createBrand = createAsyncThunk('brands/createBrand', async (newForm
     }
 });
 
-
-export const getSingleBrand = createAsyncThunk('brands/getBrand', async (id, {rejectWithValue}) => {
-    try{
-        const response = await axios.get(`${SERVER_URL}/brands/getBrand/${id}`,  { withCredentials: true });
-        return response.data;
-    } catch(err) {
-        if (!err.response) {
-            throw err;
-        }
-        return rejectWithValue(err.response.data);
-    }
-});
 
 export const deleteBrandById = createAsyncThunk('cart/deleteBrand', async (id, {rejectWithValue}) => {
     try{
@@ -103,14 +91,6 @@ export const brandsSlice = createSlice({
             state.allBrands = action.payload.brands;
         })
         .addCase(createBrand.rejected, (state, action) => {
-            state.isError = true;
-            state.error = action.payload.message;
-        })
-        .addCase(getSingleBrand.fulfilled, (state, action) => {
-            state.isSuccess = true;
-            state.brand = action.payload.brand;
-        })
-        .addCase(getSingleBrand.rejected, (state, action) => {
             state.isError = true;
             state.error = action.payload.message;
         })

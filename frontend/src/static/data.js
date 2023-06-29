@@ -1,27 +1,3 @@
-// navigation Data
-export const navItems = [
-	{
-		title: "Home",
-		url: "/",
-	},
-	{
-		title: "Best Selling",
-		url: "/bestselling",
-	},
-	{
-		title: "Products",
-		url: "/products",
-	},
-	{
-		title: "Events",
-		url: "/events",
-	},
-	{
-		title: "FAQ",
-		url: "/faq",
-	},
-];
-
 // branding data
 export const brandingData = [
 	{

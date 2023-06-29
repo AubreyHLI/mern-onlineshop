@@ -1,6 +1,28 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { navItems } from '../../../static/data'
+
+const navItems = [
+	{
+		title: "Home",
+		url: "/",
+	},
+	{
+		title: "Best Selling",
+		url: "/bestselling",
+	},
+	{
+		title: "Products",
+		url: "/products",
+	},
+	{
+		title: "Events",
+		url: "/events",
+	},
+	{
+		title: "FAQ",
+		url: "/faq",
+	},
+];
 
 const Navbar = ({activeHeading}) => {
     return (
