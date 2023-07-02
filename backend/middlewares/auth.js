@@ -5,7 +5,7 @@
 
 // check is there any user logged in and store in cookie
 const isAuthenticated = asyncHandler( async(request, response, next) => {
-    // console.log('request.cookies:',request.cookies);
+    console.log('request.cookies:',request.cookies);
     const { userToken } = request.cookies;
 
     if(!userToken){

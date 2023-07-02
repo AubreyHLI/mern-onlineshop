@@ -12,18 +12,18 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [visible, setVisible] = useState(false);
-    const { user, isSuccess, isError, error } = useSelector(state => state.user);
+    const { isSuccess, success, isError, error } = useSelector(state => state.user);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(() => {
         if(isSuccess) {
-            toast.success(`Login success! Welcome back ${user?.name}!`);
+            toast.success(success);
             dispatch(clearSuccess());
-            dispatch(fetchUser());
-            dispatch(fetchCartItems());
-		    dispatch(fetchWishlist());
+            // dispatch(fetchUser());
+            // dispatch(fetchCartItems());
+		    // dispatch(fetchWishlist());
            
             navigate('/');
         }

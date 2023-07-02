@@ -81,6 +81,7 @@ const loginUser = asyncHandler( async (request, response, next) => {
 // Load user stored in cookie
 const getUserInCookie = asyncHandler( async(request, response, next) => {
     try{
+        console.log('request.user:', request.user.id);
         const cookieUser = await User.findById(request.user.id);
         if(!cookieUser) {
             return next(new CustomErrorClass(400, "User doesn't exist!"));

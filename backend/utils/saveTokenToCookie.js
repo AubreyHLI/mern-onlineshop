@@ -12,7 +12,7 @@ const saveTokenToCookie = (user, code, response) => {
     response.status(code)
             .cookie("userToken", userJwtToken, options)
             .json({
-                success: true, 
+                success: `Login success! Welcome back ${user.name} :)`, 
                 user: user, 
                 userToken: userJwtToken
             });

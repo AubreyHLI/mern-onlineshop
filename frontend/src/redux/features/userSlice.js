@@ -177,6 +177,7 @@ export const userSlice = createSlice({
             state.isAuthenticated = true;
             state.user = action.payload.user;
             state.isSuccess = true;
+            state.success =  action.payload.success;
             state.isAdmin = false;         
         })
         .addCase(loginUser.rejected, (state, action) => {
