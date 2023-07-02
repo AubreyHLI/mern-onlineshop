@@ -11,7 +11,8 @@ require('dotenv').config();
 // middleware
 app.use(cors({
     origin: process.env.CLIENT_URL,
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'DELETE', 'PATCH'],
 }));
 // an Express built-in middleware to parse form data as strings or arrays
 app.use(express.urlencoded({extended: true}));
