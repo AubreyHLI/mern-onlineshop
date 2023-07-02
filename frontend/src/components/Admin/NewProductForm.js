@@ -128,7 +128,7 @@ const NewProductForm = ({setOpenAddForm}) => {
 					</label>
 					<select	className="w-full mt-2 border h-[35px] rounded-[5px]" value={category} onChange={(e) => setCategory(e.target.value)}>
 						<option value="Choose a category">Choose a category</option>
-						{categoriesData && categoriesData.map((i) => <option value={i.title} key={i.title}> {i.title} </option>)}
+						{categoriesData && categoriesData.map((i) => <option value={i.category} key={i.category}> {i.title} </option>)}
 					</select>
 				</div>
 

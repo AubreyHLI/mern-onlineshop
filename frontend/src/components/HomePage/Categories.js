@@ -8,7 +8,7 @@ const Categories = () => {
     return (
     <>
         <div className='section hidden sm:block'>
-            <div className={`branding my-12 flex justify-between w-full shadow-md bg-white p-5 rounded-md`} >
+            <div className={`branding mt-12 flex justify-between w-full shadow-md bg-white p-5 rounded-md`} >
                 { brandingData && brandingData.map((i, index) => 
                     <div className="flex items-start" key={index}>
                         {i.icon}
@@ -21,17 +21,17 @@ const Categories = () => {
             </div>
         </div>
 
-        <div id="categories" className='section bg-white p-6 rounded-lg mb-12'>
-            <div className="grid grid-cols-1 grid-tem gap-[5px] md:grid-cols-2 md:gap-[10px] lg:grid-cols-4 lg:gap-[20px] xl:grid-cols-5 xl:gap-[30px]">
+        <div id="categories" className='section bg-white p-6 rounded-lg my-12'>
+            <div className="grid grid-cols-1 grid-tem gap-x-[30px] gap-y-[10px] sm:grid-cols-2 800px:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
                 {categoriesData && categoriesData.map(i => {
                     const handleCategoryClick = (i) => {  
-                        navigate(`/products?category=${i.title}`);
+                        navigate(`/products?category=${i.category}`);
                     };
 
                     return (
-                        <div className="w-full h-[100px] flex items-center justify-between cursor-pointer overflow-hidden" key={i.id} onClick={() => handleCategoryClick(i)}>
+                        <div className="w-full h-[100px] flex items-center justify-between cursor-pointer overflow-hidden pr-[10px]" key={i.id} onClick={() => handleCategoryClick(i)}>
                             <h5 className={`text-[18px] leading-[1.3]`}>{i.title}</h5>
-                            <img className="w-[120px] object-cover" alt="" src={i.image_Url}/>
+                            <img className="w-[75px] object-cover" alt="" src={i.image_Url}/>
                         </div>
                     );
                 })}
